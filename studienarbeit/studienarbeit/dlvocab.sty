@@ -1,0 +1,95 @@
+\ProvidesPackage{dlvocab}[2009/04/11 v0.1 DL constructs]
+
+\RequirePackage{graphics} %provides \reflectbox
+\RequirePackage{ifthen}   %provides \ifthenelse
+
+\newcommand{\dotIf}[1]{\ifthenelse{\equal{#1}{}}{}{.}}
+
+%---------------- DL OPERATORS
+\newcommand{\DLCon}[1]{{\ensuremath{\textcolor{orange}{\tt #1}}\xspace}}
+\newcommand{\DLRol}[1]{{\ensuremath{\textcolor{brown}{\tt #1}}\xspace}}
+\newcommand{\DLInd}[1]{{\ensuremath{\textcolor{red}{\tt #1}}\xspace}}
+\newcommand{\DLnom}[1]{{\ensuremath{\{\DLInd{#1}\}}\xspace}}
+
+\newcommand{\DLConVar}[1]{{\ensuremath{\textcolor{blue}{\textsl{#1}}}\xspace}}
+\newcommand{\DLRolVar}[1]{{\ensuremath{\textcolor{blue!50!green}{\textsl{#1}}}\xspace}}
+\newcommand{\DLIndVar}[1]{{\ensuremath{\textcolor{purple}{\textsl{#1}}}\xspace}}
+\newcommand{\varC}{\DLConVar{C}}
+\newcommand{\varD}{\DLConVar{D}}
+\newcommand{\varE}{\DLConVar{E}}
+\newcommand{\varF}{\DLConVar{F}}
+\newcommand{\varR}{\DLRolVar{R}}
+\newcommand{\varS}{\DLRolVar{S}}
+\newcommand{\varT}{\DLRolVar{T}}
+
+\newcommand{\DLa}{\ensuremath{\mathrel{\reflectbox{\scriptsize$\exists$}}}}
+\newcommand{\DLSelf}{\ensuremath{\DLCon{\bf Self}}\xspace}
+\newcommand{\DLequiv}{\ensuremath{\equiv}}
+\newcommand{\DLsub}{\ensuremath{\sqsubseteq}}
+\newcommand{\DLor}{\ensuremath{\sqcup}}
+\newcommand{\DLOr}{\ensuremath{\bigsqcup}}
+\newcommand{\DLxor}{\ensuremath{\sqcupplus}}
+\newcommand{\DLXor}{\ensuremath{\bigsqcupplus}}
+\newcommand{\DLnot}[1]{\ensuremath{\neg\DLCon{#1}}}
+\newcommand{\DLand}{\ensuremath{\sqcap}}
+\newcommand{\DLAnd}{\ensuremath{\bigsqcap}}
+\newcommand{\DLexists}[2]{\ensuremath{\exists\DLRol{#1}\dotIf{#2}\DLCon{#2}}}
+\newcommand{\DLforall}[2]{\ensuremath{\forall\DLRol{#1}\dotIf{#2}\DLCon{#2}}}
+\newcommand{\DLone}[2]{\ensuremath{\exists^{=1}\DLRol{#1}\dotIf{#2}\DLCon{#2}}}
+\newcommand{\DLmin}[3]{\ensuremath{\exists^{\geq #1}\DLRol{#2}\dotIf{#3}\DLCon{#3}}}
+\newcommand{\DLmax}[3]{\ensuremath{\exists^{\leq #1}\DLRol{#2}\dotIf{#3}\DLCon{#3}}}
+\newcommand{\DLexactly}[3]{\ensuremath{\exists^{= #1}\DLRol{#2}\dotIf{#3}\DLCon{#3}}}
+\newcommand{\DLq}[2]{\ensuremath{\mathfrak{q}\DLRol{#1}\dotIf{#2}\DLCon{#2}}}
+
+\newcommand{\DLUniversalRole}{\ensuremath{\DLRol{\bf U}}\xspace}
+\newcommand{\DLInvRol}[1]{\ensuremath{{\DLRol #1}^{-1}}\xspace}
+
+\newcommand{\DLSYM}[1]{\ensuremath{\textbf{\textsc{sym}}~\DLRol{#1}}}
+\newcommand{\DLASY}[1]{\ensuremath{\textbf{\textsc{asy}}~\DLRol{#1}}}
+\newcommand{\DLTRA}[1]{\ensuremath{\textbf{\textsc{tra}}~\DLRol{#1}}}
+\newcommand{\DLIRR}[1]{\ensuremath{\textbf{\textsc{irr}}~\DLRol{#1}}}
+\newcommand{\DLREF}[1]{\ensuremath{\textbf{\textsc{ref}}~\DLRol{#1}}}
+\newcommand{\DLANT}[1]{\ensuremath{\textbf{\textsc{ant}}~\DLRol{#1}}}
+\newcommand{\DLFUN}[1]{\ensuremath{\textbf{\textsc{fun}}~\DLRol{#1}}}
+\newcommand{\DLIFU}[1]{\ensuremath{\textbf{\textsc{fun}}^{-}~\DLRol{#1}}}
+
+\newcommand{\DLDisj}{\textbf{\textsc{Disj}}}
+
+%---------------- Datatypes
+
+\newcommand{\DLLitType}{\hat{~}\hat{~}}
+
+%---------------- DLs
+
+\newcommand{\TBox}{\ensuremath{{\cal T}}\xspace}
+\newcommand{\ABox}{\ensuremath{{\cal A}}\xspace}
+\newcommand{\RBox}{\ensuremath{{\cal R}}\xspace}
+\newcommand{\KB}{\ensuremath{{\cal KB}}\xspace}
+
+\newcommand{\ALC}{\ensuremath{{\cal ALC}}\xspace}
+
+\newcommand{\ELpp}{\ensuremath{{\cal EL^{++}}}\xspace}
+\newcommand{\SHOIN}{\ensuremath{{\cal SHOIN}}\xspace}
+\newcommand{\SHOIND}{\ensuremath{{\cal SHOIN}_{(D)}}\xspace}
+\newcommand{\SHOIQ}{\ensuremath{{\cal SHOIQ}}\xspace}
+\newcommand{\SROIQ}{\ensuremath{{\cal SROIQ}}\xspace}
+\newcommand{\SROIQD}{\ensuremath{{\cal SROIQ}_{(D)}}\xspace}
+\newcommand{\SROIQDplus}{\ensuremath{{\cal SROIQ}_{(D^+)}}\xspace}
+\newcommand{\SROIQBs}{\ensuremath{{\cal SROIQB}_{s}}\xspace}
+
+%---------------- GENERAL LOGIC OPERATORS
+\newcommand{\Models}{\mbox{ \Large$\models$ }} 
+   % TODO deprecate? 
+   %\models should normally look right, but appears "shrunken" bywhen 
+   %some other symbol packages are loaded. find under which circumstances.
+\newcommand{\EXT}[1]{\ensuremath{#1^{\cal I}}}
+\newcommand{\EXTP}[1]{\EXT{\bigl(#1\bigr)}}
+\newcommand{\EXTp}[1]{\EXT{\left(#1\right)}}
+\newcommand{\wrt}{\text{ w.r.t. }}
+
+%---------------- Viewpoints
+
+\newcommand{\VPN}[1]{\DLRol{#1}}
+\newcommand{\VPV}[1]{\DLCon{#1}}
+
+

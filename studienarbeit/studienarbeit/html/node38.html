@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Change Model</TITLE>
+<META NAME="description" CONTENT="Change Model">
+<META NAME="keywords" CONTENT="SeminarPaper">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="SeminarPaper.css">
+
+<LINK REL="next" HREF="node39.html">
+<LINK REL="previous" HREF="node37.html">
+<LINK REL="up" HREF="node37.html">
+<LINK REL="next" HREF="node39.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html720"
+  HREF="node39.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html716"
+  HREF="node37.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html710"
+  HREF="node37.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html718"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html721"
+  HREF="node39.html">Change Processing</A>
+<B> Up:</B> <A NAME="tex2html717"
+  HREF="node37.html">Change Management</A>
+<B> Previous:</B> <A NAME="tex2html711"
+  HREF="node37.html">Change Management</A>
+ &nbsp; <B>  <A NAME="tex2html719"
+  HREF="node3.html">Contents</A></B> 
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00625100000000000000">
+Change Model</A>
+</H3>
+The framework does not force the user into using a certain change distribution
+model. By exhausting the full functionality of the change management
+the Replica Framework offers the flexibility to implement change management
+according to user's demands.
+
+<P>
+The forms of ontology modifications are diverse. Users can add or
+remove axioms to shared ontologies or certain fragments, add annotations
+or change the ontology ID. Moreover users may want to apply a set of these
+modifications. Keeping track of modifications is essential in many applications
+for example in versioning systems.
+
+<P>
+<P>
+<DIV><B>Definition  <SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN></B> (Change)  &nbsp; 
+<I>For the set <SPAN CLASS="MATH"></SPAN> of ontology modifications, user ID <SPAN CLASS="MATH"></SPAN>,
+time&nbsp;stamp&nbsp;<SPAN CLASS="MATH"></SPAN>, comment <SPAN CLASS="MATH"></SPAN>, the 4-tuple 
+<!-- MATH
+ $\mathcal{\nu} = \{\Delta, \upsilon, \tau, \omega \}$
+ -->
+<SPAN CLASS="MATH"></SPAN> is called <SPAN  CLASS="textbf">change</SPAN>.</I></DIV><P></P>
+The Replica Framework uses a special container called <SPAN  CLASS="textbf">change</SPAN> to
+carry a set of modifications, a user ID, a timestamp and a comment which
+is meant to report the cause of the change.
+
+<P>
+<P>
+<DIV><B>Definition  <SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN></B> (Criterion)  &nbsp; 
+<I>A <SPAN  CLASS="textbf">criterion</SPAN> is a function <!-- MATH
+ $Change \to Boolean$
+ -->
+<SPAN CLASS="MATH"></SPAN> that
+ <SPAN  CLASS="textbf">matches</SPAN> a change.
+</I>
+<P></DIV><P></P>
+Note that a <SPAN  CLASS="textbf">Change</SPAN> can contain a set of modifications.
+
+<P>
+<P>
+<DIV><B>Definition  <SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">9</SPAN></B> (Change Filter)  &nbsp; 
+<I>For <!-- MATH
+ $n \in \mathbb{N}$
+ -->
+<SPAN CLASS="MATH"></SPAN>, Criteria <SPAN CLASS="MATH"></SPAN>, 
+<!-- MATH
+ $\Theta = \bigcup_{i=0..n} \gamma_i$
+ -->
+<SPAN CLASS="MATH"></SPAN> is called <SPAN  CLASS="textbf">Change Filter</SPAN>.</I></DIV><P></P>
+A <SPAN  CLASS="textbf">Change Filter</SPAN> is meant to be used at the first step of the change
+processing but also in any other component where changes are handled.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html720"
+  HREF="node39.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html716"
+  HREF="node37.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html710"
+  HREF="node37.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html718"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html721"
+  HREF="node39.html">Change Processing</A>
+<B> Up:</B> <A NAME="tex2html717"
+  HREF="node37.html">Change Management</A>
+<B> Previous:</B> <A NAME="tex2html711"
+  HREF="node37.html">Change Management</A>
+ &nbsp; <B>  <A NAME="tex2html719"
+  HREF="node3.html">Contents</A></B> </DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Jan Novacek
+2011-07-11
+</ADDRESS>
+</BODY>
+</HTML>

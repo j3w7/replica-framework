@@ -1,0 +1,217 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Overview</TITLE>
+<META NAME="description" CONTENT="Overview">
+<META NAME="keywords" CONTENT="SeminarPaper">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="SeminarPaper.css">
+
+<LINK REL="previous" HREF="node54.html">
+<LINK REL="up" HREF="node52.html">
+<LINK REL="next" HREF="node56.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html937"
+  HREF="node56.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html933"
+  HREF="node52.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html929"
+  HREF="node54.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html935"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html938"
+  HREF="node56.html">Shared Ontology Implementation</A>
+<B> Up:</B> <A NAME="tex2html934"
+  HREF="node52.html">Modules</A>
+<B> Previous:</B> <A NAME="tex2html930"
+  HREF="node54.html">Communication module</A>
+ &nbsp; <B>  <A NAME="tex2html936"
+  HREF="node3.html">Contents</A></B> 
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00723000000000000000">
+Overview</A>
+</H2>
+This sub section offers an overview of all Replica Framework modules in
+table <A HREF="#frameworkplugins"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/usr/share/latex2html/icons/crossref.png"></A>.
+<BR><P></P>
+<DIV ALIGN="CENTER">
+<DIV ALIGN="CENTER">
+
+</DIV>	
+	<A NAME="frameworkplugins"></A>	<A NAME="1213"></A>
+<TABLE CELLPADDING=3 BORDER="1">
+<CAPTION><STRONG>Table:</STRONG>
+Overview of all Replica Framework plugins</CAPTION>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TH ALIGN="CENTER"><SPAN  CLASS="textbf"><SPAN  CLASS="textbf">Bundle Postfix</SPAN></SPAN>,</TH>
+</TR>
+<TR><TH ALIGN="CENTER"><SPAN  CLASS="textbf">Module Name</SPAN></TH>
+</TR>
+</TABLE></TD>
+<TH ALIGN="LEFT" VALIGN="TOP" WIDTH=255><SPAN  CLASS="textbf">Description</SPAN></TH>
+<TH ALIGN="CENTER"><SPAN  CLASS="textbf">Dependencies</SPAN></TH>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">owlapi</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>The OWLAPI lib Plug-in plugin contains the patched version of
+			the OWLAPI library.</TD>
+<TD ALIGN="CENTER">-</TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">core</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>The core plugin contains the Shared Ontology Implementation and Shared Ontology
+			builder which is required when applying OWLAPI updates.</TD>
+<TD ALIGN="CENTER"><SPAN  CLASS="textbf">owlapi</SPAN></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">app</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>The application plugin contains interfaces and classes required
+			to build applications like server or client instances.</TD>
+<TD ALIGN="CENTER"><SPAN  CLASS="textbf">core</SPAN></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">comm</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>The communication module contains all communication related components
+			of the Replica Framework. Especially the
+			<SPAN  CLASS="textbf">CommManager</SPAN> is included in this plugin.</TD>
+<TD ALIGN="CENTER"><SPAN  CLASS="textbf">core</SPAN></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">dictionary</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>The dictionary plugin plugin holds interfaces and classes
+			related to the Dictionary concept of the Replica Framework.</TD>
+<TD ALIGN="CENTER"><SPAN  CLASS="textbf">core</SPAN></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">fragments</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>The fragments plugin bundle incorporates the Shared Ontology
+			Fragment concept related components of the Replica Framework.</TD>
+<TD ALIGN="CENTER"><SPAN  CLASS="textbf">core</SPAN></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">changes</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>The Change Management plugin
+			holds special implementations of the <SPAN  CLASS="textbf">OWLReplicaOntology</SPAN>
+			interface that actualize all necessary parts of the
+			Change Management concept of the framework.</TD>
+<TD ALIGN="CENTER"><SPAN  CLASS="textbf">core</SPAN>, <SPAN  CLASS="textbf">fragments</SPAN></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">neonplugin</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>The NeOn Toolkit plugin includes the implementation of the
+			NeOn Toolkit plugin.</TD>
+<TD ALIGN="CENTER"><SPAN  CLASS="textbf">core</SPAN>, <SPAN  CLASS="textbf">comm</SPAN></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">plicies</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>This plugin
+			contains components required for <SPAN  CLASS="textbf">policy management</SPAN>.
+			It has not yet been implemented at the time of writing.</TD>
+<TD ALIGN="CENTER"><SPAN  CLASS="textbf">core</SPAN></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">query</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>This plugin holds Query Management related
+			parts. It has not yet been implemented at the time of writing.</TD>
+<TD ALIGN="CENTER"><SPAN  CLASS="textbf">core</SPAN></TD>
+</TR>
+<TR><TD ALIGN="CENTER"><TABLE CELLPADDING=3>
+<TR><TD ALIGN="CENTER"><SPAN  CLASS="textbf">demo</SPAN></TD>
+</TR>
+</TABLE></TD>
+<TD ALIGN="LEFT" VALIGN="TOP" WIDTH=255>This plugin contains an implementation of a
+			standalone demonstrator application that presents features of
+			the Replica Framework.</TD>
+<TD ALIGN="CENTER"><SPAN  CLASS="textbf">core</SPAN>, <SPAN  CLASS="textbf">comm</SPAN></TD>
+</TR>
+</TABLE>
+</DIV>
+<BR>
+
+<P>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html937"
+  HREF="node56.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html933"
+  HREF="node52.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html929"
+  HREF="node54.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html935"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html938"
+  HREF="node56.html">Shared Ontology Implementation</A>
+<B> Up:</B> <A NAME="tex2html934"
+  HREF="node52.html">Modules</A>
+<B> Previous:</B> <A NAME="tex2html930"
+  HREF="node54.html">Communication module</A>
+ &nbsp; <B>  <A NAME="tex2html936"
+  HREF="node3.html">Contents</A></B> </DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Jan Novacek
+2011-07-11
+</ADDRESS>
+</BODY>
+</HTML>

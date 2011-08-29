@@ -1,0 +1,25 @@
+\begin{thebibliography}{}
+
+\bibitem[Berners-Lee 98]{berners-lee98}
+Tim Berners-Lee.
+\newblock The semantic web road map.
+
+\bibitem[Chen 09]{chen09}
+Xueying Chen, Michel Dumontier.
+\newblock A framework for distributed ontology systems.
+\newblock 2009.
+
+\bibitem[Hobo 04]{hobo2004}
+Remco Hobo.
+\newblock Distributed system requirements.
+\newblock 2011.03.08.
+
+\bibitem[Tudorache 10]{tudorache2010CollabProtege}
+Tania Tudorache, Natalya Noy, Samson Tu, Mark Musen.
+\newblock {Supporting Collaborative Ontology Development in Prot\'{e}g\'{e}}.
+\newblock In Amit Sheth, Steffen Staab, Mike Dean, Massimo Paolucci, Diana
+  Maynard, Timothy Finin, Krishnaprasad Thirunarayan, Hrsg., The Semantic Web -
+  ISWC 2008, Band 5318 of Lecture Notes in Computer Science, Kapitel~2, Seiten
+  17--32. Springer Berlin Heidelberg, Berlin, Heidelberg, 2010.
+
+\end{thebibliography}

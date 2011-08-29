@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Communication Node</TITLE>
+<META NAME="description" CONTENT="Communication Node">
+<META NAME="keywords" CONTENT="SeminarPaper">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="SeminarPaper.css">
+
+<LINK REL="previous" HREF="node37.html">
+<LINK REL="up" HREF="node32.html">
+<LINK REL="next" HREF="node44.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html776"
+  HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html772"
+  HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html768"
+  HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html774"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html777"
+  HREF="node44.html">Behavioral Aspects</A>
+<B> Up:</B> <A NAME="tex2html773"
+  HREF="node32.html">Framework Components</A>
+<B> Previous:</B> <A NAME="tex2html769"
+  HREF="node42.html">Change Propagator</A>
+ &nbsp; <B>  <A NAME="tex2html775"
+  HREF="node3.html">Contents</A></B> 
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00626000000000000000">
+Communication Node</A>
+</H2>
+The framework relies on a client and server communication model.
+Clients connect to a server and can then retrieve shared ontologies managed
+by the server they are connected to as well as changes and communication
+data from other clients. As centralization is not always desired the
+framework also allows for building decentralized network structures
+by employing the concept of a <SPAN  CLASS="textbf">communication node</SPAN>.
+A communication node is a peer that provides client as well as server functionality.
+
+<P>
+The concept of a communication node is similar but not equal to the
+peer concept of a peer-to-peer network. Table <A HREF="#p2pRepComparison"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/usr/share/latex2html/icons/crossref.png"></A>
+offers a comparison between the two ideas which is based on the definition
+of a peer-to-peer network by <A
+ HREF="#schollmeier01">()</A>.
+The major difference between both network models is that in opposite to
+a self-organizing peer-to-peer network communication node management has
+to be configured manually.
+
+<P>
+<BR><P></P>
+<DIV ALIGN="CENTER">
+
+        <DIV ALIGN="CENTER">
+
+</DIV>
+        
+        <A NAME="p2pRepComparison"></A>
+        <A NAME="905"></A>
+<TABLE CELLPADDING=3 BORDER="1">
+<CAPTION><STRONG>Table:</STRONG>
+Comparison of peer-to-peer and Replica Framework peer concepts</CAPTION>
+<TR><TH ALIGN="LEFT" VALIGN="TOP" WIDTH=300><SPAN  CLASS="textbf">Characteristic</SPAN></TH>
+<TH ALIGN="CENTER"><SPAN  CLASS="textbf">Peer-to-Peer</SPAN></TH>
+<TH ALIGN="CENTER"><SPAN  CLASS="textbf">Replica Framework</SPAN></TH>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=300>Heterogenity of network connection speed, performance, reliability</TD>
+<TD ALIGN="CENTER">yes</TD>
+<TD ALIGN="CENTER">yes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=300>Peers provide services and resources and request services of other peers</TD>
+<TD ALIGN="CENTER">yes</TD>
+<TD ALIGN="CENTER">yes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=300>Services and resources can be shared across all peers</TD>
+<TD ALIGN="CENTER">yes</TD>
+<TD ALIGN="CENTER">yes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=300>Peers make up an overlay network</TD>
+<TD ALIGN="CENTER">yes</TD>
+<TD ALIGN="CENTER">yes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=300>Peers are autonomous</TD>
+<TD ALIGN="CENTER">yes</TD>
+<TD ALIGN="CENTER">yes</TD>
+</TR>
+<TR><TD ALIGN="LEFT" VALIGN="TOP" WIDTH=300>The network is self-organizing</TD>
+<TD ALIGN="CENTER">yes</TD>
+<TD ALIGN="CENTER">no</TD>
+</TR>
+</TABLE>
+</DIV>
+<BR>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html776"
+  HREF="node44.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html772"
+  HREF="node32.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html768"
+  HREF="node42.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html774"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html777"
+  HREF="node44.html">Behavioral Aspects</A>
+<B> Up:</B> <A NAME="tex2html773"
+  HREF="node32.html">Framework Components</A>
+<B> Previous:</B> <A NAME="tex2html769"
+  HREF="node42.html">Change Propagator</A>
+ &nbsp; <B>  <A NAME="tex2html775"
+  HREF="node3.html">Contents</A></B> </DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Jan Novacek
+2011-07-11
+</ADDRESS>
+</BODY>
+</HTML>

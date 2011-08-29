@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Change Processing</TITLE>
+<META NAME="description" CONTENT="Change Processing">
+<META NAME="keywords" CONTENT="SeminarPaper">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="SeminarPaper.css">
+
+<LINK REL="next" HREF="node40.html">
+<LINK REL="previous" HREF="node38.html">
+<LINK REL="up" HREF="node37.html">
+<LINK REL="next" HREF="node40.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html732"
+  HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html728"
+  HREF="node37.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html722"
+  HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html730"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html733"
+  HREF="node40.html">Change Interceptor</A>
+<B> Up:</B> <A NAME="tex2html729"
+  HREF="node37.html">Change Management</A>
+<B> Previous:</B> <A NAME="tex2html723"
+  HREF="node38.html">Change Model</A>
+ &nbsp; <B>  <A NAME="tex2html731"
+  HREF="node3.html">Contents</A></B> 
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00625200000000000000">
+Change Processing</A>
+</H3>
+Change processing in the Replica Framework follows a scheme which can be
+modified if needed. Developers can implement custom modifications and
+other tasks in any component. Figure <A HREF="#img_changeprocessing"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/usr/share/latex2html/icons/crossref.png"></A> presents
+the change processing work flow.
+
+<DIV ALIGN="CENTER"><A NAME="img_changeprocessing"></A><A NAME="856"></A>
+<TABLE>
+<CAPTION ALIGN="BOTTOM"><STRONG>Figure:</STRONG>
+Change processing work flow</CAPTION>
+<TR><TD>
+<DIV ALIGN="CENTER">
+<!-- MATH
+ $\rotatebox{-90}{
+                        \resizebox{!}{10cm}{
+                                \includegraphics[width=10cm]{BilderFrameworkArch/change_processing_flow.pdf}
+                        }
+                }$
+ -->
+</DIV></TD></TR>
+</TABLE>
+</DIV>
+
+<BR>
+Whenever a change is applied this procedure is triggered. Next change
+processing is described in algorithm <A HREF="#alg_applychange"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/usr/share/latex2html/icons/crossref.png"></A> which
+describes the change processing in detail.
+<BR>
+<A NAME="alg_applychange"></A>
+<BR>
+<BR>
+The other procedures used in algorithm <A HREF="#alg_applychange"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/usr/share/latex2html/icons/crossref.png"></A> are:
+<BR>
+<A NAME="alg_filter"></A>
+<BR>
+<DL COMPACT>
+<DT>A<SMALL>NALYSE</SMALL></DT>
+<DD>is a developer-defined analysis procedure that examines a change
+        and returns an analysis as a result. The Replica Framework poses no
+        restrictions on the subject and content of this analysis.
+        
+</DD>
+<DT>T<SMALL>RIGGER</SMALL></DT>
+<DD>is also a developer-defined algorithm that depends on the
+        analysis. This algorithm may for example be a consistency check of
+        the ontology or protocolling a change.
+        
+</DD>
+<DT>P<SMALL>ROPAGATE</SMALL></DT>
+<DD>is the function that sends a change to other peers.
+        To which peers the change is sent depends on the developers demands.
+        The change can also be modified at this stage.
+</DD>
+</DL>
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html732"
+  HREF="node40.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html728"
+  HREF="node37.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html722"
+  HREF="node38.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html730"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html733"
+  HREF="node40.html">Change Interceptor</A>
+<B> Up:</B> <A NAME="tex2html729"
+  HREF="node37.html">Change Management</A>
+<B> Previous:</B> <A NAME="tex2html723"
+  HREF="node38.html">Change Model</A>
+ &nbsp; <B>  <A NAME="tex2html731"
+  HREF="node3.html">Contents</A></B> </DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Jan Novacek
+2011-07-11
+</ADDRESS>
+</BODY>
+</HTML>

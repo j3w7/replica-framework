@@ -1,0 +1,2 @@
+This is the OWL API (for OWL 2.0), Release 3.0.0 with slight modifications for making OWLObjects Serializable.
+Attributes or Methods which have been changed are marked with a 'MODIFIED' comment.

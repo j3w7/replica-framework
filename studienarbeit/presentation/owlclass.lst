@@ -1,0 +1,6 @@
+<owl:Class rdf:about="#CheeseTopping">
+   <rdfs:label xml:lang="pt">CoberturaDeQueijo</rdfs:label>
+   <rdfs:subClassOf>
+      <owl:Class rdf:about="#PizzaTopping"/>
+   </rdfs:subClassOf>
+</owl:Class>

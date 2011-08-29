@@ -1,0 +1,584 @@
+\chapter{Semantic Web Fundamentals}
+This chapter gives an introduction to the Semantic Web and to related 
+technologies that are relevant to the subject of this seminar paper.
+
+\section{The Semantic Web}
+One problem with information on the internet today is that information
+representations are designed to be used by humans. Consider you want to find all Wikipedia articles
+about musical artists who were born in Germany and lived before 1900.
+While Wikipedia covers this information
+implicitly in its articles you can not easily express a query for this and
+would have to read all articles to find those you are looking for.
+
+Within the semantic web effort languages for expressing such knowledge
+in a machine processable form are developed.
+By adding semantic data to articles it would be possible for a machine
+to recognize and deal with the content.  The approach of the
+Semantic Web is to augment the existing web with machine processable meta information \cite{berners-lee98}.
+
+For a comprehensive introduction to the sematic web refer to \cite{AntoniouHarmelen08}.
+
+\section{Ontologies}
+\index{Ontology}
+The term \emph{ontology} is originating from the philosophical branch of metaphysics the 
+study of the nature of being, existence and reality. A major subject of ontology is the analysis
+of categories of being and their relations.
+Categorization of being means to determine categories of entities. There are many views amongst
+philosophers on what may be the most fundamental ones - Classes, Physical objects, Relations or
+Space and Time to name a few.
+The definition of categories means also to identify differences or similarities between the entities
+the categories contain.
+
+In computer science an ontology is a "formal, explicit specification of a shared conceptualization"
+\cite{gruber1993}. It is used to represent knowledge in a machine readable form where knowledge
+is understood as a set of concepts and the relations between these concepts.
+
+While the primary purpose of an ontology is to express machine understandable knowledge the
+degree of formality of an ontology can vary. For example the WordNet\footnote{WordNet developed
+at Princeton University, \url{http://wordnet.princeton.edu/}} thesaurus has word-sense
+pairs where the lexical definitions are expressed in natural language. The Gene Ontology\footnote{Gene
+ Ontology \url{http://www.geneontology.org/}} a community driven bioinformatics
+ initiative holds standardized gene representations with definitions in natural language but also gene product
+associations and attributes. And last but not least \index{CYC}\index{CycL} CYC\footnote{CYC Knowledge Base
+\url{http://cyc.com/cyc/technology/whatiscyc_dir/whatsincyc}} provides formalized theories for many
+aspects of human knowledge facts in its own formal language CycL.
+
+Ontologies are used in the fields Semantic Web, artificial intelligence,
+systems engineering, software engineering, biomedical informatics, library science, enterprise bookmarking and for building an
+enterprise architecture framework. Generally in every area where knowledge representation is required.
+
+For an overview of ontologies refer to \cite{horrocks2008}.
+
+\subsection{Ontologies vs. Databases}
+There is an obvious analogy to databases but there are important differences
+between ontologies and databases.
+In contrast to databases, ontologies have an \emph{open world assumption}:
+The truth-value of a statement unknown to an observer is assumed to be true.
+Information is assumed to be incomplete by default. Consider a query to
+a database for a certain telephone number. If there is no entry for the
+name you are looking for in the database the query will evaluate to \verb$false$
+which would denote there is no such number. In comparison to that when
+asking an ontology you could not tell whether there is a number or not
+because it is just unknown.
+
+Moreover unlike databases ontologies do not assume that instances have
+a unique name. An instance can be refered to with more than one name.
+When talking about a \emph{cape} we can also refer to it by saying \emph{cloak} but we
+mean the same thing. In a database these would be two different entities
+whereas in an ontology it can be expressed that both names refer to the
+same concept.
+
+Finally whilst database schemas behave as constraints on the structure of
+data defining legal database states, ontology axioms behave like logical
+implications and entail implicit information.
+For more information on the topic refer to \cite{horrocks2008}.
+
+\subsubsection{RDF}
+\index{RDF}
+\index{XML}
+\index{URI}
+The \emph{eXtensible Markup Language} (XML) is the key framework for interchange
+of data and meta information between applications. But XML does not define
+any semantics just syntax.
+
+The \emph{Resource Description Framework} (RDF) is a \emph{data-model}
+developed in 2004.
+It has clearly defined semantics which can be used to describe concepts and for modeling
+of information and provides therefore the basic means to express an ontology.
+The concept of a \emph{resource} is fundamental to RDF. A resource can be anything
+and is identified by a uniform resource identifier (URI).
+Resource is the base class of all other RDF classes which include containers
+of alternatives, unordered containers, and ordered containers as well as a class
+representing a list.
+
+The key idea of RDF is to express knowledge in \emph{statements}.
+A statement is a triple consisting of a subject a predicate and an object.
+As subject and object are resources information can be represented as resource
+graphs in RDF where edges correspond to predicates.
+
+\subsubsection{Overview of Ontology Languages}
+\index{HTML}
+\index{DAML-Ont}
+\index{OWL}
+\index{OIL}
+\index{DAML+OIL}
+\index{F-Logic}
+\index{Topic Maps}
+\index{KIF}
+\index{RDF-S}
+This section gives an overview of the ontology languages which led to the development of OWL.
+
+The first popular language to express an ontology was F-Logic\footnote{Frame Logic, refer to
+\cite{KiferLausen1995}} developed by Michael Kifer at New York
+State University and Georg Lausen at the University of Mannheim.
+F-Logic was originally developed for deductive databases and combines the advantages of conceptual
+modeling with object-oriented, frame-based languages but also well-defined semantics of a logic-based
+language.
+
+RDF-Schema (RDF-S) developed by the W3C can be used to express an ontology. The first version was
+published in 1998\footnote{RDF-S first version \url{http://www.w3.org/TR/1998/WD-rdf-schema-19980409/}}.
+It was intended to structure RDF resources.
+
+DAML-Ont (Darpa Agent Markup Language - Ontology) started in 1999 is an ontology language based
+on XML and RDF. It was developed as an extension to XML and RDF which were already widespread
+standards. While the predominant markup language for web pages HTML could primarily be used to
+describe the look of web pages, by then it did not define any semantics.
+DAML-Ont  defines semantic annotations in form of markups while depending on existing web technologies.
+That is why it was a major step for the Semantic Web.
+
+OIL (Ontology Inference Layer or Ontology Interchange Language) published in 2001 based on concepts
+developed in Description Logic and frame-based systems, a proposal for a standard in specifying and
+exchanging ontologies which is also grounded on Web languages. OIL is based on XML and RDFS which
+means that any RDFS ontology is also a valid OIL ontology.
+
+DAML+OIL developed by a joint committee of United States and European Union
+members and published in March 2001\footnote{The DARPA Agent Markup Language Homepage, \url{http://www.daml.org/}}
+combines features of both and is the predecessor to OWL.
+
+\subsection{OWL} \label{subsec:OWL}
+\index{OWL}
+The most popular and recent of ontology languages is the \emph{Web Ontology Language} (OWL)
+developed by the W3C and published in 2004.
+OWL is grounded on XML and RDF and is designed not only to formulate but also to exchange
+and reason with knowledge about a domain of interest.
+
+OWL poses three levels of expressiveness OWL Lite, OWL DL and OWL Full.
+OWL Full is the most expressive version of OWL.
+It is however possible
+to state undecidable problems in OWL Full which 
+is a problem for fully automatic reasoning. OWL DL is a fragment of OWL that is based on decidable Description Logics (DLs) that guarantee to sound and complete inferences and is thus especially useful in the context of automatic reasoning. As the complexity of reasoning in OWL DL might be high, OWL Lite is a further restricted fragment that makes further guarantees to the tractability of reasoning problems and is meant to be implemented easily. In this work we focus on the ontology language OWL DL.
+
+
+Description logics (DLs) are a family of knowledge representation
+languages which can be used to represent the terminological
+knowledge of an application domain in a structured and formally
+well-understood way. DLs have been applied in many domains, such as
+medical informatics, software engineering, configuration of
+technical systems, natural language processing, databases, and
+web-based information systems\footnote{For details on these and
+other applications, see \cite[Part 3]{BaaderEA2003DLHandbook}. }.
+The name description logic refers, on the one hand, to \emph{concept descriptions}
+used to describe a domain,
+on the other hand, to the \emph{logic-based semantics} of DLs.  They
+originated from research in semantic networks
+\citep{Quillian1967WordConcepts} and frame systems
+\citep{Minsky1981Frame}, and efforts to give these a formal basis
+\citep{Woods1975WhatsInALink,Brachman1977WhatsInAConcept,Hayes1977InDefenseOfLogic,Hayes1979FramesLogic}.
+
+
+DL{}s formalize the vocabulary of a domain in terms of \emph{individuals}, \emph{concepts}, and \emph{roles.}  The ``Handbook of Description Logics'' \citep{BaaderEA2003DLHandbook} discusses several DLs, most of which extend the basic description logic \ALC (Attribute Language with Complements) that was introduced by \cite{SchmidtSchaussSmolka1991ALC}. DLs are named according to the constructs they provide to describe entities, and so, to their expressive power
+\citep{SchmidtSchaussSmolka1991ALC}\footnote{ Evgeny Zolin provides a web-interface that allows to explore different possible DL constructors and their computational properties: \url{http://www.cs.man.ac.uk/~ezolin/dl/} }.
+
+
+\begin{definition}[\ALC syntax]
+\index{\ALC}
+Let $N_I$, $N_C$ and $N_R$ be disjunct sets of \emph{individual names}, \emph{concept names} and \emph{role names}.
+ Then the set of \emph{\ALC-concept descriptions} is defined inductively as follows:
+
+\begin{enumerate}
+\item Each concept name $\DLConVar{A}\in N_C$ is an \ALC-concept description.
+\item The most general concept $\top$ and the unsatisfiable concept $\bot$ are \ALC-concept descriptions.
+\item If \DLConVar C, \DLConVar D are \ALC-concept descriptions, and $\DLRolVar{R}\in N_R$, then  the concept conjuntion $\DLConVar C \DLand \DLConVar D$, the concept disjunction $\DLConVar C \DLor \DLConVar D$, the concpet negation $\neg\DLConVar{C}$ and the concept role quantifications
+$\forall\DLRolVar{R}.\DLConVar C$ and $\exists\DLRolVar{R}.\DLConVar C$ are also \ALC-concept descriptions.
+\end{enumerate}
+\end{definition}
+
+This syntax definition  is often also given in a Bachus-Naur-style form
+ \index{$\top$}\index{$\bot$}\index{$\DLand$}\index{$\DLor$}\index{$\neg C$}\index{$\DLforall{\DLRolVar{R}}{\DLConVar{C}}$}\index{$\DLexists{\DLRolVar{R}}{\DLConVar{ C}}$}
+\begin{equation}
+        \DLConVar C, \DLConVar D \rightarrow \DLConVar A \mid \top \mid \bot \mid \DLConVar C \DLand \DLConVar D \mid \DLConVar C \DLor \DLConVar D \mid \neg \DLConVar C \mid \forall \DLRolVar R.\DLConVar C \mid \exists \DLRolVar R.\DLConVar C
+\end{equation}
+
+Concepts can be used in axioms to capture their relationships. Terminological axioms (TBox) are can have the form of subsumptions $\varC\DLsub\varD$ or equivalences $\varC\DLequiv\varD$. Assertional axioms (ABox) can be type assertions $\varC(\DLIndVar a)$ or property assertions $\varR(\DLIndVar a, \DLIndVar b)$. An ontology then is a set of axioms.
+
+By $\Sigma({\cal O})$ we denote the signature of an ontology ({\cal O}),
+i.e. the set of class, property and individual names in the ontology.
+$\Sigma({\cal O})$ consists of axioms which are definitions of classes
+and the relationships between them. There are various languages for writing
+axioms with syntactical and semantical differencesa an example of an \ALC axiom
+with $\DLConVar{Pizza},\DLConVar{CheeseTopping} \in N_C, \DLRolVar{hasTopping} \in N_R$ is:
+\begin{equation}
+ (\DLConVar{Pizza} \DLand \forall \DLRolVar{hasTopping}.\DLConVar{CheeseTopping}) \sqsubseteq \DLConVar{CheeseyPizza}
+\end{equation}
+%\begin{tabbing}
+%\hspace*{1cm}\=\hspace{1cm}\=\kill
+%\> $\DLConVar{Pizza},\DLConVar{CheeseTopping} \in N_C$, $\DLRolVar{hasTopping} \in N_R$\\
+%\> $(\DLConVar{Pizza} \DLand \forall \DLRolVar{hasTopping}.\DLConVar{CheeseTopping}) \rightarrow \DLConVar{CheeseyPizza}$
+%\end{tabbing}
+Which is the implication that the conjunction of the \DLConVar{Pizza}
+and \DLConVar{CheeseTopping} concept is a \DLConVar{CheeseyPizza}. For an
+example for writing an axiom in OWL refer to listing \ref{owlclass}.
+The example expresses that the \emph{CheeseTopping} class is a sub class
+of \emph{PizzaTopping} along with its portuguese label.
+If the class \emph{PizzaTopping} has not yet been defined anywhere else
+in the ontology it is implicitly asserted to exist.
+%\begin{equation}
+%\begin{tabbing}
+%       \hspace*{1cm}\=\hspace{1cm}\=\hspace{1cm}\=\kill
+%       \verb$<owl:Class rdf:about="#CheeseTopping">$\\
+%       \>\verb$<rdfs:label xml:lang="pt">CoberturaDeQueijo</rdfs:label>$ \\ 
+%       \>\verb$<rdfs:subClassOf>$\\
+%       \> \> \verb$<owl:Class rdf:about="#PizzaTopping"/>$\\
+%       \>\verb$</rdfs:subClassOf>$\\
+%       \verb$</owl:Class>$\\
+%\end{tabbing}
+%\end{equation}
+The current version of OWL is OWL 2 which is an extension to the first version
+and which adds new functionality.
+OWL 2 is also based on RDF/XML and the relationships between the Direct and
+RDF-based semantics have not changed.
+For more information on that topic refer to the OWL 2 Web Ontology Language Primer \cite{OWL2Primer}.
+
+\subsection{Logical Reasoning with OWL}
+As already stated in section \ref{subsec:OWL} OWL DL is a fragment of first-order logic.
+Thus decision procedures for sentential logics and proof procedures for
+formulas of first-order logic can be used to infer additional information from
+an OWL ontology.
+%Examples for such a procedure are the semantic tableau or resolution.
+Interesting inferences are for example whether the ontology is consistent,
+whether a class subsumes another class whether two classes are equal
+or disjoint or if an individual belongs to a certain class.
+The answers to each of these questions have important implications. For example
+determining class subsumptions reveals the structure of the class hierarchy
+of the ontology and knowing whether a certain individual belongs to a certain class
+allows to identify all individuals which belong to that class. Other examples
+for important questions are whether two classes are equal or if they are disjoint.
+
+The existence of many description logic reasoning tools was one of the
+key motivations for basing OWL on a DL \cite{horrocks2008}.
+
+\subsubsection{Reasoners}
+\index{Reasoner}
+\index{HermiT}
+\index{Pellet}
+\index{Protégé}
+Modern reasoners like HermiT\footnote{HermiT OWL Reasoner \url{http://hermit-reasoner.com/}}
+or Pellet\footnote{Pellet: OWL2 Reasoner for Java \url{http://clarkparsia.com/pellet/}}
+implement sophisticated approaches and apply heuristics for performance optimization.
+Most ontology development systems such as Protégé\footnote{Protégé \url{http://protege.stanford.edu/}}
+offer users support of a reasoner to identify inconsistent (often called unsatisfiable)
+class definitions. Such classes cannot have any members and are therefore useless
+and indicate a fundamental error in the ontology design.
+
+Another function of reasoning systems is the explanation of inferences.
+Explanation typically involves computing a (hopefully small) subset of the ontology
+that still entails the inference in question, and if necessary presenting the user with
+a chain of reasoning steps \cite{kalyanpur2005}. This can help finding mistakes
+during the development of the ontology.
+
+%GlobaleKonsistenzderWissensbasis –  Ist Wissensbasis sinnvoll?
+%KB2false?
+%Klassenkonsistenz      C  –  Muss Klasse C leer sein?
+%Klasseninklusion(Subsumption)  CvD? –  Strukturierung der Wissensbasis
+%Klassenaequivalenz     C D –  Sind zwei Klassen eigentlich dieselbe?
+%Klassendisjunktheit    C D –  Sind zwei Klassen disjunkt?
+%Klassenzugehoerigkeit (a) –  Ist Individuum a in der Klasse C?
+%Instanzgenerierung(Retrieval) alle X mit C(X) finden –  Finde alle (bekannten!) Individuen zur Klasse C.
+
+
+
+\newpage
+
+
+
+\subsection{Modularization}
+\label{modularization}
+\index{DOS}
+This section offers an introduction to ontology modularization and different ways to achieve it.
+
+\emph{Modularization} or sometimes \emph{segmentation of ontologies}
+has a major role in Distributed Ontology Systems (DOS).
+It is a widely used technique in various areas of computer science
+such as algorithms, software engineering and programming languages. It is the
+application of the divide and conquer principle. An intuitive understanding of the concept
+of module is some subset of a whole which makes sense (i.e., is not an arbitrary subset randomly built)
+and can somehow exist separated from the whole, although not necessarily supporting
+the same functionality as the whole \cite{Menken05d2.1.3.1report}. Modularization is a process
+and the outcome of this process is generally a \emph{module}. A module encapsulates functionality
+and defines logical boundaries to other modules.
+
+In the context of ontology engineering an \emph{ontology module} can be understood as a
+reusable component of a larger or more complex ontology, which is self-contained but bears a
+definite relationship to other ontology modules \cite{doran08}. Another definition is that
+modularization should be considered as a way to structure ontologies, meaning
+that the construction of a large ontology should be based on the combination
+of self-contained, independent and reusable knowledge components \cite{mathieu2007}.
+The goals of ontology modularization include but are not limited to reuse,
+scalability for information retrieval and reasoning as well as for evolution and
+maintenance, complexity management, understandability and personalization.
+
+\subsubsection{Modularization Approaches}
+How an ontology module is created depends on the development method. There are
+at least three ways to create modules.
+\begin{enumerate}
+        \item Starting point is a large ontology that is partitioned in smaller modules
+                This approach is most important in \index{DOS} Distributed Ontology Systems,
+                where large ontologies are scattered across several nodes to reduce
+                the amount of memory required when storing the ontology as a whole
+                on a single node or to provide redundancy.
+        \item Starting point is a set of modules, target is a wider ontology
+                consisting of a partition of modules. This is also important in
+                Distributed Ontology Systems especially in concern of distributed
+                query answering.
+        \item Modularization at the design phase in the lifecycle of an ontology.
+                This approach expects the ontology developers to know about
+                logical ontology modules which are reasonable.
+\end{enumerate}
+
+\subsubsection{Forms of Ontology modularization}
+There are several strategies which can be applied when distributing
+knowledge across modules.
+For more detailed descriptions of the modularization strategies have a look
+at \cite{parent2009}.
+\begin{description}
+        \item[Disjoint or overlapping modules] Disjoint modules have the advantage
+                of easier consistency management. A set of consistent modules is
+                always consistent. A modularization system may have complete control
+                over the knowledge distribution process across modules or users may
+                somehow have the ability to adjust the distribution.
+        \item[Semantics-driven Strategies] Semantics-driven strategies target the
+                semantic part of an application domain from the users/developers
+                point of view. Users have to define to which module knowledge should
+                belong manually. Modularization systems may be used to assist in this
+                process e.g. make proposals.\\
+                A simple and traditional way to specify a module is by writing a query
+                for a subset of an ontology. The evaluation of the query then produces
+                the module.
+        \item[Structure-driven Strategies] Structure-driven strategies ignore semantics
+                and look at ontologies as data structures namely graphs of interconnected
+                nodes. Graph decomposition algorithms are used to compute subsets of
+                the graph based on structural properties.
+        \item[Machine learning Strategies] In contrast to human-driven development
+                machine-learning methods analyze the use of ontologies and compute
+                modules based on criteria such as queries.
+        \item[Monitoring modularization and making it evolve] Whatever the modularization
+                strategy may be it is important to evaluate and monitor the reliability and
+                efficiency of the module. Aspects of modules may be adjusted or removed
+                when they prove to be unsatisfactory or not efficient.
+\end{description}
+
+\subsubsection{Modularization Tools}
+\index{OWLAPI}
+\index{ModTool}
+\index{Galen}
+While there exist many different approaches of ontology modularization,
+by the time of writing few mature public tools exist which are stable enough
+to be used in the wild when it comes to OWL ontologies. Some of these tools
+are presented in the following list:
+\begin{description}
+       \item[OWLAPI] The OWLAPI\footnote{The OWL API is a Java API and
+                        reference implmentation for creating, manipulating and serialising
+                        OWL Ontologies \url{http://owlapi.sourceforge.net/}} facilitates modularization tools.
+       \item[ModTool] The ModTool utilizes the JENA\footnote{JENA a open
+                source framework for building semantic web applications
+                \url{http://jena.sourceforge.net/}}
+                API and is a standalone ontology modularization tool that comes along with GUI.
+        \item[Galen Segmenter] A Jakarta Tomcat web application segmentation service,
+                as described in \cite{seidenberg2006}.
+\end{description}
+
+
+\section{Collaborative Ontology Development}
+\index{COD}
+In some projects, the development of an ontology is very hard or impossible
+to be achieved by a single person. The ontology may become very large
+and is difficult to maintain or the complexitiy is too high.
+Collaborative Ontology Development (COD) is the subject of multi-user
+ontology development which can be done team based or with anonymous user
+contributions for example. Other situations may require hierarchical
+organizations or editors and reviewers.
+
+Especially in scientific projects where many domain experts need to work
+collaboratively on a task, communication is essential. Working on an ontology
+is thus not restricted to only editing the ontology but also involves
+a lot of communication amongst editors and other persons that are part
+of the development process. That is why a COD system usually supplies something
+like chats, message boards or other tools which assist communication.
+If and to which extend these tools are supported varies from COD system
+to COD system.
+
+\subsection{Frameworks and Toolkits}
+This section presents frameworks and toolkits related to COD, points out
+a significant difference between COD and Distributed Ontology System (DOS)
+framework characteristics and offers a short presentation of two most popular projects for each.
+
+Most frameworks have much in common in regard to the support of collaborative
+ontology development aspects. Differences are rather on the technical
+and architectural side which in practice often has a great impact on usability
+and performance.
+
+The most preeminent technical difference right now is the nature of the
+client interface.
+A developer can use many different technologies to implement an application.
+We will distinguish between desktop and web applications.
+
+\subsubsection{Frameworks intended for building desktop applications}
+A desktop application is a program installed locally on a computer system
+intended to be used with a \index{GUI}GUI.
+Such applications can leverage all features that the underlying platform
+provides including additional hardware.
+\begin{description}
+        \item[Collaborative Protégé]
+                        \index{Collaborative Protégé}
+                                Collaborative Protégé
+                \footnote{\url{http://protegewiki.stanford.edu/wiki/Collaborative_Protege}}
+                is an extension to
+                Protégé\footnote{\url{http://protege.stanford.edu/}} a popular 
+                and widely used ontology editor and knowledge-base framework.
+                It supports synchronous and asynchronous collaboration
+                via two working modes: \emph{multi-user mode} and \emph{standalone mode}.
+                Annotation of ontology components
+                Annotation of changes
+                Discussion threads
+                Proposals and voting
+                Searching and filtering
+                Live discussion (chat).
+        \item[NeOn Toolkit]
+                        \index{NeOn Toolkit}
+                        \index{Protégé}
+                It can be compared to Protégé\footnote{Protégé a free,
+                open source ontology development platform but
+                while the editor of this application has similar features
+                to the ones of Protégé, the background and purpose of
+                the NeOn Toolkit is different.
+                                \url{http://protege.stanford.edu/}} and is an outcome of the
+                                NeOn project which started in March 2006. NeOn
+                                aims to achieve and facilitate the move from feasibility in
+                                principle to a concrete solution focusing on cost efficiency
+                                and effectiveness of knowledge acquisition for, and
+                                design, development and maintenance of largescale,
+                                heterogeneous semantic-based applications \cite{neonAnnex2006}.
+\end{description}
+
+\subsubsection{Frameworks intended for building web interfaces}
+While there exist several frameworks maily intended
+for desktop application development, there are also many projects which
+provide means for building web interfaces.
+Web interfaces have several advantages above desktop applictions but also some drawbacks.
+The most important advantage of web interfaces over desktop applications
+is that they do not require clients to install any software except a browser
+thus easing usage. On the other hand they might limit the
+functionality because all user interface features depend on and are
+restricted to the capabilities of the client browser.
+By the time of writing web applications have become very popular.
+\begin{description}
+        \item[OntoVerse] 
+                        \index{OntoVerse}
+                        \emph{Ontoverse\footnote{\url{http://www.ontoverse.org/}}
+                - Cooperative knowledge management in the life sciences network}
+                is a research project funded by the German Federal Ministry of 
+                Education and Research. It is targeted at the scientific community and provides an
+                ontology editor with additional Wiki functionalities to plan and
+                discuss domain ontologies, particularly for the Life Sciences.
+        \item[Semantic MediaWiki]
+                        \index{Semantic MediaWiki}
+                        \index{Wikipedia}
+                        The \emph{Semantic MediaWiki}\footnote{\url{http://semantic-mediawiki.org/}}
+                is an extension to MediaWiki which is the base code for Wikipedia.
+                It allows users to add meta-information to articles
+                in order to enable processing by machines later.
+\end{description}
+
+\subsection{Aspects of Collaborative Ontology Development}
+This section summarizes aspects of collaborative ontology development and
+functionalities of development frameworks as identified in
+\cite{Tudorache2007}, \cite{tudorache2010CollabProtege},
+and \cite{malzan2007CollabOntoDev}.
+\begin{description}
+        \item[Synchronous and asynchronous ontology access]
+                In some situations it may be an advantage to edit an ontology
+                simultaneously. On the other hand this might not be pratical in
+                a situation where editors from different countries live in different
+                timezones.
+        \item[Discussions, chats and annotations of ontology components]
+                Users may need to discuss about certain parts of the ontology to
+                find consensus. Thats is why support for discussions and/or chats
+                is needed. It is also important, that the messages are
+                linked direct to the content they refer to, so that a user can see what
+                other users have written about a certain concern.
+        \item[Access control and provenance of information]
+                In a large work group there might be probably be members with an expertise
+                in a certain domain. These users may be allowed to edit corresponding
+                parts of the ontology but may not be allowed to edit other parts.
+                Moreover provenance of information is not only desirable in security
+                concerns but also in regard to collaboration.
+        \item[Workflow support]
+                Collaborative tools should support different tasks, the process
+                for proposing a change reaching to the concensus and the roles
+                that users might play in this process.
+        \item[Private/shared workspace support]
+                There should be a differentiation between a local copy and the
+                publicy available copy. Users should have the opportunity to edit
+                a local copy without making all changes immediately public.
+        \item[Searching]
+                Users should be able to search either in the set of shared ontologies
+                or in the changes that have been made.
+        \item[Group awareness]
+                In large projects developers will probably be organized in more than one
+                work group. The framework should take account of work group support.  
+        \item[Version control]
+                Keeping track of document versions offers the possibility to monitor changes
+                and also to roll them back if needed.
+\end{description}
+
+
+
+\section{Distributed Ontology System}
+At first it is important to mention, that the term \index{DOS}\emph{Distributed Ontology System}
+(DOS) is not used consistently. Some authors use the term in reference to collaborative ontology
+development systems. Other sources use
+it in reference to huge ontologies fragmented in smaller pieces
+which are distributed over several computation nodes. When used in this seminar
+paper the term refers to the latter.
+
+Not only that Ontologies have become very large, lately the amount of ontologies
+have also increased dramatically which poses several challenges. 
+For reasoning on very large ontologies the performance of current reasoners is
+not sufficient \cite{chen09}. An initial approach to cope with this problem is to distribute
+the knowledge and query processing across a set of nodes.
+
+Moreover querying multiple ontologies which were independently developed is problematic.
+For example a knowledge base used in an IT company may be composed of
+several ontologies each developed independently for the domain of a certain company department.
+To pose a query against the whole knowledge base would denote querying each of
+these ontologies and computing the result of the composition of the individual query
+results afterwards.
+When unification of the development methodology is impractical or impossible it
+is beneficial to use a uniform query mechanism.
+An easier approach to querying the knowledge base would be to unite the ontologies logically
+to a single large ontology and pose the query against this
+large ontology. Thus the process of querying the ontologies becomes transparent to the user.
+
+The key idea of a distributed ontology is that a large ontology is composed of smaller
+pieces called \emph{fragments}. These fragments are distributed across an
+arbitrary number of independent nodes. A more formal definiton of this
+concept is presented in the Framework Architecture chapter.
+
+\subsection{Modularization}
+\index{DOS}
+The modularization of an ontology is a very important principle when
+it comes to Distributed Ontology Systems. It has a major impact on
+the performance of a DOS. Ontology fragments may contain complete or incomplete
+A-Boxes, T-Boxes or R-Boxes.
+A fragment is called a \emph{module} if a query performed against
+it returns the same result as a query performed against the whole ontology.
+Therefore it is useful to differentiate between modular and non-modular
+fragments which is basically the question whether the fragments are disjoint
+or overlap.
+
+Querying non-modular ontology fragments of
+an ontology poses several problems for example that there might be intrinsic
+knowledge which cannot be inferred of a single fragment alone.
+
+\subsection{Distributed Query Answering}
+\index{RDF}
+A \emph{query} is a request for either information retrieval or information modification with
+information systems. Examples for query languages in the context of Semantic Web
+are the RDF query languages \index{RDQL}RDQL\footnote{RDF query Language 
+\url{http://www.w3.org/TandS/QL/QL98/pp/rdfquery.html}}, Sesame RDF Query Language\footnote{SeRQL
+\url{http://www.openrdf.org/doc/sesame/users/ch06.html}} and \index{SPARQL}SPARQL
+\footnote{SPARQL Protocol and RDF Query Language \url{http://www.w3.org/TR/rdf-sparql-query/}}.
+Posing queries against a DOS is not a trivial task and may involve querying multiple hosts combining
+requests or results. A query processing procedure for conjunctive queries is presented in \cite{chen08}.
+An interesting approach to distributed query answering using the \index{MapReduce}MapReduce
+programming model is presented by \cite{alvarez2010}.

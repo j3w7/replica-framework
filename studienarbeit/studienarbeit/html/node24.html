@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Distributed Ontology System</TITLE>
+<META NAME="description" CONTENT="Distributed Ontology System">
+<META NAME="keywords" CONTENT="SeminarPaper">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="SeminarPaper.css">
+
+<LINK REL="previous" HREF="node19.html">
+<LINK REL="up" HREF="node6.html">
+<LINK REL="next" HREF="node25.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html515"
+  HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html511"
+  HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html507"
+  HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html513"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html516"
+  HREF="node25.html">Modularization</A>
+<B> Up:</B> <A NAME="tex2html512"
+  HREF="node6.html">Semantic Web Fundamentals</A>
+<B> Previous:</B> <A NAME="tex2html508"
+  HREF="node23.html">Aspects of Collaborative Ontology</A>
+ &nbsp; <B>  <A NAME="tex2html514"
+  HREF="node3.html">Contents</A></B> 
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00540000000000000000">
+Distributed Ontology System</A>
+</H1>
+At first it is important to mention, that the term <A NAME="488"></A><SPAN  CLASS="textbf">Distributed Ontology System</SPAN>
+(DOS) is not used consistently. Some authors use the term in reference to collaborative ontology
+development systems. Other sources use
+it in reference to huge ontologies fragmented in smaller pieces
+which are distributed over several computation nodes. When used in this seminar
+paper the term refers to the latter.
+
+<P>
+Not only that Ontologies have become very large, lately the amount of ontologies
+have also increased dramatically which poses several challenges. 
+For reasoning on very large ontologies the performance of current reasoners is
+not sufficient <A
+ HREF="#chen09">()</A>. An initial approach to cope with this problem is to distribute
+the knowledge and query processing across a set of nodes.
+
+<P>
+Moreover querying multiple ontologies which were independently developed is problematic.
+For example a knowledge base used in an IT company may be composed of
+several ontologies each developed independently for the domain of a certain company department.
+To pose a query against the whole knowledge base would denote querying each of
+these ontologies and computing the result of the composition of the individual query
+results afterwards.
+When unification of the development methodology is impractical or impossible it
+is beneficial to use a uniform query mechanism.
+An easier approach to querying the knowledge base would be to unite the ontologies logically
+to a single large ontology and pose the query against this
+large ontology. Thus the process of querying the ontologies becomes transparent to the user.
+
+<P>
+The key idea of a distributed ontology is that a large ontology is composed of smaller
+pieces called <SPAN  CLASS="textbf">fragments</SPAN>. These fragments are distributed across an
+arbitrary number of independent nodes. A more formal definiton of this
+concept is presented in the Framework Architecture chapter.
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"><STRONG>Subsections</STRONG></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html517"
+  HREF="node25.html">Modularization</A>
+<LI><A NAME="tex2html518"
+  HREF="node26.html">Distributed Query Answering</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html515"
+  HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html511"
+  HREF="node6.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html507"
+  HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html513"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html516"
+  HREF="node25.html">Modularization</A>
+<B> Up:</B> <A NAME="tex2html512"
+  HREF="node6.html">Semantic Web Fundamentals</A>
+<B> Previous:</B> <A NAME="tex2html508"
+  HREF="node23.html">Aspects of Collaborative Ontology</A>
+ &nbsp; <B>  <A NAME="tex2html514"
+  HREF="node3.html">Contents</A></B> </DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Jan Novacek
+2011-07-11
+</ADDRESS>
+</BODY>
+</HTML>

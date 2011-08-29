@@ -1,0 +1,179 @@
+\chapter{Fundamentals}
+
+\section{Semantic Web}
+The problem with information on the internet today is, that it is designed
+to be used by humans. Consider you want to find all Wikipedia articles
+about musical artists who were born in Germany and lived before 1900.
+While Wikipedia covers this information
+implicitly in its articles you can not easily express a query for this and
+would have to read all articles to find those you are looking for.\\
+The semantic web approach develops languages for expressing such knowledge
+in a machine processable form.
+By adding semantic data to articles it would be possible for a machine
+to recognize and deal with the content. The path to the vision of the
+Semantic Web is about adding machine processable meta information or
+metadata to the existing web not creating a seperate new web \cite{berners-lee98}.
+
+
+\subsection{Ontologies}
+\subsubsection{Overview of ontology languages}
+\index{DAML+OIL}
+\index{F-Logic}
+\index{Topic Maps}
+\index{KIF}
+An ontology is a "formal, explicit specification of a shared conceptualisation"
+\cite{gruber1993}. It is used to represent knowledge in a machine readable form.
+\todo{explain}\\
+There are in fact quite a few ontology languages:
+RDF-S, DAML+OIL\footnote{The DARPA Agent Markup Language Homepage, \url{http://www.daml.org/}}
+which is the predecessor to OWL, F-Logic\footnote{Frame Logic, \url{http://forum.projects.semwebcentral.org/forum-syntax.html}}, Topic Maps and KIF.\\
+This section will only deal with the languages most relevant to this
+seminar paper.
+
+
+\subsubsection{XML, RDF and RDF Schema}
+\index{RDF}
+\index{RDF Schema}
+\todo{XML dialect}
+\index{XML}
+The \emph{eXtensible Markup Language} (XML) is the key framework for interchange
+of data and meta information between applications. But XML does not define
+any semantics only syntax.\\
+The \emph{Resource Description Framework} (RDF) is a \emph{data-model}
+developed in 2004.
+It has clearly defined semantics. The basic principle of RDF is to
+express knowledge in \emph{statements}. A statement is a triple consisting
+of a subject a predicate and an object.
+It provides the means to express sub class relationships and .
+
+\subsubsection{OWL}
+\index{OWL}
+\todo{Other Langs}
+The most popular language to express knowledge in form of an ontology is
+the \emph{Web Ontology Language} (OWL) developed by the W3C.
+OWL makes up a fundamental part of the semantic web.
+OWL is designed not only to to formulate but also to exchange and reason
+with knowledge about a domain of interest.\\
+OWL poses three levels of expressiveness OWL Lite, OWL DL and OWL Full.
+OWL Lite was meant to be implemented easily and to get users started quickly
+with the language.\\
+OWL DL (where DL stands for "Description Logic") was designed to support
+the existing Description Logic business segment and to provide computational
+properties for reasoning systems.\\
+For more see the OWL 2 Web Ontology Language Primer \cite{OWL2Primer}.\\
+\todo[inline]{Example, description of axiomatic structure}
+\vspace{1cm}
+In the following example a class called \emph{CheeseTopping} is defined
+along with its portuguese label and the subclass relation with a class
+called \emph{PizzaTopping}.
+If the class PizzaTopping has not yet been defined anywhere else it is
+implicitly asserted to exist.
+\begin{tabbing}
+\hspace*{1cm}\=\hspace{1cm}\=\hspace{1cm}\=\kill
+\verb$ <owl:Class rdf:about="#CheeseTopping">$\\
+\>\verb$ <rdfs:label xml:lang="pt">CoberturaDeQueijo</rdfs:label>$ \\ 
+\>\verb$	<rdfs:subClassOf>$\\
+\> \> \verb$		 <owl:Class rdf:about="#PizzaTopping"/>$\\
+\>\verb$	</rdfs:subClassOf>$\\
+\verb$ </owl:Class>$\\
+\end{tabbing}
+
+\subsubsection{Ontologies vs Databases}
+There is an obvious analogy to databases but there are important differences
+between ontologies and databases.
+In contrast to databases do ontologies have an \emph{open world assumption}:
+The truth-value of a statement unknown to an observer is assumed to be true.
+Information is assumed to be incomplete by default. Consider a query to
+a database for a certain telephone number. If there is no entry for the
+name you are looking for in the database the query will evaluate to false
+which would denote there is no such number. In comparison to that when
+asking an ontology you could not tell whether there is a number or not
+because it is just unknown.\\
+Moreover unlike databases ontologies do not assume that instances have
+a unique name. An instance can be refered to with more than one name.
+When talking about a cape we can also refer to it by saying cloak but we
+mean the same thing. In a database these would be two different entities
+whereas in an ontology it can be expressed that both names refer to the
+same concept.\\
+Finally whilst database schemas behave as constraints on the structure of
+data defining legal database states, ontology axioms behave like logical
+implications and entail implicit information.\todo[inline]{example?}
+for more refer to \cite{horrocks2008}
+
+
+\subsection{Reasoning}
+
+\subsection{Distributed Ontology Systems}
+For reasoning on very large ontologies the performance of current
+reasoners is clearly not sufficient \cite{chen09}. An initial approach to
+cope with this limitation is to distribute the query processing across a
+set of nodes.
+
+
+\subsubsection{Components of a DOS}
+As proposed by \todo{cite: framework} a \emph{Distributed Ontology System} (DOS)
+consists of three main components:
+\begin{enumerate}
+\item A large ontology
+\item A Set of ontology fragments
+\item A Dictionary $D$
+\end{enumerate}
+
+\subsubsection{Ontology modularisation}
+The modularization of an ontology is a very important principle when
+it comes to Distributed Ontology Systems.
+The goals of ontology modularization include but are not limited to reuse,
+scalability for information retrieval and reasoning as well as for evolution and
+maintenance, complexity management, understandability and personalization.
+Let $\mathcal{O}$ be an ontology over an alphabet $A_k$ and $\mathcal{F}$
+be a \emph{fragment} over $A_k$. $\mathcal{F}$ is a subset of statements
+of $\mathcal{O}$.
+Ontology fragments may contain complete or incomplete A-Boxes, T-Boxes
+or R-Boxes.
+$\mathcal{F}$ is called a \emph{module} if a query $q$ performed against
+it returns the same result as a query performed against $\mathcal{O}$.
+Therefore it is useful to differentiate between mondular and non-modular
+fragments which is basically the question whether the fragments are disjoint
+or overlap.\\
+Quering non-modular ontology fragments $\mathcal{F}_1,\mathcal{F}_2$ of
+an ontology $\mathcal{O}$ poses several problems:
+(1) There might be intrinsic knowledge of $\mathcal{O}$ which cannot be
+infered of either $\mathcal{F}_1$ or $\mathcal{F}_2$ alone.
+(2) \todo[inline]{more problems}.
+
+
+
+
+\section{Object replication}
+
+
+
+
+\section{Definitions}
+asds
+
+\begin{description}
+  \item[First] \hfill \\
+  The first item
+  \item[Second] \hfill \\
+  The second item
+  \item[Third] \hfill \\
+  The third etc \ldots
+\end{description}
+
+
+
+
+
+
+
+
+
+
+%
+
+
+
+
+
+

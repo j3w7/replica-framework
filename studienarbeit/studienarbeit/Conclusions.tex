@@ -1,0 +1,72 @@
+\chapter{Conclusions}
+
+%\section{Results}
+
+The Replica Framework provides  means for implementing Collaborative
+Ontology Development (COD) tools and Distributed Ontology Systems (DOS).
+It  allows synchronous working on an ontology with
+multiple users. 
+It is first of its kind that combines approaches from COD and DOS in a unified framework.
+The ECF-based architecture provides a reliable basis for distributed communication.
+The framework is flexible to realize a range of COD, DOS and hybrid scenarios. The modular
+structure of the framework has been created with extensibility in mind
+and the shared ontology builder allows migration to a new OWLAPI version
+to reduce maintenance costs when keeping the framework up-to-date
+which also happened in the course of the development. In addition, every component can be configured individually.
+
+Unit tests for all major functionalities of each module of the code
+base are provided as a means to foster rapid development of stable applications and framework extensions.
+
+Initial experience shows that the speed of change processing was sufficient in unit tests and the
+demonstrator but there are various possibilities to improve it.
+For example, collecting changes and applying them all at once was 
+a lot faster than applying each change on its own.
+
+
+Many features remain to be implemented in future work. For example
+\emph{query management} has been omitted as well as \emph{policy management}.
+While the current implementation of the Replica Framework supports distribution
+of OWL ontologies, import dependencies between ontologies are not yet supported.
+
+
+Another aspect that has not been addressed is how different shared ontology
+fragments are synchronized when they are connected to a logical
+shared ontology. This could be done for example by computing a logical
+diff of the ontologies such as CEX and MEX   \cite{konev2008} (implemented in OWLDiff\footnote{\url{http://krizik.felk.cvut.cz/km/owldiff/}}) using the result to gain synchronicity.
+
+Equally important is the question of fault tolerance. While the
+Replica Framework implementation relies on transactional message communication
+error correction has not been addressed heavily and for example
+collecting changes locally and re-applying them later on when the connection
+is lost has not been implemented yet.
+
+The Replica Framework implementation offers the possibility to configure
+every component from a central place. This is currently done programmatically
+and will be extended to file-based configuration in the future.
+
+Concerning the Replica Framework implementation not all of the aspects of
+COD have been addressed. For example,
+private/shared workspace support could be integrated together with
+asynchronous ontology access. The framework model forms a platform for implementation of many of these aspects. A search function and version control can be implemented
+by using the \emph{change management} components that can also be used
+to incorporate workflow support and by functions of
+the communication module. Implementing tools that assist in the
+communication is easy by using the communication module or the underlying
+ECF methods directly.
+
+%While the emphasis has been placed on the Collaborative Ontology Development
+%aspect does the Replica Framework model also take account of the Distributed
+%Ontology System aspect.
+
+The NeOn plugin and demonstrator presented in chapter \ref{chp-demonstrations} is a proof of
+concept and has shown that the Replica Framework is functional and stable.
+In the future, we plan further tests of  the demonstrator with use case ontologies.
+
+%\section{Discussion and Outlook}
+
+
+%Some aspects of Collaborative Ontology Development could not have been
+%implemented yet but were kept in mind during development. Extending the
+%Replica Framework implementation should therefore not be hard.
+
+

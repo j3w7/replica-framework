@@ -1,0 +1,256 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2008 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>OWL</TITLE>
+<META NAME="description" CONTENT="OWL">
+<META NAME="keywords" CONTENT="SeminarPaper">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2008">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="SeminarPaper.css">
+
+<LINK REL="next" HREF="node13.html">
+<LINK REL="previous" HREF="node9.html">
+<LINK REL="up" HREF="node8.html">
+<LINK REL="next" HREF="node13.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><!--Navigation Panel-->
+<A NAME="tex2html369"
+  HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html365"
+  HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html359"
+  HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html367"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html370"
+  HREF="node13.html">Logical Reasoning with OWL</A>
+<B> Up:</B> <A NAME="tex2html366"
+  HREF="node8.html">Ontologies</A>
+<B> Previous:</B> <A NAME="tex2html360"
+  HREF="node11.html">Overview of Ontology Languages</A>
+ &nbsp; <B>  <A NAME="tex2html368"
+  HREF="node3.html">Contents</A></B> 
+<BR>
+<BR></DIV>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00522000000000000000"></A> <A NAME="subsec:OWL"></A>
+<A NAME="356"></A>
+<BR>
+OWL
+</H2>
+The most popular and recent of ontology languages is the <SPAN  CLASS="textbf">Web Ontology Language</SPAN> (OWL)
+developed by the W3C and published in 2004.
+OWL is grounded on XML and RDF and is designed not only to formulate but also to exchange
+and reason with knowledge about a domain of interest.
+
+<P>
+OWL poses three levels of expressiveness OWL Lite, OWL DL and OWL Full.
+OWL Full is the most expressive version of OWL.
+It is however possible
+to state undecidable problems in OWL Full which 
+is a problem for fully automatic reasoning. OWL DL is a fragment of OWL that is based on decidable Description Logics (DLs) that guarantee to sound and complete inferences and is thus especially useful in the context of automatic reasoning. As the complexity of reasoning in OWL DL might be high, OWL Lite is a further restricted fragment that makes further guarantees to the tractability of reasoning problems and is meant to be implemented easily. In this work we focus on the ontology language OWL DL.
+
+<P>
+Description logics (DLs) are a family of knowledge representation
+languages which can be used to represent the terminological
+knowledge of an application domain in a structured and formally
+well-understood way. DLs have been applied in many domains, such as
+medical informatics, software engineering, configuration of
+technical systems, natural language processing, databases, and
+web-based information systems<A NAME="tex2html14"
+  HREF="footnode.html#foot512"><SUP><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN></SUP></A>.
+The name description logic refers, on the one hand, to <SPAN  CLASS="textbf">concept descriptions</SPAN>
+used to describe a domain,
+on the other hand, to the <SPAN  CLASS="textbf">logic-based semantics</SPAN> of DLs.  They
+originated from research in semantic networks
+(<A
+ HREF="#Quillian1967WordConcepts">, </A>) and frame systems
+(<A
+ HREF="#Minsky1981Frame">, </A>), and efforts to give these a formal basis
+(<A NAME="tex2html371" target="contents"
+  HREF="#Woods1975WhatsInALink">, </A>,,,).
+
+<P>
+DLs formalize the vocabulary of a domain in terms of <SPAN  CLASS="textbf">individuals</SPAN>, <SPAN  CLASS="textbf">concepts</SPAN>, and <SPAN  CLASS="textbf">roles.</SPAN>  The ``Handbook of Description Logics'' (<A
+ HREF="#BaaderEA2003DLHandbook">, </A>) discusses several DLs, most of which extend the basic description logic (Attribute Language with Complements) that was introduced by <A
+ HREF="#SchmidtSchaussSmolka1991ALC">()</A>. DLs are named according to the constructs they provide to describe entities, and so, to their expressive power
+(<A
+ HREF="#SchmidtSchaussSmolka1991ALC">, </A>)<A NAME="tex2html15"
+  HREF="footnode.html#foot513"><SUP><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN></SUP></A>.
+
+<P>
+<P>
+<DIV><B>Definition  <SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN></B> (syntax)  &nbsp; 
+<I><A NAME="373"></A>
+Let <SPAN CLASS="MATH"></SPAN>, <SPAN CLASS="MATH"></SPAN> and <SPAN CLASS="MATH"></SPAN> be disjunct sets of <SPAN  CLASS="textbf">individual names</SPAN>, <SPAN  CLASS="textbf">concept names</SPAN> and <SPAN  CLASS="textbf">role names</SPAN>.
+ Then the set of <SPAN  CLASS="textbf">-concept descriptions</SPAN> is defined inductively as follows:
+</I>
+<P>
+
+<OL>
+<LI>Each concept name <!-- MATH
+ $\DLConVar{A}\in N_C$
+ -->
+<SPAN CLASS="MATH"></SPAN> is an -concept description.
+</LI>
+<LI>The most general concept <SPAN CLASS="MATH"></SPAN> and the unsatisfiable concept <SPAN CLASS="MATH"></SPAN> are -concept descriptions.
+</LI>
+<LI>If C, D are -concept descriptions, and <!-- MATH
+ $\DLRolVar{R}\in N_R$
+ -->
+<SPAN CLASS="MATH"></SPAN>, then  the concept conjuntion <!-- MATH
+ $\DLConVar C \DLand \DLConVar D$
+ -->
+<SPAN CLASS="MATH"></SPAN>, the concept disjunction <!-- MATH
+ $\DLConVar C \DLor \DLConVar D$
+ -->
+<SPAN CLASS="MATH"></SPAN>, the concpet negation <!-- MATH
+ $\neg\DLConVar{C}$
+ -->
+<SPAN CLASS="MATH"></SPAN> and the concept role quantifications
+<!-- MATH
+ $\forall\DLRolVar{R}.\DLConVar C$
+ -->
+<SPAN CLASS="MATH"></SPAN> and <!-- MATH
+ $\exists\DLRolVar{R}.\DLConVar C$
+ -->
+<SPAN CLASS="MATH"></SPAN> are also -concept descriptions.
+</LI>
+</OL></DIV><P></P>
+
+<P>
+This syntax definition  is often also given in a Bachus-Naur-style form
+ <A NAME="386"></A><A NAME="387"></A><A NAME="388"></A><A NAME="389"></A><A NAME="390"></A><A NAME="531"></A><A NAME="532"></A>
+<P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay"><!-- MATH
+ \begin{equation}
+\DLConVar C, \DLConVar D \rightarrow \DLConVar A \mid \top \mid \bot \mid \DLConVar C \DLand \DLConVar D \mid \DLConVar C \DLor \DLConVar D \mid \neg \DLConVar C \mid \forall \DLRolVar R.\DLConVar C \mid \exists \DLRolVar R.\DLConVar C
+\end{equation}
+ -->
+<TABLE CLASS="equation" CELLPADDING="0" WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD NOWRAP ALIGN="CENTER"><SPAN CLASS="MATH"></SPAN></TD>
+<TD NOWRAP CLASS="eqno" WIDTH="10" ALIGN="RIGHT">
+(<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN>)</TD></TR>
+</TABLE></DIV>
+<BR CLEAR="ALL"><P></P>
+
+<P>
+Concepts can be used in axioms to capture their relationships. Terminological axioms (TBox) are can have the form of subsumptions <!-- MATH
+ $\varC\DLsub\varD$
+ -->
+<SPAN CLASS="MATH"></SPAN> or equivalences <!-- MATH
+ $\varC\DLequiv\varD$
+ -->
+<SPAN CLASS="MATH"></SPAN>. Assertional axioms (ABox) can be type assertions <!-- MATH
+ $\varC(\DLIndVar a)$
+ -->
+<SPAN CLASS="MATH"></SPAN> or property assertions <!-- MATH
+ $\varR(\DLIndVar a, \DLIndVar b)$
+ -->
+<SPAN CLASS="MATH"></SPAN>. An ontology then is a set of axioms.
+
+<P>
+By <!-- MATH
+ $\Sigma({\cal O})$
+ -->
+<SPAN CLASS="MATH"></SPAN> we denote the signature of an ontology (O),
+i.e. the set of class, property and individual names in the ontology.
+<!-- MATH
+ $\Sigma({\cal O})$
+ -->
+<SPAN CLASS="MATH"></SPAN> consists of axioms which are definitions of classes
+and the relationships between them. There are various languages for writing
+axioms with syntactical and semantical differencesa an example of an axiom
+with <!-- MATH
+ $\DLConVar{Pizza},\DLConVar{CheeseTopping} \in N_C, \DLRolVar{hasTopping} \in N_R$
+ -->
+<SPAN CLASS="MATH"></SPAN> is:
+<P></P>
+<DIV ALIGN="CENTER" CLASS="mathdisplay"><!-- MATH
+ \begin{equation}
+(\DLConVar{Pizza} \DLand \forall \DLRolVar{hasTopping}.\DLConVar{CheeseTopping}) \sqsubseteq \DLConVar{CheeseyPizza}
+\end{equation}
+ -->
+<TABLE CLASS="equation" CELLPADDING="0" WIDTH="100%" ALIGN="CENTER">
+<TR VALIGN="MIDDLE">
+<TD NOWRAP ALIGN="CENTER"><SPAN CLASS="MATH"></SPAN></TD>
+<TD NOWRAP CLASS="eqno" WIDTH="10" ALIGN="RIGHT">
+(<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN>)</TD></TR>
+</TABLE></DIV>
+<BR CLEAR="ALL"><P></P>
+Which is the implication that the conjunction of the Pizza
+and CheeseTopping concept is a CheeseyPizza. For an
+example for writing an axiom in OWL refer to listing <A HREF="#owlclass"><IMG  ALIGN="BOTTOM" BORDER="1" ALT="[*]"
+ SRC="/usr/share/latex2html/icons/crossref.png"></A>.
+The example expresses that the <SPAN  CLASS="textbf">CheeseTopping</SPAN> class is a sub class
+of <SPAN  CLASS="textbf">PizzaTopping</SPAN> along with its portuguese label.
+If the class <SPAN  CLASS="textbf">PizzaTopping</SPAN> has not yet been defined anywhere else
+in the ontology it is implicitly asserted to exist.
+The current version of OWL is OWL 2 which is an extension to the first version
+and which adds new functionality.
+OWL 2 is also based on RDF/XML and the relationships between the Direct and
+RDF-based semantics have not changed.
+For more information on that topic refer to the OWL 2 Web Ontology Language Primer <A
+ HREF="#OWL2Primer">()</A>.
+
+<P>
+
+<DIV CLASS="navigation"><HR>
+<!--Navigation Panel-->
+<A NAME="tex2html369"
+  HREF="node13.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next"
+ SRC="/usr/share/latex2html/icons/next.png"></A> 
+<A NAME="tex2html365"
+  HREF="node8.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up"
+ SRC="/usr/share/latex2html/icons/up.png"></A> 
+<A NAME="tex2html359"
+  HREF="node11.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous"
+ SRC="/usr/share/latex2html/icons/prev.png"></A> 
+<A NAME="tex2html367"
+  HREF="node3.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents"
+ SRC="/usr/share/latex2html/icons/contents.png"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html370"
+  HREF="node13.html">Logical Reasoning with OWL</A>
+<B> Up:</B> <A NAME="tex2html366"
+  HREF="node8.html">Ontologies</A>
+<B> Previous:</B> <A NAME="tex2html360"
+  HREF="node11.html">Overview of Ontology Languages</A>
+ &nbsp; <B>  <A NAME="tex2html368"
+  HREF="node3.html">Contents</A></B> </DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+Jan Novacek
+2011-07-11
+</ADDRESS>
+</BODY>
+</HTML>

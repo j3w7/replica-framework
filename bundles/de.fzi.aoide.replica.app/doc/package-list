@@ -1,0 +1,7 @@
+de.fzi.replica.app
+de.fzi.replica.app.client
+de.fzi.replica.app.internal
+de.fzi.replica.app.msg
+de.fzi.replica.app.node
+de.fzi.replica.app.server
+de.fzi.replica.app.util

@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99c (TeX Live 2009/Debian)
+The top-level auxiliary file: ReplicaFramework_beamer-english.aux
+The style file: ka-style.bst
+Database file #1: bibliography.bib
+Warning--entry type for "berners-lee98" isn't style-file defined
+--line 194 of file bibliography.bib
+Warning--entry type for "hobo2004" isn't style-file defined
+--line 454 of file bibliography.bib
+Warning--empty journal in chen09
+You've used 4 entries,
+            2465 wiz_defined-function locations,
+            589 strings with 5040 characters,
+and the built_in function-call counts, 1500 in all, are:
+= -- 140
+> -- 73
+< -- 3
++ -- 25
+- -- 23
+* -- 111
+:= -- 251
+add.period$ -- 12
+call.type$ -- 4
+change.case$ -- 24
+chr.to.int$ -- 4
+cite$ -- 5
+duplicate$ -- 57
+empty$ -- 109
+format.name$ -- 27
+if$ -- 305
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 2
+newline$ -- 22
+num.names$ -- 14
+pop$ -- 33
+preamble$ -- 1
+purify$ -- 28
+quote$ -- 0
+skip$ -- 54
+stack$ -- 0
+substring$ -- 54
+swap$ -- 15
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 32
+warning$ -- 1
+while$ -- 12
+width$ -- 6
+write$ -- 49
+(There were 3 warnings)

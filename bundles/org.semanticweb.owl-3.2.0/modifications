@@ -1,0 +1,6 @@
+uk.ac.manchester.cs.owl.owlapi.OWLObjectImpl
+uk.ac.manchester.cs.owl.owlapi.OWLOntologyImpl
+uk.ac.manchester.cs.owl.owlapi.AstractInternalsImpl
+org.semanticweb.owlapi.model.IRI
+org.semanticweb.owlapi.model.AxiomType
+org.semanticweb.owlapi.model.OWLOntologyChange

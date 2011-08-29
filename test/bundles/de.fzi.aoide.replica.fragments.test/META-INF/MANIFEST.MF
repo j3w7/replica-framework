@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name
+Bundle-SymbolicName: de.fzi.replica.fragments.test
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.fzi.replica.fragments.test.internal.Activator
+Bundle-Vendor: %Bundle-Vendor
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.osgi.framework;version="1.3.0"
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.junit4;bundle-version="4.8.1",
+ de.fzi.replica.test;bundle-version="1.0.0",
+ de.fzi.replica.fragments;bundle-version="1.0.0",
+ org.semanticweb.owl;bundle-version="3.2.0"
