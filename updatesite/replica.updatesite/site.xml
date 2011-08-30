@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/replica.app.feature_1.0.0.qualifier.jar" id="replica.app.feature" version="1.0.0.qualifier"/>
-   <feature url="features/replica.comm.feature_1.0.0.qualifier.jar" id="replica.comm.feature" version="1.0.0.qualifier"/>
-   <feature url="features/replica.core.feature_1.0.0.qualifier.jar" id="replica.core.feature" version="1.0.0.qualifier"/>
-   <feature url="features/replica.neonplugin.feature_1.0.0.qualifier.jar" id="replica.neonplugin.feature" version="1.0.0.qualifier"/>
+   <feature url="features/replica.app.feature_1.0.0.201108310017.jar" id="replica.app.feature" version="1.0.0.201108310017"/>
+   <feature url="features/replica.comm.feature_1.0.0.201108310017.jar" id="replica.comm.feature" version="1.0.0.201108310017"/>
+   <feature url="features/replica.core.feature_1.0.0.201108310017.jar" id="replica.core.feature" version="1.0.0.201108310017"/>
+   <feature url="features/replica.neonplugin.feature_1.0.0.201108310017.jar" id="replica.neonplugin.feature" version="1.0.0.201108310017"/>
 </site>
