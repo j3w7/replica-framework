@@ -20,5 +20,9 @@
          This category contains replica framework components.
       </description>
    </category-def>
-   <category-def name="extensions" label="Extensions"/>
+   <category-def name="extensions" label="Extensions">
+      <description>
+         This category contains replica framework extensions and demos.
+      </description>
+   </category-def>
 </site>
