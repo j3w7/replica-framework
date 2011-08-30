@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="replica.neonplugin.feature"
-      label="Feature"
+      label="Replica NeOn Toolkit plugin"
       version="1.0.0.qualifier"
       provider-name="FZI Karlsruhe">
 

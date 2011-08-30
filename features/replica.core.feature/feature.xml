@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="replica.core.feature"
-      label="Feature"
+      label="Replica Core Component"
       version="1.0.0.qualifier"
       provider-name="FZI Karlsruhe">
 
