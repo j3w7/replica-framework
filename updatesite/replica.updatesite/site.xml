@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/replica.app.feature_1.0.0.201108310017.jar" id="replica.app.feature" version="1.0.0.201108310017"/>
-   <feature url="features/replica.comm.feature_1.0.0.201108310017.jar" id="replica.comm.feature" version="1.0.0.201108310017"/>
-   <feature url="features/replica.core.feature_1.0.0.201108310017.jar" id="replica.core.feature" version="1.0.0.201108310017"/>
-   <feature url="features/replica.neonplugin.feature_1.0.0.201108310017.jar" id="replica.neonplugin.feature" version="1.0.0.201108310017"/>
+   <description name="Replica Framework" url="https://svn.fzi.de/svn/ipesvn/code/trunk/Theseus/CTC/Replica/updatesite/replica.updatesite/">
+      This update site contains features which make up the Replica framework and extensions.
+   </description>
+   <feature url="features/replica.app.feature_1.0.0.201108310017.jar" id="replica.app.feature" version="1.0.0.201108310017">
+      <category name="framework"/>
+   </feature>
+   <feature url="features/replica.comm.feature_1.0.0.201108310017.jar" id="replica.comm.feature" version="1.0.0.201108310017">
+      <category name="framework"/>
+   </feature>
+   <feature url="features/replica.core.feature_1.0.0.201108310017.jar" id="replica.core.feature" version="1.0.0.201108310017">
+      <category name="framework"/>
+   </feature>
+   <feature url="features/replica.neonplugin.feature_1.0.0.201108310017.jar" id="replica.neonplugin.feature" version="1.0.0.201108310017">
+      <category name="extensions"/>
+   </feature>
+   <category-def name="framework" label="Replica Framework">
+      <description>
+         This category contains replica framework components.
+      </description>
+   </category-def>
+   <category-def name="extensions" label="Extensions"/>
 </site>
