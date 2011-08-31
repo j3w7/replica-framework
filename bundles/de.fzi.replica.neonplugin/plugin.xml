@@ -75,16 +75,16 @@
             name="OWL2 Replica Development Project"
             icon="icons/ontoprj_obj.gif"
             category="NewOWL2ReplicaWizard"
-            class="de.fzi.aoide.replica.neonplugin.wizard.NewReplicaProjectWizard"
+            class="de.fzi.replica.neonplugin.wizard.NewReplicaProjectWizard"
             project="true"
-            id="de.fzi.aoide.replica.neonplugin.wizard.NewReplicaProjectWizard">
+            id="de.fzi.replica.neonplugin.wizard.NewReplicaProjectWizard">
       </wizard>
       <wizard
             name="OWL2 Replica"
             icon="icons/ontology.gif"
             category="NewOWL2ReplicaWizard"
-            class="de.fzi.aoide.replica.neonplugin.wizard.NewReplicaWizard"
-            id="de.fzi.aoide.replica.neonplugin.wizard.NewReplicaWizard">
+            class="de.fzi.replica.neonplugin.wizard.NewReplicaWizard"
+            id="de.fzi.replica.neonplugin.wizard.NewReplicaWizard">
       </wizard>
       <!--<wizard
             name="OWL2 ReplicaOntology"
@@ -103,7 +103,7 @@
        point="org.neontoolkit.core.ontologyProject">
     <factory
           class="de.fzi.replica.neonplugin.commands.ReplicaProjectFactory"
-          id="de.fzi.aoide.replica.neonplugin.commands.ReplicaProjectFactory">
+          id="de.fzi.replica.neonplugin.commands.ReplicaProjectFactory">
     </factory>
  </extension>
 </plugin>
