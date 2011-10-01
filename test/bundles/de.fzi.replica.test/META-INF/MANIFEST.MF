@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: de.fzi.aoide.replica.test;singleton:=true
+Bundle-SymbolicName: de.fzi.replica.test;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: de.fzi.replica.test.internal.Activator
 Bundle-Vendor: %Bundle-Vendor

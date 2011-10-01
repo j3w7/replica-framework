@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: de.fzi.aoide.replica
+Bundle-SymbolicName: de.fzi.replica
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: de.fzi.aoide.replica.internal.Activator
+Bundle-Activator: de.fzi.replica.internal.Activator
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.core.runtime.jobs,
  org.eclipse.osgi.util;version="1.1.0",
@@ -19,7 +19,7 @@ Require-Bundle: org.eclipse.ecf;bundle-version="3.1.200",
  org.aspectj.weaver;bundle-version="1.6.11",
  org.semanticweb.owl;bundle-version="3.2.0"
 Export-Package: .,
- de.fzi.aoide.replica,
- de.fzi.aoide.replica.util
+ de.fzi.replica,
+ de.fzi.replica.util
 Bundle-Vendor: %Bundle-Vendor
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

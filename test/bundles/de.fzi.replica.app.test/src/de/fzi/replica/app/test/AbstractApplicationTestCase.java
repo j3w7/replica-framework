@@ -16,9 +16,9 @@
 
 package de.fzi.replica.app.test;
 
-import static de.fzi.aoide.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_ID;
-import static de.fzi.aoide.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_TYPE;
-import static de.fzi.aoide.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_ID;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_TYPE;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,15 +28,15 @@ import org.eclipse.osgi.util.NLS;
 import org.junit.After;
 import org.junit.Before;
 
-import de.fzi.aoide.replica.app.Application.StartupException;
-import de.fzi.aoide.replica.app.client.Client;
-import de.fzi.aoide.replica.app.client.Client.ConnectException;
-import de.fzi.aoide.replica.app.client.ClientFactory;
-import de.fzi.aoide.replica.app.client.DefaultClientFactory;
-import de.fzi.aoide.replica.app.server.DefaultServerFactory;
-import de.fzi.aoide.replica.app.server.Server;
-import de.fzi.aoide.replica.comm.Connection;
-import de.fzi.aoide.replica.test.AbstractReplicaTestCase;
+import de.fzi.replica.app.Application.StartupException;
+import de.fzi.replica.app.client.Client;
+import de.fzi.replica.app.client.ClientFactory;
+import de.fzi.replica.app.client.DefaultClientFactory;
+import de.fzi.replica.app.client.Client.ConnectException;
+import de.fzi.replica.app.server.DefaultServerFactory;
+import de.fzi.replica.app.server.Server;
+import de.fzi.replica.comm.Connection;
+import de.fzi.replica.test.AbstractReplicaTestCase;
 
 /**
  * The <code>createServer()</code> and <code>createClients()</code> methods

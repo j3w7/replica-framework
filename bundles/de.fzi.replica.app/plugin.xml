@@ -10,7 +10,7 @@
             thread="main"
             visible="true">
          <run
-               class="de.fzi.aoide.replica.app.server.ServerEclipseImpl">
+               class="de.fzi.replica.app.server.ServerEclipseImpl">
          </run>
       </application>
    </extension>
@@ -23,7 +23,7 @@
             thread="main"
             visible="true">
          <run
-               class="de.fzi.aoide.replica.app.client.ClientEclipseImpl">
+               class="de.fzi.replica.app.client.ClientEclipseImpl">
          </run>
       </application>
    </extension>

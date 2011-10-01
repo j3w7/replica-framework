@@ -31,18 +31,18 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
-import de.fzi.aoide.replica.app.client.Client.AddException;
-import de.fzi.aoide.replica.app.client.Client.AsyncMethodCallback.Result;
-import de.fzi.aoide.replica.app.client.Client.FetchException;
-import de.fzi.aoide.replica.app.client.Client.OnGroupsReceivedListener;
-import de.fzi.aoide.replica.app.client.Client.OnOntologyAddedListener;
-import de.fzi.aoide.replica.app.client.Client.OnOntologyIDsReceivedListener;
-import de.fzi.aoide.replica.app.client.Client.OnOntologyReceivedListener;
+import de.fzi.replica.app.client.Client.AddException;
+import de.fzi.replica.app.client.Client.FetchException;
+import de.fzi.replica.app.client.Client.OnGroupsReceivedListener;
+import de.fzi.replica.app.client.Client.OnOntologyAddedListener;
+import de.fzi.replica.app.client.Client.OnOntologyIDsReceivedListener;
+import de.fzi.replica.app.client.Client.OnOntologyReceivedListener;
+import de.fzi.replica.app.client.Client.AsyncMethodCallback.Result;
 
 /**
  * Tests all methods of the <code>Client</code> interface.
  * 
- * @see de.fzi.aoide.replica.app.client.Client
+ * @see de.fzi.replica.app.client.Client
  * 
  * @author Jan Novacek novacek@fzi.de, jannvck@gmail.com
  * @version 0.1, 20.07.2011

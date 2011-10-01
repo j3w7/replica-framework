@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: de.fzi.aoide.replica.app;singleton:=true
+Bundle-SymbolicName: de.fzi.replica.app;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.ecf;bundle-version="3.1.0",
  org.eclipse.ecf.provider;bundle-version="4.0.0",
@@ -14,8 +14,8 @@ Require-Bundle: org.eclipse.ecf;bundle-version="3.1.0",
  org.eclipse.equinox.app;bundle-version="1.2.1",
  org.eclipse.equinox.common;bundle-version="3.5.1",
  org.eclipse.equinox.security;bundle-version="1.0.100",
- de.fzi.aoide.replica;bundle-version="1.0.0",
- de.fzi.aoide.replica.comm;bundle-version="1.0.0",
+ de.fzi.replica;bundle-version="1.0.0",
+ de.fzi.replica.comm;bundle-version="1.0.0",
  org.semanticweb.owl;bundle-version="3.2.0",
  org.eclipse.ecf.server;bundle-version="2.1.0",
  org.eclipse.ecf.server.generic;bundle-version="5.0.0"
@@ -24,10 +24,10 @@ Bundle-Vendor: %Bundle-Vendor
 Import-Package: org.osgi.framework,
  org.osgi.service.log,
  org.osgi.util.tracker
-Export-Package: de.fzi.aoide.replica.app,
- de.fzi.aoide.replica.app.client,
- de.fzi.aoide.replica.app.node,
- de.fzi.aoide.replica.app.server,
- de.fzi.aoide.replica.app.util
-Bundle-Activator: de.fzi.aoide.replica.app.internal.Activator
+Export-Package: de.fzi.replica.app,
+ de.fzi.replica.app.client,
+ de.fzi.replica.app.node,
+ de.fzi.replica.app.server,
+ de.fzi.replica.app.util
+Bundle-Activator: de.fzi.replica.app.internal.Activator
 Bundle-ActivationPolicy: lazy
