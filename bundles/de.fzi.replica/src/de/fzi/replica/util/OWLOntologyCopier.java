@@ -31,6 +31,6 @@ public abstract class OWLOntologyCopier<Source extends OWLOntology, Target exten
 	
 	// one day there may be filters and stuff here
 	
-	abstract void copy(Set<Source> sources, Target target);
+	public abstract void copy(Set<Source> sources, Target target);
 	
 }

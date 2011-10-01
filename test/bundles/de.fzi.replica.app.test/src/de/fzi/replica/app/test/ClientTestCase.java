@@ -98,7 +98,7 @@ public class ClientTestCase extends AbstractApplicationTestCase {
 								h.result0 = result;
 							}
 						});
-				Thread.sleep(1000);
+				Thread.sleep(3000);
 				OWLOntology onto1 = createTestOWLOntology(ontologyID1);
 				getClient(B).addOWLOntology(onto1, null,
 						new OnOntologyAddedListener() {
@@ -123,7 +123,7 @@ public class ClientTestCase extends AbstractApplicationTestCase {
 		System.out.println("------testAddOntology()------start");
 		AddOntoThread t = new AddOntoThread();
 		t.start();
-		Thread.sleep(3000);
+		Thread.sleep(8000);
 		assertEquals(Result.OK, h.result0);
 		assertEquals(Result.OK, h.result1);
 		System.out.println("------testAddOntology()------end\n");

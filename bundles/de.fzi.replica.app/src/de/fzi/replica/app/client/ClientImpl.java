@@ -41,6 +41,13 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 
 import de.fzi.replica.OWLReplicaManager;
 import de.fzi.replica.OWLReplicaOntology;
+import de.fzi.replica.app.AbstractMasterSlaveConceptApplication;
+import de.fzi.replica.app.ApplicationContext;
+import de.fzi.replica.app.client.Client.AsyncMethodCallback.Result;
+import de.fzi.replica.app.client.ClientConnectionActivityStates.AddOntology;
+import de.fzi.replica.app.client.ClientConnectionActivityStates.GetGroups;
+import de.fzi.replica.app.client.ClientConnectionActivityStates.GetOntologyIDs;
+import de.fzi.replica.app.msg.Message;
 import de.fzi.replica.comm.Connection;
 import de.fzi.replica.comm.Connection.ConnectionContext;
 import de.fzi.replica.comm.Connection.ConnectionContext.ConnectionActivity;
@@ -52,13 +59,6 @@ import de.fzi.replica.comm.channel.SignalChannelManager.AddChannelException;
 import de.fzi.replica.comm.util.MessageCarrier;
 import de.fzi.replica.comm.util.ObjectMapBuilder;
 import de.fzi.replica.util.OWLOntologyToOWLReplicaOntologyCopier;
-import de.fzi.replica.app.AbstractMasterSlaveConceptApplication;
-import de.fzi.replica.app.ApplicationContext;
-import de.fzi.replica.app.client.Client.AsyncMethodCallback.Result;
-import de.fzi.replica.app.client.ClientConnectionActivityStates.AddOntology;
-import de.fzi.replica.app.client.ClientConnectionActivityStates.GetGroups;
-import de.fzi.replica.app.client.ClientConnectionActivityStates.GetOntologyIDs;
-import de.fzi.replica.app.msg.Message;
 
 
 /**
@@ -74,12 +74,15 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 	private Map<Object, AsyncMethodCallback> methodCallbacks;
 	private Map<Object, Object> args;
 	
+//	private OWLOntologyCopier<OWLOntology, OWLReplicaOntology> copier;
+	
 	protected ClientImpl(ApplicationContext context) {
 		super(context);
 		methodCallbacks = Collections.synchronizedMap(
 				new HashMap<Object, AsyncMethodCallback>());
 		args = Collections.synchronizedMap(
 				new HashMap<Object, Object>());
+//		copier = new OWLOntologyToOWLReplicaOntologyCopier();
 	}
 	
 	@Override
@@ -144,6 +147,7 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 						soM.getSharedObject((ID) c.get("soid"));
 					((OnOntologyReceivedListener) l).
 						onOntologyReceived(Result.OK, onto);
+					System.out.println("l="+l+", onto="+onto);
 					break;
 				case RESPONSE_ONTOIDS_GROUP_OK:
 					try {						
