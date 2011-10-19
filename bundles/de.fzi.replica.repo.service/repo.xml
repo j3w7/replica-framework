@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="de.fzi.replica.repo.service">
+   <implementation class="de.fzi.replica.repo.service.ReplicaRepositoryServiceAsyncImpl"/>
+   <property name="service.exported.interfaces" type="String" value="*"/>
+   <property name="service.exported.configs" type="String" value="ecf.generic.server"/>
+   <property name="ecf.exported.containerfactoryargs" type="String" value="ecftcp://localhost:3787/server"/>
+   <service>
+      <provide interface="de.fzi.replica.repo.ReplicaRepositoryServiceAsync"/>
+   </service>
+</scr:component>

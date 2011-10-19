@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="de.fzi.replica.repo.client">
+   <implementation class="de.fzi.replica.repo.client.ReplicaRepositoryServiceAsyncConsumerImpl"/>
+   <reference bind="bindRepo" cardinality="0..n"
+   		interface="de.fzi.replica.repo.ReplicaRepositoryServiceAsync"
+   		name="ReplicaRepositoryServiceAsync" policy="dynamic"/>
+</scr:component>

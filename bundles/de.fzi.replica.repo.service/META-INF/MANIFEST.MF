@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Replica Framework Repository Service
+Bundle-SymbolicName: de.fzi.replica.repo.service
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.fzi.replica.repo.service.internal.Activator
+Bundle-Vendor: FZI Karlsruhe
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.osgi.framework;version="1.3.0"
+Require-Bundle: de.fzi.replica.repo;bundle-version="1.0.0",
+ org.semanticweb.owl;bundle-version="3.2.2",
+ org.eclipse.ecf.identity;bundle-version="3.1.100",
+ org.eclipse.ecf.remoteservice;bundle-version="6.0.0",
+ org.eclipse.ecf;bundle-version="3.1.300",
+ org.eclipse.ecf.provider;bundle-version="4.2.0",
+ org.eclipse.ecf.osgi.services.distribution;bundle-version="2.0.100",
+ org.eclipse.core.runtime;bundle-version="3.6.0",
+ ch.ethz.iks.r_osgi.remote;bundle-version="1.0.0",
+ org.eclipse.ecf.provider.r_osgi;bundle-version="3.2.0",
+ org.eclipse.ecf.discovery;bundle-version="4.0.0",
+ org.eclipse.ecf.provider.discovery;bundle-version="2.1.200",
+ org.eclipse.ecf.provider.remoteservice;bundle-version="4.0.0"
+Bundle-ActivationPolicy: lazy
+Service-Component: repo.xml
