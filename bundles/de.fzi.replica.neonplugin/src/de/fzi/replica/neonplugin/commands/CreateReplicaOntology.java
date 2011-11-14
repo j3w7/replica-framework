@@ -102,11 +102,16 @@ public class CreateReplicaOntology extends DatamodelCommand {
                     ontologyProject.setNamespacePrefix(ontologyURI, "rdf",OWLNamespaces.RDF_NS); //$NON-NLS-1$
                     ontologyProject.setNamespacePrefix(ontologyURI, "rdfs",OWLNamespaces.RDFS_NS); //$NON-NLS-1$
                     ontologyProject.setNamespacePrefix(ontologyURI, "xsd",OWLNamespaces.XSD_NS); //$NON-NLS-1$
+                    // finally share the ontology
+                    shareOntology(ontology);
                 } catch (NeOnCoreException e) {
                     throw new CommandException(e);
-                }
+                } catch (ContainerConnectException e) {
+					e.printStackTrace();
+				} catch (SharedObjectAddException e) {
+					e.printStackTrace();
+				}
             }
-            
         } catch (OWLOntologyCreationException e) {
             throw new CommandException(e);
         } catch (NeOnCoreException nce) {
@@ -114,10 +119,9 @@ public class CreateReplicaOntology extends DatamodelCommand {
         }
     }
     
-    
-    
     private void shareOntology(OWLOntology ontology)
 			throws ContainerConnectException, SharedObjectAddException {
+    	Activator.getDefault().logInfo("CreateReplicaOntology.shareOntology("+ontology+")");
 		// Create and open a connection
 		CommManager commManager = new DefaultCommManagerFactory().createCommManager();
 		Connection connection = commManager.createConnection(connectionProperties);
@@ -135,10 +139,12 @@ public class CreateReplicaOntology extends DatamodelCommand {
 	}
 
 	private OWLOntology retrieveOntology() throws ContainerConnectException {
+    	Activator.getDefault().logInfo("CreateReplicaOntology.retrieveOntology()");
 		// Create and open a connection
 		CommManager commManager = new DefaultCommManagerFactory().createCommManager();
 		Connection connection = commManager.createConnection(connectionProperties);
 		connection.connect();
+		// Wait
 		try { Thread.sleep(2000); } catch (InterruptedException e) { e.printStackTrace(); }
 		System.out.print("connectedID="+connection.getSharedObjectContainer().getConnectedID()+" ");
 		for(ID soID : connection.getSharedObjectContainer().getSharedObjectManager().getSharedObjectIDs()) {

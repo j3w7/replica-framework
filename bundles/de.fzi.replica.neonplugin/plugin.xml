@@ -27,7 +27,7 @@
  <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="de.fzi.aoide.replica.neonplugin.navigator.NewOWLReplicaOntologyHandler"
+            class="de.fzi.replica.neonplugin.navigator.NewOWLReplicaOntologyHandler"
             commandId="org.neontoolkit.gui.navigator.newCommand">
          <activeWhen>
             <reference
@@ -90,8 +90,8 @@
             name="OWL2 ReplicaOntology"
             icon="icons/ontology.gif"
             category="NewOWL2OntologyWizard"
-            class="de.fzi.aoide.replica.neonplugin.wizard.NewReplicaOntologyWizard"
-            id="de.fzi.aoide.replica.neonplugin.wizard.NewReplicaOntologyWizard">
+            class="de.fzi.replica.neonplugin.wizard.NewReplicaOntologyWizard"
+            id="de.fzi.replica.neonplugin.wizard.NewReplicaOntologyWizard">
       </wizard>-->
    </extension>
    
