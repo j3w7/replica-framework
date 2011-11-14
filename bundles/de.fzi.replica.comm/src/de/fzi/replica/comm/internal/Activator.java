@@ -25,7 +25,7 @@ import org.osgi.util.tracker.ServiceTracker;
 
 public class Activator implements BundleActivator {
 	
-	private static final String PLUGIN_ID = "de.fzi.aoide.replica.comm";
+	private static final String PLUGIN_ID = "de.fzi.replica.comm";
 
 	private static Activator instance;
 	
