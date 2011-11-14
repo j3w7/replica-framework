@@ -19,6 +19,7 @@ package de.fzi.replica.repo.service.internal;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.core.IContainerManager;
 import org.eclipse.ecf.discovery.IDiscoveryAdvertiser;
+import org.eclipse.ecf.discovery.IDiscoveryLocator;
 import org.eclipse.ecf.osgi.services.distribution.IDistributionConstants;
 import org.eclipse.ecf.remoteservice.IRemoteServiceRegistration;
 import org.osgi.framework.BundleActivator;
@@ -78,6 +79,7 @@ public class Activator implements BundleActivator, IDistributionConstants {
 		IContainer c = containerManagerService.getContainerFactory().
 			createContainer("ecf.r_osgi.peer");
 //		c.getAdapter(IDiscoveryLocator.class);
+		c.getAdapter(IDiscoveryLocator.class);
 		
 		System.out.println("ReplicaRepositoryServiceAsync RemoteService registered");
 	}

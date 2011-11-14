@@ -268,7 +268,6 @@ public class ServerImpl extends AbstractMasterSlaveConceptApplication
 						}
 						break;
 					case REQUEST_ONTOIDS_GROUP:
-						@SuppressWarnings("unchecked")
 						Set<Object> groups = (Set<Object>) c.get("groups");
 						// List ontology IDs in groups
 						if (groups != null) {
