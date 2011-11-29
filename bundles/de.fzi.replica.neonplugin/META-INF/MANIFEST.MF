@@ -28,7 +28,9 @@ Require-Bundle: com.ontoprise.dependencies,
  org.semanticweb.owl;bundle-version="3.2.2",
  org.eclipse.ecf;bundle-version="3.1.200",
  org.eclipse.ecf.provider;bundle-version="4.0.0",
- org.eclipse.ecf.sharedobject;bundle-version="2.2.100"
+ org.eclipse.ecf.sharedobject;bundle-version="2.2.100",
+ org.eclipse.ecf.datashare;bundle-version="3.0.100",
+ org.eclipse.ecf.provider.datashare;bundle-version="1.4.100"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: de.fzi.replica.neonplugin,

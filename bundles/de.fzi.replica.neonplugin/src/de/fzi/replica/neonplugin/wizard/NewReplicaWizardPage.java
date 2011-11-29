@@ -12,6 +12,14 @@ package de.fzi.replica.neonplugin.wizard;
 
 import java.util.Properties;
 
+import javax.swing.JCheckBox;
+import javax.swing.event.ChangeEvent;
+
+import org.eclipse.ecf.core.ContainerConnectException;
+import org.eclipse.ecf.core.identity.ID;
+import org.eclipse.ecf.core.identity.IDFactory;
+import org.eclipse.ecf.core.sharedobject.ISharedObject;
+import org.eclipse.ecf.core.sharedobject.SharedObjectAddException;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -26,7 +34,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
@@ -38,11 +48,23 @@ import org.neontoolkit.core.project.OntologyProjectManager;
 import org.neontoolkit.gui.NeOnUIPlugin;
 import org.neontoolkit.gui.navigator.elements.IProjectElement;
 import org.neontoolkit.gui.util.URIUtils;
+import org.semanticweb.owlapi.model.OWLOntology;
 
 import com.ontoprise.ontostudio.owl.gui.Messages;
 
+import de.fzi.replica.comm.CommManager;
+import de.fzi.replica.comm.CommManagerImpl;
+import de.fzi.replica.comm.Connection;
+import de.fzi.replica.comm.DefaultCommManagerFactory;
+import de.fzi.replica.neonplugin.Activator;
 import de.fzi.replica.neonplugin.commands.CreateUniqueReplicaUri;
 
+import static de.fzi.replica.comm.CommManager.*;
+import static de.fzi.replica.comm.Connection.*;
+
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_ID;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_TYPE;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
 
 /* 
  * Created on: 12.11.2004
@@ -58,22 +80,23 @@ import de.fzi.replica.neonplugin.commands.CreateUniqueReplicaUri;
  */
 public class NewReplicaWizardPage extends WizardPage {
 	
-	private static final boolean IS_CLIENT = true;
+	public static boolean IS_CLIENT = true;
+	public static boolean SERVER_STARTED = true;
 	// One client adds a shared ontology, another one retrieves it.
 	private static final boolean IS_ADDING_SHARED_OBJECT = true;
 	
 	private static final String DEFAULT_CONTAINER_TYPE_CLIENT = "ecf.generic.client";
 	private static final String DEFAULT_CONTAINER_TYPE_SERVER = "ecf.generic.server";
-	private static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://192.168.123.35:10000/server"; // Set to interface IP
+	private static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://localhost:10000/server"; // Set to interface IP
 	private static final String DEFAULT_CONTAINER_ID_CLIENT = "client1";
 	
 	// Use for a client connection
-	private String containerTypeClient = DEFAULT_CONTAINER_TYPE_CLIENT;
-	private String containerIDClient = DEFAULT_CONTAINER_ID_CLIENT;
-	private String targetID = DEFAULT_CONTAINER_ID_SERVER;
+	public static String containerTypeClient = DEFAULT_CONTAINER_TYPE_CLIENT;
+	public static String containerIDClient = DEFAULT_CONTAINER_ID_CLIENT;
+	public static String targetID = DEFAULT_CONTAINER_ID_SERVER;
 	// Use for a server connection, uncomment previous
-	private String containerTypeServer = DEFAULT_CONTAINER_TYPE_SERVER;
-	private String containerIDServer = DEFAULT_CONTAINER_ID_SERVER;
+	public static String containerTypeServer = DEFAULT_CONTAINER_TYPE_SERVER;
+	public static String containerIDServer = DEFAULT_CONTAINER_ID_SERVER;
 
     private IStructuredSelection _selection;
     private Composite _container;
@@ -87,6 +110,8 @@ public class NewReplicaWizardPage extends WizardPage {
     private Button _isClientCheckbox;
     
     protected IInputValidator _uriValidator = getInputValidator();
+    
+    private Properties connectionProperties;
 
     public NewReplicaWizardPage(IStructuredSelection selection) {
         super("NewReplicaOntologyWizardPage"); //$NON-NLS-1$
@@ -118,7 +143,6 @@ public class NewReplicaWizardPage extends WizardPage {
         GridData gd = new GridData(GridData.FILL_HORIZONTAL);
         _ontologyUriText.setLayoutData(gd);
         _ontologyUriText.addModifyListener(new ModifyListener() {
-
             public void modifyText(ModifyEvent e) {
                 updateStatus();
             }
@@ -245,14 +269,67 @@ public class NewReplicaWizardPage extends WizardPage {
         dummy4.setVisible(false);
         dummy4.setLayoutData(gd);
         
-        _isClientCheckbox = new Button(_container, SWT.CHECK);
+        _isClientCheckbox = new Button(_container, SWT.NONE);
         _isClientCheckbox.setText("Start local server");
+//        _isClientCheckbox.addChangeListener(new ChangeListener() {
+//			@Override
+//			public void stateChanged(ChangeEvent arg0) {
+////				IS_CLIENT = arg0.toString();
+//				NeOnUIPlugin.getDefault().logInfo(arg0.toString());
+//			}
+//        });
+        _isClientCheckbox.addSelectionListener(new SelectionListener() {
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				startServer();
+			}
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				startServer();
+			}
+        });
+//        _isClientCheckbox
         
         initialize();
         updateStatus();
         setControl(_container);
     }
-
+    
+    String CONFIG_KEYWORD_CONNECTION_ID = "connectionID";
+	String CONFIG_KEYWORD_CONTAINER_TYPE = "containerType";
+	String CONFIG_KEYWORD_CONTAINER_ID = "containerID";
+	String CONFIG_KEYWORD_TARGET_ID = "targetID";
+	String CONFIG_KEYWORD_SHAREDOBJECTS = "sharedObjects";
+	String CONFIG_KEYWORD_CHANNELS = "channels";
+    
+    private void startServer() {
+		try {
+			CommManager mgr = new CommManagerImpl();
+			Connection connection = mgr.createConnection(createConnectionProperties());
+			connection.connect();
+			Activator.getDefault().logInfo("connection==null ?   "+(connection!=null?false:true));
+			SERVER_STARTED = true;
+		} catch (ContainerConnectException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    private Properties createConnectionProperties() {
+    	Activator.getDefault().logInfo(
+    			"createConnectionProperties() _isClientCheckbox.getSelection()=");
+    	Properties connectionProperties = new Properties();
+//    	if(NewReplicaWizardPage.IS_CLIENT) {
+//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
+//    		connectionProperties.put(CONFIG_KEYWORD_TARGET_ID, targetID);
+//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDClient);    		
+//    	} else {
+    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
+    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);    		
+//    	}
+    	Activator.getDefault().logInfo("connectionProperties="+connectionProperties);
+    	return connectionProperties;
+    }
+    
     private void initialize() {
         //initialize project combo
         String[] projects;
@@ -282,6 +359,12 @@ public class NewReplicaWizardPage extends WizardPage {
             	_namespaceText.setText(newId+"#"); //$NON-NLS-1$
             }
             _container.layout(true);
+            
+            // start a local server if activated
+            // this happens in CreateReplicaOntology
+//            if(_isClientCheckbox.getEnabled()) {
+////            	shareOntology(null);
+//            }
         } catch (Exception e) {
         	e.printStackTrace();
             NeOnUIPlugin.getDefault().logError("", e); //$NON-NLS-1$
@@ -370,17 +453,5 @@ public class NewReplicaWizardPage extends WizardPage {
         String helpContextId = org.neontoolkit.gui.IHelpContextIds.OWL_CREATE_ONTOLOGY;
         PlatformUI.getWorkbench().getHelpSystem().displayHelp(helpContextId);
     }
-    
-    private Properties createConnectionProperties() {
-    	Properties connectionProperties = new Properties();
-    	if(true) {
-//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
-//    		connectionProperties.put(CONFIG_KEYWORD_TARGET_ID, targetID);
-//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDClient);    		
-    	} else {
-//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
-//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);    		
-    	}
-    	return connectionProperties;
-    }
+
 }

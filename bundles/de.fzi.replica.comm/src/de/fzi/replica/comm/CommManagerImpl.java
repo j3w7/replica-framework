@@ -36,7 +36,7 @@ public class CommManagerImpl implements CommManager {
 	private String defaultContainerID;
 	private String defaultTargetID;
 	
-	protected CommManagerImpl() {
+	public CommManagerImpl() {
 		connections = new HashMap<String, Connection>();
 	}
 	
