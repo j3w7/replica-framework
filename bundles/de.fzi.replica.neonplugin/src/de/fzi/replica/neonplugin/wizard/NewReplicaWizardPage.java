@@ -81,13 +81,14 @@ import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
 public class NewReplicaWizardPage extends WizardPage {
 	
 	public static boolean IS_CLIENT = true;
-	public static boolean SERVER_STARTED = true;
+	public static boolean INST0_SERVER_STARTED = true;
+	public static boolean INST1_SERVER_STARTED = true;
 	// One client adds a shared ontology, another one retrieves it.
 	private static final boolean IS_ADDING_SHARED_OBJECT = true;
 	
 	private static final String DEFAULT_CONTAINER_TYPE_CLIENT = "ecf.generic.client";
 	private static final String DEFAULT_CONTAINER_TYPE_SERVER = "ecf.generic.server";
-	private static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://localhost:10000/server"; // Set to interface IP
+	private static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://192.168.178.100:10000/server"; // Set to interface IP
 	private static final String DEFAULT_CONTAINER_ID_CLIENT = "client1";
 	
 	// Use for a client connection
@@ -120,6 +121,12 @@ public class NewReplicaWizardPage extends WizardPage {
         setTitle("Create New ReplicaOntology"); 
       setDescription("Creates a new empty ReplicaOntology");
         _selection = selection;
+        
+        // Start a server
+        if(Integer.parseInt(System.getenv("INSTANCE").toString()) == 0) {
+        	Activator.getDefault().logInfo("Server started");
+        	startServer();
+        }
     }
 
     protected IInputValidator getInputValidator() {
@@ -241,7 +248,6 @@ public class NewReplicaWizardPage extends WizardPage {
 //        });
         _containerID.setText(targetID);
         
-        
         gd = new GridData(GridData.FILL_HORIZONTAL);
         Label dummy3 = new Label(_container, SWT.NONE);
         dummy3.setVisible(false);
@@ -255,12 +261,13 @@ public class NewReplicaWizardPage extends WizardPage {
         gd = new GridData(GridData.FILL_HORIZONTAL);
         gd.grabExcessHorizontalSpace = true;
         _containerType.setLayoutData(gd);
-//        _containerID.addModifyListener(new ModifyListener() {
-//        	@Override
-//            public void modifyText(ModifyEvent e) {
-//                updateStatus();
-//            }
-//        });
+        _containerType.addModifyListener(new ModifyListener() {
+        	@Override
+            public void modifyText(ModifyEvent e) {
+                updateStatus();
+                System.out.println("ModifyEvent: "+e);
+            }
+        });
         _containerType.setText(containerTypeClient);
         
         
@@ -269,63 +276,81 @@ public class NewReplicaWizardPage extends WizardPage {
         dummy4.setVisible(false);
         dummy4.setLayoutData(gd);
         
-        _isClientCheckbox = new Button(_container, SWT.NONE);
-        _isClientCheckbox.setText("Start local server");
-//        _isClientCheckbox.addChangeListener(new ChangeListener() {
+//        _isClientCheckbox = new Button(_container, SWT.NONE);
+//        _isClientCheckbox.setText("Start local server");
+//        _isClientCheckbox.addSelectionListener(new SelectionListener() {
 //			@Override
-//			public void stateChanged(ChangeEvent arg0) {
-////				IS_CLIENT = arg0.toString();
-//				NeOnUIPlugin.getDefault().logInfo(arg0.toString());
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				startServer();
+//			}
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				startServer();
 //			}
 //        });
-        _isClientCheckbox.addSelectionListener(new SelectionListener() {
-			@Override
-			public void widgetDefaultSelected(SelectionEvent arg0) {
-				startServer();
-			}
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-				startServer();
-			}
-        });
-//        _isClientCheckbox
         
         initialize();
         updateStatus();
         setControl(_container);
     }
     
-    String CONFIG_KEYWORD_CONNECTION_ID = "connectionID";
-	String CONFIG_KEYWORD_CONTAINER_TYPE = "containerType";
-	String CONFIG_KEYWORD_CONTAINER_ID = "containerID";
-	String CONFIG_KEYWORD_TARGET_ID = "targetID";
-	String CONFIG_KEYWORD_SHAREDOBJECTS = "sharedObjects";
-	String CONFIG_KEYWORD_CHANNELS = "channels";
+    static final String CONFIG_KEYWORD_CONNECTION_ID = "connectionID";
+	static final String CONFIG_KEYWORD_CONTAINER_TYPE = "containerType";
+	static final String CONFIG_KEYWORD_CONTAINER_ID = "containerID";
+	static final String CONFIG_KEYWORD_TARGET_ID = "targetID";
+	static final String CONFIG_KEYWORD_SHAREDOBJECTS = "sharedObjects";
+	static final String CONFIG_KEYWORD_CHANNELS = "channels";
     
     private void startServer() {
 		try {
 			CommManager mgr = new CommManagerImpl();
-			Connection connection = mgr.createConnection(createConnectionProperties());
+			Connection connection = mgr.createConnection(createConnectionProperties(true));
 			connection.connect();
-			Activator.getDefault().logInfo("connection==null ?   "+(connection!=null?false:true));
-			SERVER_STARTED = true;
+			Activator.getDefault().logInfo("connection==null ?   "+
+					(connection!=null?false:true));
+			int instance = Integer.parseInt(System.getenv("INSTANCE").toString());
+//			if(instance == 0) {
+//				INST0_SERVER_STARTED = true;
+//				INST1_SERVER_STARTED = false;
+//			} else {
+//				// server is started on instance 1
+//				INST0_SERVER_STARTED = false;
+//				INST1_SERVER_STARTED = true;
+//			}
+			Activator.getDefault().logInfo("Server started on instance "+instance);
 		} catch (ContainerConnectException e) {
 			e.printStackTrace();
 		}
     }
     
-    private Properties createConnectionProperties() {
+    public static Properties createConnectionProperties(boolean server) {
     	Activator.getDefault().logInfo(
     			"createConnectionProperties() _isClientCheckbox.getSelection()=");
     	Properties connectionProperties = new Properties();
-//    	if(NewReplicaWizardPage.IS_CLIENT) {
-//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
-//    		connectionProperties.put(CONFIG_KEYWORD_TARGET_ID, targetID);
-//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDClient);    		
-//    	} else {
+    	int instance = Integer.parseInt(System.getenv("INSTANCE").toString());
+    	if(!server) { // client
+    		Activator.getDefault().logInfo(
+    			"\t client instance\n"+
+				"containerTypeClient="+containerTypeClient+"\n"+
+				"targetID="+targetID+"\n"+
+				"client"+instance);
+    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
+    		connectionProperties.put(CONFIG_KEYWORD_TARGET_ID, targetID);
+//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDClient);
+			if(instance == 0) {
+				connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, "client0");
+			} else {
+				connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, "client1");
+			}
+    	} else { // server
+    		Activator.getDefault().logInfo(
+    				"\t server instance\n"+
+    				"containerTypeClient="+containerTypeClient+"\n"+
+    				"targetID="+targetID+"\n"+
+    				"client"+instance);
     		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
     		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);    		
-//    	}
+    	}
     	Activator.getDefault().logInfo("connectionProperties="+connectionProperties);
     	return connectionProperties;
     }
@@ -443,7 +468,7 @@ public class NewReplicaWizardPage extends WizardPage {
     public String getOntologyUri() {
         return _ontologyUriText.getText();
     }
-
+    
     public String getDefaultNamespace() {
   		return _namespaceText.getText();
     }

@@ -28,6 +28,7 @@ import org.neontoolkit.gui.exception.NeonToolkitExceptionHandler;
 
 import com.ontoprise.ontostudio.owl.gui.Messages;
 
+import de.fzi.replica.neonplugin.Activator;
 import de.fzi.replica.neonplugin.commands.CreateReplicaProject;
 import de.fzi.replica.neonplugin.commands.ReplicaProjectFactory;
 /* 
@@ -53,6 +54,7 @@ public class NewReplicaProjectWizard extends Wizard implements INewWizard {
      */
     public NewReplicaProjectWizard() {
         super();
+        Activator.getDefault().logInfo("NewReplicaProjectWizard constructor");
         setDefaultPageImageDescriptor(NeOnUIPlugin.getDefault().getImageRegistry().getDescriptor(SharedImages.NEW_ONTOLOGY_PROJECT_WIZ));
         setWindowTitle(Messages.NewOntologyProjectWizard_1); 
         setNeedsProgressMonitor(true);

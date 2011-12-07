@@ -14,6 +14,7 @@ import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_ID;
 import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_TYPE;
 import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
 
+import java.util.List;
 import java.util.Properties;
 
 import org.eclipse.core.resources.IProject;
@@ -28,7 +29,10 @@ import org.neontoolkit.core.command.DatamodelCommand;
 import org.neontoolkit.core.exception.NeOnCoreException;
 import org.neontoolkit.core.project.IOntologyProject;
 import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLException;
 import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyChange;
+import org.semanticweb.owlapi.model.OWLOntologyChangeListener;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyFactory;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
@@ -93,10 +97,31 @@ public class CreateReplicaOntology extends DatamodelCommand {
                 // Activate shared ontology by adding it to the pool
                 // of shared ontologies
                 try {
-                	if(NewReplicaWizardPage.SERVER_STARTED) {
+                	Activator.getDefault().logInfo(
+                			"this is instance "+
+                				Integer.parseInt(System.getenv("INSTANCE").toString()));
+                	if(Integer.parseInt(System.getenv("INSTANCE").toString()) == 0) {
+                		// Server
                 		shareOntology(ontology);
-                	} else {
+                		Activator.getDefault().logInfo("Server - ontology shared");
+                		
+                		// try to receive it
+                		CommManager commManager = new DefaultCommManagerFactory().createCommManager();
+                		Properties cp = NewReplicaWizardPage.createConnectionProperties(false);
+                		cp.remove(CONFIG_KEYWORD_CONTAINER_ID);
+                		cp.put(CONFIG_KEYWORD_CONTAINER_ID, "client100");
+                		Connection connection = commManager.createConnection(cp); // get server propertiesTODO: server/client?!
+                		connection.connect();
+                		
+                		// Get the shared ontology
+                		ID sharedObjectID = IDFactory.getDefault().createStringID("NeOnReplicaOntology");
+                		ISharedObject sharedObject = connection.getSharedObjectContainer().
+                			getSharedObjectManager().getSharedObject(sharedObjectID);
+                		System.out.println("sharedObject="+sharedObject);
+                	} else if(Integer.parseInt(System.getenv("INSTANCE").toString()) == 1) {
+                		// Client
                 		ontology = retrieveOntology();
+                		Activator.getDefault().logInfo("Client - retrieving ontology");
                 	}
 				} catch (ContainerConnectException e) {
 					e.printStackTrace();
@@ -104,11 +129,27 @@ public class CreateReplicaOntology extends DatamodelCommand {
 					e.printStackTrace();
 				}
                 
+                Activator.getDefault().logInfo(
+                		"this.getArgument(0)="+this.getArgument(0) + 
+                		"this.getArgument(1)="+this.getArgument(1) + 
+                		"this.getArgument(2)="+this.getArgument(2) );
+				
+				// Register a change listener
+				ontology.getOWLOntologyManager().addOntologyChangeListener(
+						new OWLOntologyChangeListener() {
+							@Override
+							public void ontologiesChanged(
+									List<? extends OWLOntologyChange> changes)
+									throws OWLException {
+								System.out.println("changes="+changes);
+							}
+						});
+                
                 ontologyProject.readAndDispatchWhileWaitingForEvents();
                 
                 // The manchester implementation has no event for new created ontologies, we need to update manually.
                 ontologyProject.addOntology(ontologyURI);
-
+                
                 try {
                     if (defaultNamespace != null && !"".equals(defaultNamespace)) { //$NON-NLS-1$
                         ontologyProject.setDefaultNamespace(ontologyURI, defaultNamespace);
@@ -140,59 +181,66 @@ public class CreateReplicaOntology extends DatamodelCommand {
         }
     }
     
-    // Use for a client connection
-	private String containerTypeClient = DEFAULT_CONTAINER_TYPE_CLIENT;
-	private String containerIDClient = DEFAULT_CONTAINER_ID_CLIENT;
-	private String targetID = DEFAULT_CONTAINER_ID_SERVER;
-	// Use for a server connection, uncomment previous
-	private String containerTypeServer = DEFAULT_CONTAINER_TYPE_SERVER;
-	private String containerIDServer = DEFAULT_CONTAINER_ID_SERVER;
-	
-//	Properties connectionProperties = createConnectionProperties();
+//    // Use for a client connection
+//	private String containerTypeClient = DEFAULT_CONTAINER_TYPE_CLIENT;
+//	private String containerIDClient = DEFAULT_CONTAINER_ID_CLIENT;
+//	private String targetID = DEFAULT_CONTAINER_ID_SERVER;
+//	// Use for a server connection, uncomment previous
+//	private String containerTypeServer = DEFAULT_CONTAINER_TYPE_SERVER;
+//	private String containerIDServer = DEFAULT_CONTAINER_ID_SERVER;
+//	
+////	Properties connectionProperties = createConnectionProperties();
+//    
+//	private static final String DEFAULT_CONTAINER_TYPE_CLIENT = "ecf.generic.client";
+//	private static final String DEFAULT_CONTAINER_TYPE_SERVER = "ecf.generic.server";
+//	private static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://192.168.123.35:10000/server"; // Set to interface IP
+//	private static final String DEFAULT_CONTAINER_ID_CLIENT = "client1";
+//    
+//	private static final String CONFIG_KEYWORD_CONNECTION_ID = "connectionID";
+//	private static final String CONFIG_KEYWORD_CONTAINER_TYPE = "containerType";
+//	private static final String CONFIG_KEYWORD_CONTAINER_ID = "containerID";
+//	private static final String CONFIG_KEYWORD_TARGET_ID = "targetID";
+//	private static final String CONFIG_KEYWORD_SHAREDOBJECTS = "sharedObjects";
+//	private static final String CONFIG_KEYWORD_CHANNELS = "channels";
     
-	private static final String DEFAULT_CONTAINER_TYPE_CLIENT = "ecf.generic.client";
-	private static final String DEFAULT_CONTAINER_TYPE_SERVER = "ecf.generic.server";
-	private static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://192.168.123.35:10000/server"; // Set to interface IP
-	private static final String DEFAULT_CONTAINER_ID_CLIENT = "client1";
-    
-    String CONFIG_KEYWORD_CONNECTION_ID = "connectionID";
-	String CONFIG_KEYWORD_CONTAINER_TYPE = "containerType";
-	String CONFIG_KEYWORD_CONTAINER_ID = "containerID";
-	String CONFIG_KEYWORD_TARGET_ID = "targetID";
-	String CONFIG_KEYWORD_SHAREDOBJECTS = "sharedObjects";
-	String CONFIG_KEYWORD_CHANNELS = "channels";
-    
-    private Properties createConnectionProperties() {
-    	Properties connectionProperties = new Properties();
-    	if(NewReplicaWizardPage.SERVER_STARTED) {
-    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, NewReplicaWizardPage.containerTypeClient);
-    		connectionProperties.put(CONFIG_KEYWORD_TARGET_ID, NewReplicaWizardPage.targetID);
-    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, NewReplicaWizardPage.containerIDClient);    		
-    	} else {
-    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, NewReplicaWizardPage.containerTypeServer);
-    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, NewReplicaWizardPage.containerIDServer);    		
-    	}
-    	Activator.getDefault().logInfo(this.getClass()+".connectionProperties="+connectionProperties);
-    	return connectionProperties;
-    }
+//    private Properties createConnectionProperties() {
+//    	Properties connectionProperties = new Properties();
+////    	if(NewReplicaWizardPage.SERVER_STARTED) {
+////    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, NewReplicaWizardPage.containerTypeClient);
+////    		connectionProperties.put(CONFIG_KEYWORD_TARGET_ID, NewReplicaWizardPage.targetID);
+////    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, NewReplicaWizardPage.containerIDClient);    		
+////    	} else {
+////    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, NewReplicaWizardPage.containerTypeServer);
+////    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, NewReplicaWizardPage.containerIDServer);    		
+////    	}
+//    	Activator.getDefault().logInfo(
+//    			this.getClass()+".connectionProperties="+connectionProperties);
+//    	return connectionProperties;
+//    }
     
     private void shareOntology(OWLOntology ontology)
 			throws ContainerConnectException, SharedObjectAddException {
 		Activator.getDefault().logInfo("CreateReplicaOntology.shareOntology("+ontology+")");
 		// Create and open a connection			
 		CommManager commManager = new DefaultCommManagerFactory().createCommManager();
-		Connection connection = commManager.createConnection(createConnectionProperties());
+		Connection connection = commManager.createConnection(
+				NewReplicaWizardPage.createConnectionProperties(false)); // get client propertiesTODO: server/client?!
 		connection.connect();
 		// Add the shared ontology
 		ID sharedObjectID = IDFactory.getDefault().createStringID("NeOnReplicaOntology");
-		connection.getSharedObjectContainer().getSharedObjectManager().
-			addSharedObject(sharedObjectID, (ISharedObject) ontology, null);
+		System.out.println("sharedObjectID equality: "+connection.getSharedObjectContainer().getSharedObjectManager().
+			addSharedObject(sharedObjectID, (ISharedObject) ontology, null).equals(sharedObjectID));
 		// Debugging
 		System.out.print("Added Shared object, IDs:");
 		for(ID soID : connection.getSharedObjectContainer().getSharedObjectManager().getSharedObjectIDs()) {
 			System.out.print(" sharedObjectID="+soID);
 		}
 		System.out.println();
+		
+		ISharedObject is = connection.getSharedObjectContainer().
+			getSharedObjectManager().getSharedObject(
+					IDFactory.getDefault().createStringID("NeOnReplicaOntology"));
+		System.out.println("shareOntology(..) is="+is);
 	}
 	
 	private OWLOntology retrieveOntology()
@@ -200,19 +248,22 @@ public class CreateReplicaOntology extends DatamodelCommand {
 		Activator.getDefault().logInfo("CreateReplicaOntology.retrieveOntology()");
 		// Create and open a connection
 		CommManager commManager = new DefaultCommManagerFactory().createCommManager();
-		Connection connection = commManager.createConnection(createConnectionProperties());
+		Connection connection = commManager.createConnection(
+				NewReplicaWizardPage.createConnectionProperties(false)); // get server propertiesTODO: server/client?!
 		connection.connect();
 		// Wait
 		try { Thread.sleep(2000); } catch (InterruptedException e) { e.printStackTrace(); }
-		System.out.print("connectedID="+connection.getSharedObjectContainer().getConnectedID()+" ");
+		Activator.getDefault().logInfo("connectedID="+connection.getSharedObjectContainer().getConnectedID()+" ");
 		for(ID soID : connection.getSharedObjectContainer().getSharedObjectManager().getSharedObjectIDs()) {
-			System.out.print("sharedObjectID="+soID+" ");
+			Activator.getDefault().logInfo("found sharedObjectID="+soID+" ");
 		}
-		System.out.println();
+		
 		// Get the shared ontology
 		ID sharedObjectID = IDFactory.getDefault().createStringID("NeOnReplicaOntology");
 		ISharedObject sharedObject = connection.getSharedObjectContainer().
 			getSharedObjectManager().getSharedObject(sharedObjectID);
+		
+		Activator.getDefault().logInfo("(OWLOntology) sharedObject="+(OWLOntology) sharedObject);
 		return (OWLOntology) sharedObject;
 	}
 
