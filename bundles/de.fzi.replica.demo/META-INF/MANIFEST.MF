@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Replica Framework Demo Core
-Bundle-SymbolicName: de.fzi.aoide.replica.demo;singleton:=true
+Bundle-SymbolicName: de.fzi.replica.demo;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.core.runtime;bundle-version="3.6.0",
  org.eclipse.ecf;bundle-version="3.1.200",
@@ -9,8 +9,8 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.6.0",
  org.eclipse.ecf.sharedobject;bundle-version="2.2.100",
  org.semanticweb.owl;bundle-version="3.2.0",
  de.fzi.aoide.common.graph;bundle-version="1.0.0",
- de.fzi.aoide.replica;bundle-version="1.0.0",
- de.fzi.aoide.replica.comm;bundle-version="1.0.0"
+ de.fzi.replica;bundle-version="1.0.0",
+ de.fzi.replica.comm;bundle-version="1.0.0"
 Bundle-ClassPath: lib/groovy-all-1.8.0.jar,
  lib/jruby-1.6.2.jar,
  lib/swing-layout-1.0.2.jar,

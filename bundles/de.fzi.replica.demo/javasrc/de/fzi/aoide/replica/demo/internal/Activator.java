@@ -23,7 +23,7 @@ import org.jruby.embed.jsr223.JRubyEngineFactory;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-import de.fzi.aoide.replica.util.ScriptRunner;
+import de.fzi.replica.util.ScriptRunner;
 
 /**
  * @author Jan Novacek novacek@fzi.de
