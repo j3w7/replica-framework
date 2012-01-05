@@ -23,7 +23,7 @@ import com.ontoprise.ontostudio.owl.gui.navigator.project.OWLProjectTreeElement;
 import com.ontoprise.ontostudio.owl.gui.wizard.NewOntologyWizard;
 
 import de.fzi.replica.neonplugin.commands.ReplicaProjectFactory;
-import de.fzi.replica.neonplugin.wizard.NewReplicaWizard;
+import de.fzi.replica.neonplugin.wizard.NewReplicaOntologyWizard;
 
 /* 
  * Created on: 01.07.2005
@@ -46,7 +46,7 @@ public class NewOWLReplicaHandler extends AbstractHandler {
                 (MTreeView)HandlerUtil.getActivePart(arg0) : null;
 
         //NewOntologyWizard wizard = null;
-        NewReplicaWizard wizard = null;
+        NewReplicaOntologyWizard wizard = null;
 
         try {
             IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -67,7 +67,7 @@ public class NewOWLReplicaHandler extends AbstractHandler {
                     IConfigurationElement confElement = confElements[i];
                     if ("wizard".equals(confElement.getName()) && getId().equals(confElement.getAttribute("id"))) { //$NON-NLS-1$ //$NON-NLS-2$             
                         //wizard = (NewOntologyWizard) confElement.createExecutableExtension("class"); //$NON-NLS-1$
-                        wizard = (NewReplicaWizard) confElement.createExecutableExtension("class"); //$NON-NLS-1$
+                        wizard = (NewReplicaOntologyWizard) confElement.createExecutableExtension("class"); //$NON-NLS-1$
                         WizardDialog wizardDialog = new WizardDialog(shell, wizard);
                         if (selection != null && (selection instanceof IStructuredSelection)) {
                             Object element = ((IStructuredSelection) selection).getFirstElement();

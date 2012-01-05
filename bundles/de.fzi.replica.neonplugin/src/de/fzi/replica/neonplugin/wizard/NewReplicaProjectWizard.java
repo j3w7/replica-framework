@@ -31,6 +31,7 @@ import com.ontoprise.ontostudio.owl.gui.Messages;
 import de.fzi.replica.neonplugin.Activator;
 import de.fzi.replica.neonplugin.commands.CreateReplicaProject;
 import de.fzi.replica.neonplugin.commands.ReplicaProjectFactory;
+
 /* 
  * Created on: 06.11.2004
  * Created by: Dirk Wenke
@@ -43,7 +44,6 @@ import de.fzi.replica.neonplugin.commands.ReplicaProjectFactory;
 /**
  * This class provides the wizard for the creation of new ontology projects.
  */
-
 public class NewReplicaProjectWizard extends Wizard implements INewWizard {
 
     private NewReplicaProjectWizardPage _defaultPage;

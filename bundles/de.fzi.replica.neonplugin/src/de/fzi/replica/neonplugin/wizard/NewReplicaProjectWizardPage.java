@@ -44,7 +44,7 @@ import com.ontoprise.ontostudio.owl.gui.Messages;
  */
 public class NewReplicaProjectWizardPage extends WizardPage {
 
-    private static final String DEFAULT_PROJECT_NAME = "NewOntologyProject"; //$NON-NLS-1$
+    private static final String DEFAULT_PROJECT_NAME = "NewReplicaOntologyProject"; //$NON-NLS-1$
 
     private Text _projectText;
     

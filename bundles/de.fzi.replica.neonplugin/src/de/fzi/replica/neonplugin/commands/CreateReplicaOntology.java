@@ -45,7 +45,7 @@ import de.fzi.replica.comm.CommManager;
 import de.fzi.replica.comm.Connection;
 import de.fzi.replica.comm.DefaultCommManagerFactory;
 import de.fzi.replica.neonplugin.Activator;
-import de.fzi.replica.neonplugin.wizard.NewReplicaWizardPage;
+import de.fzi.replica.neonplugin.wizard.NewReplicaOntologyWizardPage;
 
 /**
  * @author diwe
@@ -107,7 +107,7 @@ public class CreateReplicaOntology extends DatamodelCommand {
                 		
                 		// try to receive it
                 		CommManager commManager = new DefaultCommManagerFactory().createCommManager();
-                		Properties cp = NewReplicaWizardPage.createConnectionProperties(false);
+                		Properties cp = NewReplicaOntologyWizardPage.createConnectionProperties(false);
                 		cp.remove(CONFIG_KEYWORD_CONTAINER_ID);
                 		cp.put(CONFIG_KEYWORD_CONTAINER_ID, "client100");
                 		Connection connection = commManager.createConnection(cp); // get server propertiesTODO: server/client?!
@@ -221,10 +221,10 @@ public class CreateReplicaOntology extends DatamodelCommand {
     private void shareOntology(OWLOntology ontology)
 			throws ContainerConnectException, SharedObjectAddException {
 		Activator.getDefault().logInfo("CreateReplicaOntology.shareOntology("+ontology+")");
-		// Create and open a connection			
+		// Create and open a connection
 		CommManager commManager = new DefaultCommManagerFactory().createCommManager();
 		Connection connection = commManager.createConnection(
-				NewReplicaWizardPage.createConnectionProperties(false)); // get client propertiesTODO: server/client?!
+				NewReplicaOntologyWizardPage.createConnectionProperties(false)); // get client propertiesTODO: server/client?!
 		connection.connect();
 		// Add the shared ontology
 		ID sharedObjectID = IDFactory.getDefault().createStringID("NeOnReplicaOntology");
@@ -249,7 +249,7 @@ public class CreateReplicaOntology extends DatamodelCommand {
 		// Create and open a connection
 		CommManager commManager = new DefaultCommManagerFactory().createCommManager();
 		Connection connection = commManager.createConnection(
-				NewReplicaWizardPage.createConnectionProperties(false)); // get server propertiesTODO: server/client?!
+				NewReplicaOntologyWizardPage.createConnectionProperties(false)); // get server propertiesTODO: server/client?!
 		connection.connect();
 		// Wait
 		try { Thread.sleep(2000); } catch (InterruptedException e) { e.printStackTrace(); }
@@ -257,13 +257,13 @@ public class CreateReplicaOntology extends DatamodelCommand {
 		for(ID soID : connection.getSharedObjectContainer().getSharedObjectManager().getSharedObjectIDs()) {
 			Activator.getDefault().logInfo("found sharedObjectID="+soID+" ");
 		}
-		
 		// Get the shared ontology
 		ID sharedObjectID = IDFactory.getDefault().createStringID("NeOnReplicaOntology");
 		ISharedObject sharedObject = connection.getSharedObjectContainer().
 			getSharedObjectManager().getSharedObject(sharedObjectID);
 		
-		Activator.getDefault().logInfo("(OWLOntology) sharedObject="+(OWLOntology) sharedObject);
+		Activator.getDefault().logInfo("(OWLOntology) sharedObject="+
+				(OWLOntology) sharedObject);
 		return (OWLOntology) sharedObject;
 	}
 

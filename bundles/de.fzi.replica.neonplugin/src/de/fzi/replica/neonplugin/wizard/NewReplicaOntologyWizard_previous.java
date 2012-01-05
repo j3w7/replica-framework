@@ -46,12 +46,15 @@ import de.fzi.replica.neonplugin.commands.CreateReplicaOntology;
 /**
  * This class provides a wizard for the creation of new ontologies.
  */
-public class NewReplicaWizard extends Wizard implements INewWizard {
+public class NewReplicaOntologyWizard_previous extends Wizard implements INewWizard {
 
     protected IStructuredSelection _selectedElement;
-    protected NewReplicaWizardPage _page;
+    protected NewReplicaOntologyWizardPage _page;
+    private boolean _fixed;
+    private String _fixedProjectSelection;
+    private String _fixedOntologyName;
 
-    public NewReplicaWizard() {
+    public NewReplicaOntologyWizard_previous() {
         setDefaultPageImageDescriptor(NeOnUIPlugin.getDefault().getImageRegistry().getDescriptor(SharedImages.ONTOLOGY));
 //        setWindowTitle(Messages.NewOntologyWizard_1); 
         setWindowTitle("New Replica Wizard"); 
@@ -69,7 +72,9 @@ public class NewReplicaWizard extends Wizard implements INewWizard {
      */
     @Override
 	public void addPages() {
-        _page = new NewReplicaWizardPage(_selectedElement);
+        _page = new NewReplicaOntologyWizardPage(_selectedElement);
+        if(_fixed)
+            _page.setFixed(_fixedProjectSelection, _fixedOntologyName);
         addPage(_page);
     }
 
@@ -100,6 +105,7 @@ public class NewReplicaWizard extends Wizard implements INewWizard {
      * @see org.eclipse.ui.IWorkbenchWizard#init(org.eclipse.ui.IWorkbench,
      *      org.eclipse.jface.viewers.IStructuredSelection)
      */
+    @Override
     public void init(IWorkbench workbench, IStructuredSelection selection) {
     	_selectedElement = (IStructuredSelection)workbench.getActiveWorkbenchWindow().getSelectionService().getSelection(NeOnUIPlugin.ID_ONTOLOGY_NAVIGATOR);
     }
@@ -163,6 +169,16 @@ public class NewReplicaWizard extends Wizard implements INewWizard {
         IFile file = resource.getFile(fileName);
         URI uri = file.getLocationURI();
         return uri;
+    }
+    
+    /**
+     * @param fixed
+     * @param selectionString
+     */
+    public void setFixed(boolean fixed, String fixedProjectSelection, String fixedOntologyName) {
+        _fixed = fixed;
+        _fixedProjectSelection = fixedProjectSelection;
+        _fixedOntologyName = fixedOntologyName;
     }
     
 }

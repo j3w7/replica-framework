@@ -71,6 +71,9 @@
             name="OWL2 Replica"
             id="NewOWL2ReplicaWizard">
       </category>
+      
+      
+      <!-- replica project -->
       <wizard
             name="OWL2 Replica Development Project"
             icon="icons/ontoprj_obj.gif"
@@ -79,12 +82,15 @@
             project="true"
             id="de.fzi.replica.neonplugin.wizard.NewReplicaProjectWizard">
       </wizard>
+      
+      
+      <!-- replica ontology -->
       <wizard
             name="OWL2 Replica"
             icon="icons/ontology.gif"
             category="NewOWL2ReplicaWizard"
-            class="de.fzi.replica.neonplugin.wizard.NewReplicaWizard"
-            id="de.fzi.replica.neonplugin.wizard.NewReplicaWizard">
+            class="de.fzi.replica.neonplugin.wizard.NewReplicaOntologyWizard"
+            id="de.fzi.replica.neonplugin.wizard.NewReplicaOntologyWizard">
       </wizard>
       <!--<wizard
             name="OWL2 ReplicaOntology"

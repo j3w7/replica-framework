@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.PlatformUI;
 import org.neontoolkit.core.NeOnCorePlugin;
 import org.neontoolkit.core.command.CommandException;
+import org.neontoolkit.core.command.ontology.CreateUniqueOntologyUri;
 import org.neontoolkit.core.command.ontology.ExistsOntology;
 import org.neontoolkit.core.exception.NeOnCoreException;
 import org.neontoolkit.core.project.OntologyProjectManager;
@@ -78,7 +79,7 @@ import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
 /**
  * This class provides the wizard page that is displayed in the NewOntologyWizard.
  */
-public class NewReplicaWizardPage extends WizardPage {
+public class NewReplicaOntologyWizardPage_previous extends WizardPage {
 	
 	public static boolean IS_CLIENT = true;
 	public static boolean INST0_SERVER_STARTED = true;
@@ -102,24 +103,26 @@ public class NewReplicaWizardPage extends WizardPage {
     private IStructuredSelection _selection;
     private Composite _container;
     private Combo _projectCombo;
+    protected boolean _projectComboFixed = false;
     private Button _createButton;
     private Text _ontologyUriText;
     private Text _namespaceText;
+    protected IInputValidator _uriValidator = getInputValidator();
     // Replica specific settings
     private Text _containerID;
     private Text _containerType;
+    private String _ontologyURI;
+    private String _projectName;
+    private boolean _initDone;
     private Button _isClientCheckbox;
-    
-    protected IInputValidator _uriValidator = getInputValidator();
-    
     private Properties connectionProperties;
 
-    public NewReplicaWizardPage(IStructuredSelection selection) {
+    public NewReplicaOntologyWizardPage_previous(IStructuredSelection selection) {
         super("NewReplicaOntologyWizardPage"); //$NON-NLS-1$
 //        setTitle(Messages.NewOntologyWizardPage_1); 
 //        setDescription(Messages.NewOntologyWizardPage_2);
         setTitle("Create New ReplicaOntology"); 
-      setDescription("Creates a new empty ReplicaOntology");
+        setDescription("Creates a new empty ReplicaOntology");
         _selection = selection;
         
         // Start a server
@@ -138,6 +141,7 @@ public class NewReplicaWizardPage extends WizardPage {
      * 
      * @see org.eclipse.jface.dialogs.IDialogPage#createControl(org.eclipse.swt.widgets.Composite)
      */
+    @Override
     public void createControl(Composite parent) {
         _container = new Composite(parent, SWT.NULL);
         GridLayout layout = new GridLayout(3, false);
@@ -150,8 +154,10 @@ public class NewReplicaWizardPage extends WizardPage {
         GridData gd = new GridData(GridData.FILL_HORIZONTAL);
         _ontologyUriText.setLayoutData(gd);
         _ontologyUriText.addModifyListener(new ModifyListener() {
+        	@Override
             public void modifyText(ModifyEvent e) {
-                updateStatus();
+        		if(_initDone)
+        			updateStatus();
             }
         });
 
@@ -168,9 +174,10 @@ public class NewReplicaWizardPage extends WizardPage {
         gd.grabExcessHorizontalSpace = true;
         _namespaceText.setLayoutData(gd);
         _namespaceText.addModifyListener(new ModifyListener() {
-
+        	@Override
             public void modifyText(ModifyEvent e) {
-                updateStatus();
+        		if(_initDone)
+        			updateStatus();
             }
         });
 
@@ -187,11 +194,12 @@ public class NewReplicaWizardPage extends WizardPage {
         gd.grabExcessHorizontalSpace = true;
         _projectCombo.setLayoutData(gd);
         _projectCombo.addSelectionListener(new SelectionListener() {
-
+        	@Override
             public void widgetSelected(SelectionEvent e) {
-                updateStatus();
+        		if(_initDone)
+        			updateStatus();
             }
-
+        	@Override
             public void widgetDefaultSelected(SelectionEvent e) {
             }
         });
@@ -204,7 +212,7 @@ public class NewReplicaWizardPage extends WizardPage {
         _createButton = new Button(_container, SWT.PUSH);
         _createButton.setText(Messages.NewOntologyWizardPage_11); 
         _createButton.addSelectionListener(new SelectionListener() {
-
+        	@Override
             public void widgetSelected(SelectionEvent e) {
                 NewReplicaProjectWizard wizard = new NewReplicaProjectWizard();
                 wizard.init(PlatformUI.getWorkbench(), null);
@@ -215,7 +223,7 @@ public class NewReplicaWizardPage extends WizardPage {
         		dialog.open();
         		initialize();
             }
-
+        	@Override
             public void widgetDefaultSelected(SelectionEvent e) {
             }
             
@@ -356,7 +364,7 @@ public class NewReplicaWizardPage extends WizardPage {
     }
     
     private void initialize() {
-        //initialize project combo
+    	//initialize project combo
         String[] projects;
         try {
             projects = OntologyProjectManager.getDefault().getOntologyProjects();
@@ -366,34 +374,81 @@ public class NewReplicaWizardPage extends WizardPage {
             } else if (projects.length == 1) {
                 _projectCombo.select(_projectCombo.indexOf(projects[0]));
             }
-
-            //set the current selected item
-            if (_selection != null) {
-                Object selection = _selection.getFirstElement();
-                if (selection instanceof IProjectElement) {
-                    _projectCombo.select(_projectCombo.indexOf(((IProjectElement) selection).getProjectName()));
+            //set the initial values for the id and namespace
+            if(_projectComboFixed){
+                _ontologyUriText.setText(_ontologyURI);
+                _ontologyUriText.setEnabled(false);
+                _namespaceText.setText(_ontologyURI+"#"); //$NON-NLS-1$
+                //set the current selected item
+                if(_projectName != null && !_projectName.equals("")) //$NON-NLS-1$
+                    _projectCombo.select(_projectCombo.indexOf(_projectName));
+            }else{
+                //set the current selected item
+                if (_selection != null) {
+                    Object selection = _selection.getFirstElement();
+                    if (selection instanceof IProjectElement) {
+                        _projectCombo.select(_projectCombo.indexOf(((IProjectElement) selection).getProjectName()));
+                    }
+                }
+                String newId = new CreateUniqueReplicaUri(getProjectName()).getOntologyUri();
+                _ontologyUriText.setText(newId);
+                if (newId.equals("")) { //$NON-NLS-1$
+                    _namespaceText.setText(""); //$NON-NLS-1$
+                } else {
+                    _namespaceText.setText(newId+"#"); //$NON-NLS-1$
                 }
             }
-            //set the initial values for the id and namespace
-            //String newId = new CreateUniqueOntologyUri(getProjectName()).getOntologyUri();
-            String newId = new CreateUniqueReplicaUri(getProjectName()).getOntologyUri();
-            _ontologyUriText.setText(newId);
-            if (newId.equals("")) { //$NON-NLS-1$
-                _namespaceText.setText(""); //$NON-NLS-1$
-            } else {
-            	_namespaceText.setText(newId+"#"); //$NON-NLS-1$
-            }
+            //set the current selected item
+            if(_projectName != null && !_projectName.equals("")) //$NON-NLS-1$
+                _projectCombo.select(_projectCombo.indexOf(_projectName));
+            _projectCombo.setEnabled(!_projectComboFixed);
             _container.layout(true);
-            
-            // start a local server if activated
-            // this happens in CreateReplicaOntology
-//            if(_isClientCheckbox.getEnabled()) {
-////            	shareOntology(null);
-//            }
         } catch (Exception e) {
         	e.printStackTrace();
             NeOnUIPlugin.getDefault().logError("", e); //$NON-NLS-1$
         }
+        _initDone = true;
+    	
+    	// previous version:
+    	
+//        //initialize project combo
+//        String[] projects;
+//        try {
+//            projects = OntologyProjectManager.getDefault().getOntologyProjects();
+//            _projectCombo.setItems(projects);
+//            if (projects.length == 0) {
+//                _createButton.setVisible(true);
+//            } else if (projects.length == 1) {
+//                _projectCombo.select(_projectCombo.indexOf(projects[0]));
+//            }
+//
+//            //set the current selected item
+//            if (_selection != null) {
+//                Object selection = _selection.getFirstElement();
+//                if (selection instanceof IProjectElement) {
+//                    _projectCombo.select(_projectCombo.indexOf(((IProjectElement) selection).getProjectName()));
+//                }
+//            }
+//            //set the initial values for the id and namespace
+//            //String newId = new CreateUniqueOntologyUri(getProjectName()).getOntologyUri();
+//            String newId = new CreateUniqueReplicaUri(getProjectName()).getOntologyUri();
+//            _ontologyUriText.setText(newId);
+//            if (newId.equals("")) { //$NON-NLS-1$
+//                _namespaceText.setText(""); //$NON-NLS-1$
+//            } else {
+//            	_namespaceText.setText(newId+"#"); //$NON-NLS-1$
+//            }
+//            _container.layout(true);
+//            
+//            // start a local server if activated
+//            // this happens in CreateReplicaOntology
+////            if(_isClientCheckbox.getEnabled()) {
+//////            	shareOntology(null);
+////            }
+//        } catch (Exception e) {
+//        	e.printStackTrace();
+//            NeOnUIPlugin.getDefault().logError("", e); //$NON-NLS-1$
+//        }
     }
 
     private void updateStatus() {
@@ -477,6 +532,15 @@ public class NewReplicaWizardPage extends WizardPage {
     public void performHelp() {
         String helpContextId = org.neontoolkit.gui.IHelpContextIds.OWL_CREATE_ONTOLOGY;
         PlatformUI.getWorkbench().getHelpSystem().displayHelp(helpContextId);
+    }
+    
+    /**
+     * @param projectName
+     */
+    public void setFixed(String projectName, String ontologyURI) {
+        _projectName = projectName;
+        _ontologyURI = ontologyURI;
+        _projectComboFixed = true;
     }
 
 }
