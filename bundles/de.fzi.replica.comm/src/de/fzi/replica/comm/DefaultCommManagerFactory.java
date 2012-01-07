@@ -17,6 +17,8 @@
 package de.fzi.replica.comm;
 
 public class DefaultCommManagerFactory implements CommManagerFactory {
+	
+	public static CommManager DEFAULT_INSTANCE = new CommManagerImpl();
 
 	@Override
 	public CommManager createCommManager() {

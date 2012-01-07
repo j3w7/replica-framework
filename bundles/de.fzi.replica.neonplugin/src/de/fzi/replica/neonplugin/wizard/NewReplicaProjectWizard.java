@@ -10,10 +10,15 @@
 
 package de.fzi.replica.neonplugin.wizard;
 
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_ID;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_TYPE;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.ecf.core.ContainerConnectException;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -28,6 +33,9 @@ import org.neontoolkit.gui.exception.NeonToolkitExceptionHandler;
 
 import com.ontoprise.ontostudio.owl.gui.Messages;
 
+import de.fzi.replica.comm.CommManager;
+import de.fzi.replica.comm.CommManagerImpl;
+import de.fzi.replica.comm.Connection;
 import de.fzi.replica.neonplugin.Activator;
 import de.fzi.replica.neonplugin.commands.CreateReplicaProject;
 import de.fzi.replica.neonplugin.commands.ReplicaProjectFactory;
@@ -131,4 +139,5 @@ public class NewReplicaProjectWizard extends Wizard implements INewWizard {
 	public NewReplicaProjectWizardPage getLastPage() {
 		return _defaultPage;
 	}
+	
 }

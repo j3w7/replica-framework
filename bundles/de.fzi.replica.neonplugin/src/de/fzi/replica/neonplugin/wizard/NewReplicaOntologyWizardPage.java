@@ -99,16 +99,16 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
 
     public NewReplicaOntologyWizardPage(IStructuredSelection selection) {
         super("NewReplicaOntologyWizardPage"); //$NON-NLS-1$
-        setTitle(Messages.NewReplicaOntologyWizardPage_1); 
-        setDescription(Messages.NewReplicaOntologyWizardPage_2); 
+        setTitle(Messages.NewReplicaOntologyWizardPage_1);
+        setDescription(Messages.NewReplicaOntologyWizardPage_2);
         _selection = selection;
         // Start a server
 		if(Integer.parseInt(System.getenv("INSTANCE").toString()) == 0) {
-			Activator.getDefault().logInfo("Server started");
 		  	startServer();
+		  	Activator.getDefault().logInfo("Server started");
 		}
     }
-
+    
     protected IInputValidator getInputValidator() {
         return URIUtils.getOntologyUriValidator();
     }
@@ -210,10 +210,6 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         dummy3.setVisible(false);
         dummy3.setLayoutData(gd3);
         
-//        initialize();
-//        updateStatus();
-//        setControl(_container);
-        
         /*
          * ReplicaOntology specific stuff
          */
@@ -225,12 +221,12 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         gd = new GridData(GridData.FILL_HORIZONTAL);
         gd.grabExcessHorizontalSpace = true;
         _containerID.setLayoutData(gd);
-//        _containerID.addModifyListener(new ModifyListener() {
-//        	@Override
-//            public void modifyText(ModifyEvent e) {
-//                updateStatus();
-//            }
-//        });
+        _containerID.addModifyListener(new ModifyListener() {
+        	@Override
+            public void modifyText(ModifyEvent e) {
+                updateStatus();
+            }
+        });
         _containerID.setText(targetID);
         
         gd = new GridData(GridData.FILL_HORIZONTAL);
@@ -374,7 +370,18 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
             updateStatus(Messages.NewOntologyWizardPage_9); 
             return;
         }
- 
+        
+        /*
+         *  Replica specific stuff
+         */
+        
+        containerIDClient = _containerID.getText();
+        containerIDServer = _containerID.getText();
+        containerTypeClient = _containerType.getText();
+        containerTypeServer = _containerType.getText();
+        
+        Activator.getDefault().logInfo("status updated");
+        
         updateStatus(null);
     }
 
@@ -418,16 +425,15 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
     }
     
     public static Properties createConnectionProperties(boolean server) {
-    	Activator.getDefault().logInfo(
-    			"createConnectionProperties() _isClientCheckbox.getSelection()=");
+//    	String info = "";
     	Properties connectionProperties = new Properties();
     	int instance = Integer.parseInt(System.getenv("INSTANCE").toString());
     	if(!server) { // client
-    		Activator.getDefault().logInfo(
-    			"\t client instance\n"+
-				"containerTypeClient="+containerTypeClient+"\n"+
-				"targetID="+targetID+"\n"+
-				"client"+instance);
+//    		info = "\t client instance\n"+
+//				Integer.parseInt(System.getenv("INSTANCE").toString())+"\n"+
+//				"containerTypeClient="+containerTypeClient+"\n"+
+//				"targetID="+targetID+"\n"+
+//				"client"+instance;
     		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
     		connectionProperties.put(CONFIG_KEYWORD_TARGET_ID, targetID);
 //    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDClient);
@@ -437,15 +443,15 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
 				connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, "client1");
 			}
     	} else { // server
-    		Activator.getDefault().logInfo(
-    				"\t server instance\n"+
-    				"containerTypeClient="+containerTypeClient+"\n"+
-    				"targetID="+targetID+"\n"+
-    				"client"+instance);
+//    		info = "\t server instance"+
+//				Integer.parseInt(System.getenv("INSTANCE").toString())+"\n"+
+//				"containerTypeServer="+containerTypeServer+"\n"+
+//				"containerIDServer="+containerIDServer;
     		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
     		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);    		
     	}
-    	Activator.getDefault().logInfo("connectionProperties="+connectionProperties);
+    	Activator.getDefault().logInfo("connectionProperties="+
+    			connectionProperties);
     	return connectionProperties;
     }
     

@@ -32,6 +32,8 @@ import java.util.Properties;
  */
 public interface CommManager {
 	
+//	static CommManager INSTANCE = new CommManagerImpl();
+	
 	String CONFIG_KEYWORD_DEFAULT_CONTAINER_TYPE = "defaultContainerType";
 	String CONFIG_KEYWORD_DEFAULT_CONTAINER_ID = "defaultContainerID";
 	String CONFIG_KEYWORD_DEFAULT_TARGET_ID = "defaultTargetID";

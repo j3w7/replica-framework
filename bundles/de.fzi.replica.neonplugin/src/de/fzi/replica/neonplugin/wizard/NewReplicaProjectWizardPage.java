@@ -45,7 +45,7 @@ import com.ontoprise.ontostudio.owl.gui.Messages;
 public class NewReplicaProjectWizardPage extends WizardPage {
 
     private static final String DEFAULT_PROJECT_NAME = "NewReplicaOntologyProject"; //$NON-NLS-1$
-
+    
     private Text _projectText;
     
 	public NewReplicaProjectWizardPage(ISelection selection) {
@@ -78,6 +78,19 @@ public class NewReplicaProjectWizardPage extends WizardPage {
                 dialogChanged();
             }
         });
+        
+//        _isClientCheckbox = new Button(_container, SWT.NONE);
+//        _isClientCheckbox.setText("Start local server");
+//        _isClientCheckbox.addSelectionListener(new SelectionListener() {
+//			@Override
+//			public void widgetDefaultSelected(SelectionEvent arg0) {
+//				startServer();
+//			}
+//			@Override
+//			public void widgetSelected(SelectionEvent arg0) {
+//				startServer();
+//			}
+//        });
         
         initProjectName();
         dialogChanged();
@@ -139,4 +152,5 @@ public class NewReplicaProjectWizardPage extends WizardPage {
         String helpContextId = org.neontoolkit.gui.IHelpContextIds.OWL_CREATE_ONTOLOGY_PROJECT;
         PlatformUI.getWorkbench().getHelpSystem().displayHelp(helpContextId);
     }
+    
 }
