@@ -40,7 +40,9 @@ import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
+import de.fzi.replica.OWLReplicaManager;
 import de.fzi.replica.OWLReplicaOntology;
+import de.fzi.replica.OWLReplicaOntologyImpl;
 import de.fzi.replica.comm.CommManager;
 import de.fzi.replica.comm.CommManagerFactory;
 import de.fzi.replica.comm.Connection;
@@ -101,32 +103,54 @@ public class MultipleThreadsTest extends AbstractCommTestCase {
 			try {
 //				connectAllClients();
 				c.connect();
-				assertNotNull(c.getSharedObjectContainer().getConnectedID());
 				assertTrue(true);
+				assertNotNull(c.getSharedObjectContainer().getConnectedID());
 				System.out.println("Client A connected");
+				Thread.sleep(2000);
+				ID soId = IDFactory.getDefault().createStringID("sharedobject");
+				OWLOntology o = OWLReplicaManager.createOWLOntologyManager().
+					createOntology(IRI.create("replica://ontology.com/test#zero"));
+				assertEquals(
+						c.getSharedObjectContainer().getSharedObjectManager().
+							addSharedObject(soId, (ISharedObject) o, null),
+							soId);
+				System.out.println("Client A added shared object");
 			} catch (ContainerConnectException e) {
 				e.printStackTrace();
 				assertTrue(false);
 				System.out.println("Client A connecting failed");
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (SharedObjectAddException e) {
+				e.printStackTrace();
+			} catch (OWLOntologyCreationException e) {
+				e.printStackTrace();
 			}
 		}
 	}
 	
 	class ClientBThread extends Thread {
 		public void run() {
-			Map<String, CommManager> clients = createAndReturnClients(A);
+			Map<String, CommManager> clients = createAndReturnClients(B);
 //			createClientConnection(A, createConnectionPropertiesClient(A));
-			Connection c = clients.get(A).createConnection(createConnectionPropertiesClient(A));
+			Connection c = clients.get(B).createConnection(createConnectionPropertiesClient(B));
 			try {
 //				connectClient(A);
 				c.connect();
-				assertNotNull(c.getSharedObjectContainer().getConnectedID());
 				assertTrue(true);
+				assertNotNull(c.getSharedObjectContainer().getConnectedID());
 				System.out.println("Client B connected");
+				Thread.sleep(2000);
+				ID soId = IDFactory.getDefault().createStringID("sharedobject");
+				assertNotNull(c.getSharedObjectContainer().getSharedObjectManager().
+					getSharedObject(soId));
+				System.out.println("Client B retrieved shared object");
 			} catch (ContainerConnectException e) {
 				e.printStackTrace();
 				assertTrue(false);
 				System.out.println("Client B connecting failed");
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -139,10 +163,12 @@ public class MultipleThreadsTest extends AbstractCommTestCase {
 			Thread.sleep(1000);
 			ClientAThread ca = new ClientAThread();
 			ca.start();
+			System.out.println("About to start second thread");
 			Thread.sleep(1000);
-			// wait for client to connect
+			// wait for first client connection
 			ClientBThread cb = new ClientBThread();
 			cb.start();
+			Thread.sleep(6000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
