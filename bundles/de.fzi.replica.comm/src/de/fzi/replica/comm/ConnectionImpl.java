@@ -114,7 +114,7 @@ public class ConnectionImpl implements Connection {
 			try {
 				initialize();
 			} catch (ContainerCreateException e) {
-				throw new ContainerConnectException("Initalization failed", e);
+				throw new ContainerConnectException("Initialization failed", e);
 			}
 		}
 		if (targetID != null) {
