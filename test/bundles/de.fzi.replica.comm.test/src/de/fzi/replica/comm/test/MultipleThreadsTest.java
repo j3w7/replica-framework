@@ -142,8 +142,9 @@ public class MultipleThreadsTest extends AbstractCommTestCase {
 				System.out.println("Client B connected");
 				Thread.sleep(2000);
 				ID soId = IDFactory.getDefault().createStringID("sharedobject");
-				assertNotNull(c.getSharedObjectContainer().getSharedObjectManager().
-					getSharedObject(soId));
+				ISharedObject o = c.getSharedObjectContainer().getSharedObjectManager().
+					getSharedObject(soId);
+				assertNotNull(o);
 				System.out.println("Client B retrieved shared object");
 			} catch (ContainerConnectException e) {
 				e.printStackTrace();
