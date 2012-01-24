@@ -257,7 +257,7 @@ public class ClientTestCase extends AbstractApplicationTestCase {
 			try {
 				System.out.println("creating test ontology, ontologyID="+ontologyID0);
 				OWLOntology onto0 = createTestOWLOntology(ontologyID0);
-				getClient(A).addOWLOntology(onto0, Collections.singleton("testgroup0"),
+				getClient(A).addOWLOntology(onto0, "testgroup0",
 						new OnOntologyAddedListener() {
 							@Override
 							public void onOntologyAdded(Result result) {
@@ -267,7 +267,7 @@ public class ClientTestCase extends AbstractApplicationTestCase {
 						});
 				Thread.sleep(1000);
 				OWLOntology onto1 = createTestOWLOntology(ontologyID1);
-				getClient(B).addOWLOntology(onto1, Collections.singleton("testgroup0"),
+				getClient(B).addOWLOntology(onto1, "testgroup0",
 						new OnOntologyAddedListener() {
 							@Override
 							public void onOntologyAdded(Result result) {

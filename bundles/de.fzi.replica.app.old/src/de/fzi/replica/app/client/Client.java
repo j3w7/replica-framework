@@ -75,6 +75,8 @@ public interface Client extends Application {
 	 * @param group
 	 * @param listener
 	 * @throws AddException
+	 * 
+	 * TODO add ontology to multiple groups
 	 */
 	void addOWLOntology(OWLOntology ontology, String group, OnOntologyAddedListener listener)
 			throws AddException;
