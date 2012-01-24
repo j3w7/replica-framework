@@ -91,7 +91,11 @@ public class ClientTestCase extends AbstractApplicationTestCase {
 		public void run() {
 			try {
 				OWLOntology onto0 = createTestOWLOntology(ontologyID0);
-				getClient(A).addOWLOntology(onto0, null,
+				Set<String> groups = new HashSet<String>();
+				groups.add("testgroup0");
+				groups.add("testgroup1");
+				groups.add("testgroup2");
+				getClient(A).addOWLOntology(onto0, groups,
 						new OnOntologyAddedListener() {
 							@Override
 							public void onOntologyAdded(Result result) {
@@ -100,7 +104,7 @@ public class ClientTestCase extends AbstractApplicationTestCase {
 						});
 				Thread.sleep(3000);
 				OWLOntology onto1 = createTestOWLOntology(ontologyID1);
-				getClient(B).addOWLOntology(onto1, null,
+				getClient(B).addOWLOntology(onto1, groups,
 						new OnOntologyAddedListener() {
 							@Override
 							public void onOntologyAdded(Result result) {
@@ -257,7 +261,7 @@ public class ClientTestCase extends AbstractApplicationTestCase {
 			try {
 				System.out.println("creating test ontology, ontologyID="+ontologyID0);
 				OWLOntology onto0 = createTestOWLOntology(ontologyID0);
-				getClient(A).addOWLOntology(onto0, "testgroup0",
+				getClient(A).addOWLOntology(onto0, Collections.singleton("testgroup0"),
 						new OnOntologyAddedListener() {
 							@Override
 							public void onOntologyAdded(Result result) {
@@ -267,7 +271,7 @@ public class ClientTestCase extends AbstractApplicationTestCase {
 						});
 				Thread.sleep(1000);
 				OWLOntology onto1 = createTestOWLOntology(ontologyID1);
-				getClient(B).addOWLOntology(onto1, "testgroup0",
+				getClient(B).addOWLOntology(onto1, Collections.singleton("testgroup0"),
 						new OnOntologyAddedListener() {
 							@Override
 							public void onOntologyAdded(Result result) {

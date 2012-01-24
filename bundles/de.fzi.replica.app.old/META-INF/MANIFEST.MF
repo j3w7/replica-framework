@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
-Bundle-SymbolicName: de.fzi.replica.app;singleton:=true
+Bundle-SymbolicName: de.fzi.replica.app.old;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.ecf;bundle-version="3.1.0",
  org.eclipse.ecf.provider;bundle-version="4.0.0",
