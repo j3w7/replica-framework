@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 Jan Novacek
+   Copyright 2012 Jan Novacek
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -64,7 +64,7 @@ import de.fzi.replica.util.OWLOntologyToOWLReplicaOntologyCopier;
 /**
  * 
  * @author Jan Novacek novacek@fzi.de
- * @version 0.3, 22.07.2011
+ * @version 0.3, 27.01.2012
  *
  */
 public class ClientImpl extends AbstractMasterSlaveConceptApplication 
@@ -124,6 +124,8 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 								(ID) c.get("soid"),
 								rOnto,
 								null);
+						// Wait for the shared object to become active
+						Thread.sleep(1000);
 						new OWLOntologyToOWLReplicaOntologyCopier().copy(
 								Collections.singleton(onto),
 								rOnto);
@@ -135,6 +137,12 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 						e.printStackTrace();
 						getConnectionActivityById(requestId).
 							setConnectionActivityState(AddOntology.EXCEPTION);
+						((OnOntologyAddedListener) l).
+							onOntologyAdded(Result.EXCEPTION);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+						getConnectionActivityById(requestId).
+						setConnectionActivityState(AddOntology.EXCEPTION);
 						((OnOntologyAddedListener) l).
 							onOntologyAdded(Result.EXCEPTION);
 					}
@@ -199,6 +207,7 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 	
 	@Override
 	public void connect() throws ConnectException {
+		// TODO start client if not started yet
 		try {
 			getConnection().connect();
 		} catch (ContainerConnectException e) {

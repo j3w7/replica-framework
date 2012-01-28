@@ -47,9 +47,9 @@ import org.neontoolkit.gui.util.URIUtils;
 
 import com.ontoprise.ontostudio.owl.gui.Messages;
 
-import de.fzi.replica.comm.CommManager;
-import de.fzi.replica.comm.CommManagerImpl;
-import de.fzi.replica.comm.Connection;
+import de.fzi.replica.app.Application.StartupException;
+import de.fzi.replica.app.server.DefaultServerFactory;
+import de.fzi.replica.app.server.Server;
 import de.fzi.replica.neonplugin.Activator;
 
 /* 
@@ -72,7 +72,7 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
 	
 	private static final String DEFAULT_CONTAINER_TYPE_CLIENT = "ecf.generic.client";
 	private static final String DEFAULT_CONTAINER_TYPE_SERVER = "ecf.generic.server";
-	private static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://192.168.178.100:10000/server"; // Set to interface IP
+	private static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://localhost:10000/server"; // Set to interface IP
 	private static final String DEFAULT_CONTAINER_ID_CLIENT = "client1";
 	
 	// Use for a client connection
@@ -104,7 +104,9 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         _selection = selection;
         // Start a server
 		if(Integer.parseInt(System.getenv("INSTANCE").toString()) == 0) {
-		  	startServer();
+//		  	startServer();
+		  	ServerThread t = new ServerThread();
+		  	t.start();
 		  	Activator.getDefault().logInfo("Server started");
 		}
     }
@@ -380,7 +382,7 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         containerTypeClient = _containerType.getText();
         containerTypeServer = _containerType.getText();
         
-        Activator.getDefault().logInfo("status updated");
+//        Activator.getDefault().logInfo("status updated");
         
         updateStatus(null);
     }
@@ -415,6 +417,7 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         String helpContextId = org.neontoolkit.gui.IHelpContextIds.OWL_CREATE_ONTOLOGY;
         PlatformUI.getWorkbench().getHelpSystem().displayHelp(helpContextId);
     }
+    
     /**
      * @param projectName
      */
@@ -455,13 +458,42 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
     	return connectionProperties;
     }
     
+    protected Properties createServerConfig() {
+		Properties connectionConfig = new Properties();
+		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
+		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);
+//		connectionConfig.put(CONFIG_KEYWORD_DEFAULT_CONTAINER_TYPE, containerTypeServer);
+//		connectionConfig.put(CONFIG_KEYWORD_DEFAULT_CONTAINER_ID, containerIDServer);
+		return connectionConfig;
+	}
+    
     private void startServer() {
 		try {
-			CommManager mgr = new CommManagerImpl();
-			Connection connection = mgr.createConnection(createConnectionProperties(true));
-			connection.connect();
-			Activator.getDefault().logInfo("connection==null ?   "+
-					(connection!=null?false:true));
+//			CommManager mgr = new CommManagerImpl();
+//			Connection connection = mgr.createConnection(
+//					createConnectionProperties(true));
+//			connection.connect();
+//			connection.getSharedObjectContainer().addListener(
+//					new IContainerListener() {
+//						@Override
+//						public void handleEvent(IContainerEvent event) {
+//							Activator.getDefault().logInfo(
+//									"event="+event+"\n");
+//						}
+//					});
+			
+			
+			Server s = new DefaultServerFactory().createServer(createServerConfig());
+			s.start();
+			
+			
+			/*
+			 * Debug output
+			 */
+			
+//			System.out.println("");
+//			Activator.getDefault().logInfo("connection==null ?   "+
+//					(connection!=null?false:true));
 			int instance = Integer.parseInt(System.getenv("INSTANCE").toString());
 	//		if(instance == 0) {
 	//			INST0_SERVER_STARTED = true;
@@ -472,10 +504,18 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
 	//			INST1_SERVER_STARTED = true;
 	//		}
 			Activator.getDefault().logInfo("Server started on instance "+instance);
-		} catch (ContainerConnectException e) {
+		} catch (StartupException e) {
 			e.printStackTrace();
 		}
   	}
+    
+    class ServerThread extends Thread {
+    	@Override
+    	public void run() {
+    		startServer();
+    		System.out.println("Replica server started");
+    	}
+    }
 }
 
 

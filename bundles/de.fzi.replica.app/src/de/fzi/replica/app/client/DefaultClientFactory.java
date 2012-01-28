@@ -29,7 +29,7 @@ public class DefaultClientFactory implements ClientFactory {
 		ApplicationContextImpl c = new ApplicationContextImpl();
 		c.setConfiguration(config);
 		CommManager cm = new DefaultCommManagerFactory().createCommManager();
-		cm.setConfiguration(config); // TODO no effect currently
+		cm.setConfiguration(config); // FIXME no effect currently
 		c.addService(cm);
 		Client cl = new ClientImpl(c);
 		return cl;

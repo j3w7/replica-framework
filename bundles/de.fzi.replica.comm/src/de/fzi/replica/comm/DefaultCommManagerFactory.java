@@ -22,6 +22,7 @@ public class DefaultCommManagerFactory implements CommManagerFactory {
 
 	@Override
 	public CommManager createCommManager() {
+		System.out.println("creating comm manager");
 		return new CommManagerImpl();
 	}
 
