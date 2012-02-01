@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 Jan Novacek
+   Copyright 2012 Jan Novacek
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ import uk.ac.manchester.cs.owl.owlapi.OWLOntologyImpl;
  * and declares methods for change management.
  * 
  * @author Jan Novacek novacek@fzi.de
- * @version 0.2, 04.07.2011
+ * @version 0.3, 30.01.2012
  */
 public class OWLReplicaOntologyImpl extends AbstractOWLReplicaOntology {
 	
@@ -92,6 +92,13 @@ public class OWLReplicaOntologyImpl extends AbstractOWLReplicaOntology {
 					getLocalContainerID());
 			
 			// Set up the ontology on primary object
+			if(ontologyManager == null) {				
+				// In case this ontology is created on a replica.app server
+				// instance, create a new ontology manager instance.
+				// Do not use OWLReplicaManager so we don't get another
+				// OWLReplicaInstance
+				ontologyManager = OWLManager.createOWLOntologyManager();
+			}
 			ontology = new OWLOntologyImpl(ontologyManager, ontologyID);
 		} else {
 			System.out.println("Replica(" + getID() + ") here on " +

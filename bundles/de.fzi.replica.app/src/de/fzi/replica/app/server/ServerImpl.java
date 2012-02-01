@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 Jan Novacek
+   Copyright 2012 Jan Novacek
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package de.fzi.replica.app.server;
 
 import java.security.PermissionCollection;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -40,6 +39,9 @@ import org.eclipse.ecf.core.sharedobject.events.ISharedObjectActivatedEvent;
 import org.eclipse.ecf.core.sharedobject.security.ISharedObjectPolicy;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
+import de.fzi.replica.app.AbstractMasterSlaveConceptApplication;
+import de.fzi.replica.app.ApplicationContext;
+import de.fzi.replica.app.msg.Message;
 import de.fzi.replica.comm.Connection;
 import de.fzi.replica.comm.channel.OnSignalReceivedListener;
 import de.fzi.replica.comm.channel.Signal;
@@ -47,15 +49,12 @@ import de.fzi.replica.comm.channel.SignalChannel.SendMessageException;
 import de.fzi.replica.comm.channel.SignalChannelManager.AddChannelException;
 import de.fzi.replica.comm.util.MessageCarrier;
 import de.fzi.replica.comm.util.ObjectMapBuilder;
-import de.fzi.replica.app.AbstractMasterSlaveConceptApplication;
-import de.fzi.replica.app.ApplicationContext;
-import de.fzi.replica.app.msg.Message;
 
 
 /**
  * 
  * @author Jan Novacek novacek@fzi.de
- * @version 0.3, 22.07.2011
+ * @version 0.3, 01.02.2012
  *
  */
 public class ServerImpl extends AbstractMasterSlaveConceptApplication
@@ -116,12 +115,12 @@ public class ServerImpl extends AbstractMasterSlaveConceptApplication
 		ontoSoid = new HashMap<OWLOntologyID, ID>();
 		soidOnto = new HashMap<ID, OWLOntologyID>();
 		// TODO API revision for adding groups - client/server side?
-		groups.put("devgroup0", Collections.singleton(
-				IDFactory.getDefault().createStringID("onto0")));
-		groups.put("devgroup1", Collections.singleton(
-				IDFactory.getDefault().createStringID("onto1")));
-		groups.put("devgroup2", Collections.singleton(
-				IDFactory.getDefault().createStringID("onto2")));
+//		groups.put("devgroup0", Collections.singleton(
+//				IDFactory.getDefault().createStringID("onto0")));
+//		groups.put("devgroup1", Collections.singleton(
+//				IDFactory.getDefault().createStringID("onto1")));
+//		groups.put("devgroup2", Collections.singleton(
+//				IDFactory.getDefault().createStringID("onto2")));
 	}
 	
 	@Override
@@ -146,6 +145,25 @@ public class ServerImpl extends AbstractMasterSlaveConceptApplication
 					ID clientID = ((IContainerConnectedEvent) event).getTargetID();
 					clientIDs.add(clientID);
 					System.out.println("Client connected: "+clientID);
+					
+//					/*
+//					 * Workaround: reactivate shared objects, when new client
+//					 * connects.
+//					 */
+//					ISharedObjectManager m = getConnection().
+//						getSharedObjectContainer().getSharedObjectManager();
+//					for(ID soid : m.getSharedObjectIDs()) {
+//						ISharedObject o = m.getSharedObject(soid);
+//						try {
+//							m.removeSharedObject(soid);
+//							Thread.sleep(5000);
+//							m.addSharedObject(soid, o, null);
+//						} catch (SharedObjectAddException e) {
+//							e.printStackTrace();
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+//					}
 				} else if (event instanceof IContainerDisconnectedEvent) {
 					ID clientID = ((IContainerDisconnectedEvent) event).getTargetID();
 					clientIDs.remove(clientID);

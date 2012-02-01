@@ -109,7 +109,7 @@ public interface Client extends Application {
 	 * @param groups
 	 * @param listener
 	 */
-	void getOWLOntologyIDs(Set<Object> groups, OnOntologyIDsReceivedListener listener)
+	void getOWLOntologyIDs(Set<? extends Object> groups, OnOntologyIDsReceivedListener listener)
 			throws FetchException;
 
 	/**

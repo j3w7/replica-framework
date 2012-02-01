@@ -32,6 +32,7 @@ import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.identity.ID;
 import org.eclipse.ecf.core.identity.IDCreateException;
 import org.eclipse.ecf.core.identity.IDFactory;
+import org.eclipse.ecf.core.sharedobject.ISharedObject;
 import org.eclipse.ecf.core.sharedobject.ISharedObjectManager;
 import org.eclipse.ecf.core.sharedobject.SharedObjectAddException;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -58,13 +59,12 @@ import de.fzi.replica.comm.channel.SignalChannel.SendMessageException;
 import de.fzi.replica.comm.channel.SignalChannelManager.AddChannelException;
 import de.fzi.replica.comm.util.MessageCarrier;
 import de.fzi.replica.comm.util.ObjectMapBuilder;
-import de.fzi.replica.util.OWLOntologyToOWLReplicaOntologyCopier;
 
 
 /**
  * 
  * @author Jan Novacek novacek@fzi.de
- * @version 0.3, 27.01.2012
+ * @version 0.3, 29.01.2012
  *
  */
 public class ClientImpl extends AbstractMasterSlaveConceptApplication 
@@ -119,16 +119,12 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 							getConnection().getSharedObjectContainer().
 								getSharedObjectManager();
 						OWLOntology onto = (OWLOntology) getArgument(requestId);
-						OWLReplicaOntology rOnto = createOWLReplicaOntologyOf(onto);
 						soM.addSharedObject(
 								(ID) c.get("soid"),
-								rOnto,
+								(ISharedObject) onto,
 								null);
 						// Wait for the shared object to become active
 						Thread.sleep(1000);
-						new OWLOntologyToOWLReplicaOntologyCopier().copy(
-								Collections.singleton(onto),
-								rOnto);
 						getConnectionActivityById(requestId).
 							setConnectionActivityState(AddOntology.RECEIVED_OK);
 						((OnOntologyAddedListener) l).
@@ -153,6 +149,11 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 							getSharedObjectManager();
 					OWLOntology onto = (OWLOntology)
 						soM.getSharedObject((ID) c.get("soid"));
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					((OnOntologyReceivedListener) l).
 						onOntologyReceived(Result.OK, onto);
 					System.out.println("l="+l+", onto="+onto);
@@ -331,7 +332,7 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 	}
 	
 	@Override
-	public void getOWLOntologyIDs(final Set<Object> groups,
+	public void getOWLOntologyIDs(final Set<? extends Object> groups,
 			 OnOntologyIDsReceivedListener listener) throws FetchException {
 		final long requestId = generateRequestID();
 		Connection c = getConnection();

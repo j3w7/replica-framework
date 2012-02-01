@@ -10,20 +10,18 @@
 
 package de.fzi.replica.neonplugin.commands;
 
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_ID;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_TYPE;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.ecf.core.ContainerConnectException;
-import org.eclipse.ecf.core.IContainerListener;
-import org.eclipse.ecf.core.events.ContainerConnectedEvent;
-import org.eclipse.ecf.core.events.IContainerEvent;
-import org.eclipse.ecf.core.identity.ID;
-import org.eclipse.ecf.core.identity.IDFactory;
-import org.eclipse.ecf.core.sharedobject.ISharedObject;
-import org.eclipse.ecf.core.sharedobject.ISharedObjectContainer;
-import org.eclipse.ecf.core.sharedobject.SharedObjectAddException;
 import org.neontoolkit.core.NeOnCorePlugin;
 import org.neontoolkit.core.command.CommandException;
 import org.neontoolkit.core.command.DatamodelCommand;
@@ -42,26 +40,17 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import com.ontoprise.ontostudio.owl.model.OWLManchesterProjectFactory;
 import com.ontoprise.ontostudio.owl.model.OWLNamespaces;
 
-import de.fzi.replica.OWLReplicaOntology;
 import de.fzi.replica.OWLReplicaOntologyFactoryImpl;
-import de.fzi.replica.OWLReplicaOntologyImpl;
 import de.fzi.replica.app.Application.StartupException;
 import de.fzi.replica.app.client.Client;
 import de.fzi.replica.app.client.Client.AddException;
 import de.fzi.replica.app.client.Client.ConnectException;
 import de.fzi.replica.app.client.Client.FetchException;
 import de.fzi.replica.app.client.Client.OnOntologyAddedListener;
+import de.fzi.replica.app.client.Client.OnOntologyIDsReceivedListener;
 import de.fzi.replica.app.client.Client.OnOntologyReceivedListener;
 import de.fzi.replica.app.client.DefaultClientFactory;
-import de.fzi.replica.comm.CommManager;
-import de.fzi.replica.comm.Connection;
-import de.fzi.replica.comm.DefaultCommManagerFactory;
 import de.fzi.replica.neonplugin.Activator;
-import de.fzi.replica.neonplugin.wizard.NewReplicaOntologyWizardPage;
-
-import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_ID;
-import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
-import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_TYPE;
 
 /**
  * @author diwe, novacek
@@ -169,7 +158,7 @@ public class CreateReplicaOntology extends DatamodelCommand {
                 manager.addOntologyFactory(new OWLReplicaOntologyFactoryImpl());
                 // Check factories
                 for(OWLOntologyFactory fac : manager.getOntologyFactories()) {
-//                	Activator.getDefault().logInfo("CreateReplicaOntology.perform(): fac="+fac);
+                	Activator.getDefault().logInfo("CreateReplicaOntology.perform(): fac="+fac);
                 }
                 OWLOntology ontology = manager.createOntology(IRI.create(ontologyURI));
                 manager.setOntologyDocumentIRI(ontology, IRI.create(physicalUri));
@@ -188,7 +177,6 @@ public class CreateReplicaOntology extends DatamodelCommand {
                 		try {
 							Thread.sleep(2000);
 						} catch(InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
                 		
@@ -321,13 +309,18 @@ public class CreateReplicaOntology extends DatamodelCommand {
 						System.out.println("onOntologyAdded(), result="+result);
 					}
 			});
+			Thread.sleep(8000);
 		} catch (AddException e) {
 			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+		System.out.println("shareOntology() finished, ontology="+ontology);
     }
     
     private OWLOntology retrieveOntology()
-		throws ContainerConnectException {
+			throws ContainerConnectException {
+    	System.out.println("retrieveOntology()");
     	
     	// TODO get onto ID from a dialog
     	OWLOntologyID ontoID = new OWLOntologyID(
@@ -335,19 +328,31 @@ public class CreateReplicaOntology extends DatamodelCommand {
     	
     	final OntoHolder h = new OntoHolder();
     	try {
+    		client.getOWLOntologyIDs(Collections.singleton("neon"),
+    				new OnOntologyIDsReceivedListener() {
+				@Override
+				public void onOntologyIDsGot(Result result,
+						Map<Object, Set<OWLOntologyID>> ids) {
+					System.out.println("onOntologyIDsGot("+
+							result+", ids="+ids);
+				}
+			});
 			client.getOWLOntology(ontoID, new OnOntologyReceivedListener() {
 				@Override
 				public void onOntologyReceived(Result result, OWLOntology onto) {
-					System.out.println("onOntologyReceived(), result="+result);
+					System.out.println("onOntologyReceived(), result="+result+
+							", onto="+onto);
 					h.onto = onto;
 				}
 			});
+			while(h.onto == null) {
+				// wait
+				Thread.sleep(1000);
+			}
 		} catch (FetchException e) {
 			e.printStackTrace();
-		}
-		
-		while(h.onto == null) {
-			// wait
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
     	
 		System.out.println("retrieveOntology() finished, h.onto="+h.onto);
