@@ -74,15 +74,12 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 	private Map<Object, AsyncMethodCallback> methodCallbacks;
 	private Map<Object, Object> args;
 	
-//	private OWLOntologyCopier<OWLOntology, OWLReplicaOntology> copier;
-	
 	protected ClientImpl(ApplicationContext context) {
 		super(context);
 		methodCallbacks = Collections.synchronizedMap(
 				new HashMap<Object, AsyncMethodCallback>());
 		args = Collections.synchronizedMap(
 				new HashMap<Object, Object>());
-//		copier = new OWLOntologyToOWLReplicaOntologyCopier();
 	}
 	
 	@Override
@@ -156,7 +153,7 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 					}
 					((OnOntologyReceivedListener) l).
 						onOntologyReceived(Result.OK, onto);
-					System.out.println("l="+l+", onto="+onto);
+//					System.out.println("l="+l+", onto="+onto);
 					break;
 				case RESPONSE_ONTOIDS_GROUP_OK:
 					try {						
@@ -247,10 +244,12 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 		final long requestId = generateRequestID();
 		ConnectionActivity a = cntxt.addConnectionActivity(requestId);
 		registerConnectionActivity(requestId, a);
-		registerArgument(requestId, ontology);
-		a.setConnectionActivityStates(AddOntology.stateMap);
-		a.setConnectionActivityState(AddOntology.WAIT_FOR_SOID);
 		try {
+			registerArgument(requestId, convertToReplicaOntology(ontology));
+//			System.out.println("registerArgument, ontology="+ontology.getClass());
+//			registerArgument(requestId, ontology);
+			a.setConnectionActivityStates(AddOntology.stateMap);
+			a.setConnectionActivityState(AddOntology.WAIT_FOR_SOID);
 			SignalChannel idInfoChannel = getPrimaryChannel(c);
 			idInfoChannel.sendSignal(
 					IDFactory.getDefault().createStringID(
@@ -284,8 +283,34 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 			e.printStackTrace();
 			throw new AddException("Could not create container", e);
 		}
+//		catch (OWLOntologyCreationException e) {
+//			e.printStackTrace();
+//			throw new AddException("Could not convert ontology", e);
+//		}
 	}
 	
+	private OWLOntology convertToReplicaOntology(OWLOntology ontology) {
+		// leave empty, is overridden by an aspect 
+		return null;
+	}
+	
+//	private OWLOntology convertToReplicaOntology(OWLOntology ontology)
+//			throws OWLOntologyCreationException {
+//		OWLOntologyID ontologyID = ontology.getOntologyID();
+//		IRI ontoIri = ontologyID.getOntologyIRI();
+//		String newIri = ontoIri.toString();
+//		int dd = newIri.indexOf(':');
+//		newIri = "replica"+newIri.substring(dd);
+//		OWLOntologyID targetOntoID = new OWLOntologyID(IRI.create(newIri));
+//		OWLOntology	target = OWLReplicaManager.createOWLOntologyManager().
+//			createOntology(targetOntoID);
+//		((OWLReplicaOntology) target).
+//		new OWLOntologyToOWLReplicaOntologyCopier().copy(
+//				Collections.singleton(ontology),
+//				(OWLReplicaOntology) target);
+//		return target;
+//	}
+
 	@Override
 	public void getOWLOntology(final OWLOntologyID ontologyID,
 			OnOntologyReceivedListener listener) throws FetchException {
@@ -483,6 +508,7 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 ////	}
 //}
 	
+	@SuppressWarnings("unused")
 	private OWLReplicaOntology createOWLReplicaOntologyOf(OWLOntology onto) {
 		OWLOntologyManager man = OWLReplicaManager.createOWLOntologyManager();
 		try {

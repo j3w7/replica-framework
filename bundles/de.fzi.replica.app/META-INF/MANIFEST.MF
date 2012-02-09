@@ -23,7 +23,8 @@ Require-Bundle: org.eclipse.ecf;bundle-version="3.1.0",
  org.eclipse.ecf.remoteservice;bundle-version="6.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: %Bundle-Vendor
-Import-Package: org.osgi.framework,
+Import-Package: de.fzi.replica.app,
+ org.osgi.framework,
  org.osgi.service.log,
  org.osgi.util.tracker
 Export-Package: de.fzi.replica.app,

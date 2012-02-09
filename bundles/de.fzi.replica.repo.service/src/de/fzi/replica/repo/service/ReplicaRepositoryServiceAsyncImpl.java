@@ -81,6 +81,7 @@ public class ReplicaRepositoryServiceAsyncImpl
 	
 	@Override
 	public void getGroupsAsync(IAsyncCallback<Set<Object>> callback) {
+		System.out.println("getGroupsAsync");
 		// TODO Auto-generated method stub
 		callback.onSuccess(groups.keySet());
 	}

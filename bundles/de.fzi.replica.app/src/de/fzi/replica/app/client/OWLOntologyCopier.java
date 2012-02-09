@@ -14,22 +14,23 @@
    limitations under the License.
 */
 
-package de.fzi.replica;
+package de.fzi.replica.app.client;
+
+import java.util.Set;
+
+import org.semanticweb.owlapi.model.OWLOntology;
 
 /**
- * Will be used for tracing and implementing access restrictions.
- * 
  * @author Jan Novacek novacek@fzi.de
- * @version 1.0, 11.09.2010
+ * @version version, 31.08.2010
  *
+ * @param <Source>
+ * @param <Target>
  */
-public aspect OWLReplicaOntologyProxy {
+public abstract class OWLOntologyCopier<Source extends OWLOntology, Target extends OWLOntology> {
 	
-	before(OWLReplicaOntologyImpl sharedOnto):
-		execution(@ProxyMethod * *(..))
-		&& target(sharedOnto) {
-//		System.out.println(thisJoinPoint.getSignature().getName()+"() invoked"+
-//				" on class "+thisJoinPoint.getSignature().getDeclaringTypeName());
-	}
+	// one day there may be filters and stuff here
+	
+	abstract void copy(Set<Source> sources, Target target);
 	
 }
