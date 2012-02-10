@@ -33,9 +33,10 @@ import org.semanticweb.owlapi.model.OWLOntologyChange;
  * @version version 1.0, 20.10.2010
  *
  */
-public class OWLOntologyToOWLMutableOntologyCopier extends OWLOntologyCopier<OWLOntology, OWLMutableOntology> {
+public class OWLOntologyToOWLMutableOntologyCopier
+	extends OWLOntologyCopier<OWLOntology, OWLMutableOntology> {
 	
-	// Maybe we want filters some day, so dont use static methods
+	// Maybe we want filters some day, so do not use static methods
 
 	@Override
 	public void copy(Set<OWLOntology> sources, OWLMutableOntology target) {

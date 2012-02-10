@@ -23,7 +23,6 @@ import java.util.Set;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.AddAxiom;
-import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLMutableOntology;
 import org.semanticweb.owlapi.model.OWLOntology;
@@ -32,10 +31,9 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
-import uk.ac.manchester.cs.owl.owlapi.OWLOntologyImpl;
-
 import de.fzi.replica.OWLReplicaManager;
 import de.fzi.replica.OWLReplicaOntologyImpl;
+import de.fzi.replica.util.OWLReplicaOntologyConverter;
 
 /**
  * 
@@ -46,6 +44,81 @@ import de.fzi.replica.OWLReplicaOntologyImpl;
  *
  */
 public privileged aspect ConvertOntology {
+	
+	OWLOntology around(OWLOntology o):
+			execution(OWLOntology ClientImpl.convertToReplicaOntology(OWLOntology)) &&
+			args(o) {
+//		System.out.println("around");
+		if(o instanceof OWLReplicaOntologyImpl) {
+			return o;
+		}
+		
+		
+//		OWLOntologyID ontologyID = o.getOntologyID();
+//		IRI ontoIri = ontologyID.getOntologyIRI();
+//		String newIri = ontoIri.toString();
+//		int dd = newIri.indexOf(':');
+//		newIri = "replica"+newIri.substring(dd);
+//		OWLOntologyID targetOntoID = new OWLOntologyID(IRI.create(newIri));
+		
+		
+		
+		OWLOntology	target = null;
+//		System.out.println("before try");
+		try {
+			// Create target and initialize
+			OWLOntologyID targetOntoID = OWLReplicaOntologyConverter.
+				convertToReplicaOntologyID(o.getOntologyID());
+			target = OWLReplicaManager.createOWLOntologyManager().
+				createOntology(targetOntoID);
+			OWLOntologyManager man = OWLManager.createOWLOntologyManager();
+			((OWLReplicaOntologyImpl) target).ontology
+				= (OWLMutableOntology) man.createOntology(targetOntoID);
+//			System.out.println("target created");
+		} catch(OWLOntologyCreationException e) {
+			System.out.println(e);
+		}
+//		System.out.println("target created 2");
+		Util.copy(
+				Collections.singleton(o),
+				((OWLReplicaOntologyImpl) target).ontology);
+		o = target; // FIXME no effect
+//		System.out.println("ontology converted");
+		return target;
+	}
+
+}
+
+/**
+ * 
+ * @author Jan Novacek novacek@fzi.de
+ * @version 0.1, 07.02.2012
+ *
+ */
+class Util {
+	public static void copy(Set<OWLOntology> sources, OWLMutableOntology ontology) {
+		for(OWLOntology source : sources) {
+			/*
+			 * TODO set the way this is done in a global property
+			 * Beware: this has a major impact on replication speed!
+			 * With current (25.10.10) settings, even when replicating
+			 * just locally some test cases fail because of test timings.
+			 */
+			
+	//		// One by one
+	//		for(OWLAxiom axiom : source.getAxioms()) {
+	//			AddAxiom addAxiom = new AddAxiom(target, axiom);
+	//			target.applyChange(addAxiom);
+	//		}
+			
+			// Aggregate changes
+			List<OWLOntologyChange> changes = new LinkedList<OWLOntologyChange>();
+			for(OWLAxiom axiom : source.getAxioms()) {
+				changes.add(new AddAxiom(ontology, axiom));
+			}
+			ontology.getOWLOntologyManager().applyChanges(changes);
+		}
+	}
 	
 //	before(
 //			ClientImpl cl,
@@ -83,67 +156,4 @@ public privileged aspect ConvertOntology {
 //		System.out.println("Ontology converted! Ontology: "+o.getClass());
 //	}
 	
-	OWLOntology around(OWLOntology o):
-			execution(OWLOntology ClientImpl.convertToReplicaOntology(OWLOntology)) &&
-			args(o) {
-		if(o instanceof OWLReplicaOntologyImpl) {
-			return o;
-		}
-		OWLOntologyID ontologyID = o.getOntologyID();
-		IRI ontoIri = ontologyID.getOntologyIRI();
-		String newIri = ontoIri.toString();
-		int dd = newIri.indexOf(':');
-		newIri = "replica"+newIri.substring(dd);
-		OWLOntologyID targetOntoID = new OWLOntologyID(IRI.create(newIri));
-		OWLOntology	target = null;
-		try {
-			// Create target and initialize
-			target = OWLReplicaManager.createOWLOntologyManager().
-				createOntology(targetOntoID);
-			OWLOntologyManager man = OWLManager.createOWLOntologyManager();
-			((OWLReplicaOntologyImpl) target).ontology
-				= (OWLMutableOntology) man.createOntology(targetOntoID);
-		} catch(OWLOntologyCreationException e) {
-			System.out.println(e);
-		}
-		Util.copy(
-				Collections.singleton(o),
-				((OWLReplicaOntologyImpl) target).ontology);
-		o = target; // FIXME no effect
-		return target;
-	}
-	
 }
-
-/**
- * 
- * @author Jan Novacek novacek@fzi.de
- * @version 0.1, 07.02.2012
- *
- */
-class Util {
-	public static void copy(Set<OWLOntology> sources, OWLMutableOntology ontology) {
-		for(OWLOntology source : sources) {
-			/*
-			 * TODO set the way this is done in a global property
-			 * Beware: this has a major impact on replication speed!
-			 * With current (25.10.10) settings, even when replicating
-			 * just locally some test cases fail because of test timings.
-			 */
-			
-//			// One by one
-//			for(OWLAxiom axiom : source.getAxioms()) {
-//				AddAxiom addAxiom = new AddAxiom(target, axiom);
-//				target.applyChange(addAxiom);
-//			}
-			
-			// Aggregate changes
-			List<OWLOntologyChange> changes = new LinkedList<OWLOntologyChange>();
-			for(OWLAxiom axiom : source.getAxioms()) {
-				changes.add(new AddAxiom(ontology, axiom));
-			}
-			ontology.getOWLOntologyManager().applyChanges(changes);
-		}
-	}
-}
-

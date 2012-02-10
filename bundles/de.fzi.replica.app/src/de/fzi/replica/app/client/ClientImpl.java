@@ -59,6 +59,7 @@ import de.fzi.replica.comm.channel.SignalChannel.SendMessageException;
 import de.fzi.replica.comm.channel.SignalChannelManager.AddChannelException;
 import de.fzi.replica.comm.util.MessageCarrier;
 import de.fzi.replica.comm.util.ObjectMapBuilder;
+import de.fzi.replica.util.OWLReplicaOntologyConverter;
 
 
 /**
@@ -237,7 +238,8 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 	}
 	
 	@Override
-	public void addOWLOntology(final OWLOntology ontology, final Set<? extends Object> groups,
+	public void addOWLOntology(final OWLOntology ontology, 
+			final Set<? extends Object> groups,
 			OnOntologyAddedListener listener) throws AddException {
 		Connection c = getConnection();
 		ConnectionContext cntxt = c.getConnectionContext();
@@ -245,7 +247,7 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 		ConnectionActivity a = cntxt.addConnectionActivity(requestId);
 		registerConnectionActivity(requestId, a);
 		try {
-			registerArgument(requestId, convertToReplicaOntology(ontology));
+			registerArgument(requestId, OWLReplicaOntologyConverter.convert(ontology));
 //			System.out.println("registerArgument, ontology="+ontology.getClass());
 //			registerArgument(requestId, ontology);
 			a.setConnectionActivityStates(AddOntology.stateMap);

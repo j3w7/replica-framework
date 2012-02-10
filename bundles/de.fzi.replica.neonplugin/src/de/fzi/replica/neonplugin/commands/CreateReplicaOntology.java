@@ -84,9 +84,12 @@ public class CreateReplicaOntology extends DatamodelCommand {
         try {
         	client.start();
 			client.connect();
+			Thread.sleep(5000);
 		} catch (ConnectException e) {
 			e.printStackTrace();
 		} catch (StartupException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
     }
@@ -155,7 +158,10 @@ public class CreateReplicaOntology extends DatamodelCommand {
                 String physicalUri = project.getFile(fileName).getLocationURI().toString();
                 // MAPI remove OWLOntologyManager
                 OWLOntologyManager manager = ontologyProject.getAdapter(OWLOntologyManager.class);
-                manager.addOntologyFactory(new OWLReplicaOntologyFactoryImpl());
+                
+                
+//                manager.addOntologyFactory(new OWLReplicaOntologyFactoryImpl());
+                
                 // Check factories
                 for(OWLOntologyFactory fac : manager.getOntologyFactories()) {
                 	Activator.getDefault().logInfo("CreateReplicaOntology.perform(): fac="+fac);
@@ -296,9 +302,6 @@ public class CreateReplicaOntology extends DatamodelCommand {
 //    Connection connection;
     
     
-    
-    
-    
     private void shareOntology(final OWLOntology ontology) {
     	System.out.println("shareOntology(), ID="+ontology.getOntologyID());
     	try {
@@ -337,6 +340,8 @@ public class CreateReplicaOntology extends DatamodelCommand {
 							result+", ids="+ids);
 				}
 			});
+    		Thread.sleep(5000);
+    		System.out.println("client.getOWLOntology");
 			client.getOWLOntology(ontoID, new OnOntologyReceivedListener() {
 				@Override
 				public void onOntologyReceived(Result result, OWLOntology onto) {

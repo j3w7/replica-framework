@@ -16,7 +16,6 @@ import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
 
 import java.util.Properties;
 
-import org.eclipse.ecf.core.ContainerConnectException;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -377,12 +376,16 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
          *  Replica specific stuff
          */
         
-        containerIDClient = _containerID.getText();
-        containerIDServer = _containerID.getText();
-        containerTypeClient = _containerType.getText();
-        containerTypeServer = _containerType.getText();
-        
-//        Activator.getDefault().logInfo("status updated");
+//        containerIDClient = _containerID.getText();
+//        containerIDServer = _containerID.getText();
+//        containerTypeClient = _containerType.getText();
+//        containerTypeServer = _containerType.getText();
+//        
+//        Activator.getDefault().logInfo("status updated, "+
+//        		"containerIDClient="+containerIDClient+"\n"+
+//        		"containerIDServer="+containerIDServer+"\n"+
+//        		"containerTypeClient="+containerTypeClient+"\n"+
+//        		"containerTypeServer="+containerTypeServer+"\n");
         
         updateStatus(null);
     }
