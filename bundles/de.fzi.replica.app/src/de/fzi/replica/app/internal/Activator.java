@@ -16,6 +16,9 @@
 
 package de.fzi.replica.app.internal;
 
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_ID;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_TYPE;
+
 import java.util.Properties;
 
 import org.eclipse.ecf.core.ContainerCreateException;
@@ -30,6 +33,8 @@ import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.log.LogService;
 import org.osgi.util.tracker.ServiceTracker;
 
+import de.fzi.replica.app.server.DefaultServerFactory;
+import de.fzi.replica.app.server.Server;
 import de.fzi.replica.app.server.rs.ReplicaRepositoryServiceAsync;
 import de.fzi.replica.app.server.rs.ReplicaRepositoryServiceAsyncImpl;
 import de.fzi.replica.comm.CommManager;
@@ -73,6 +78,28 @@ public class Activator implements BundleActivator {
 		instance = this;
 		registerRemoteService();
 		System.out.println("Replica Application bundle started");
+		
+		// Start a server, if specified
+		Properties p = new Properties();
+		p.load(context.getBundle().
+				getResource("config.properties").openStream());
+		if("true".equals(p.getProperty("server.start", "false"))) {
+			System.out.println("\tStarting a server");
+			DefaultServerFactory f = new DefaultServerFactory();
+			Server s = f.createServer(createServerConfig(
+					p.getProperty("server.type"),
+					p.getProperty("server.id")));
+			s.start();
+		}
+	}
+	
+	protected Properties createServerConfig(
+			String containerTypeServer,
+			String containerIDServer) {
+		Properties connectionConfig = new Properties();
+		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
+		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);
+		return connectionConfig;
 	}
 	
 	/*

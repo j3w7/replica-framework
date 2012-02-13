@@ -22,3 +22,5 @@ Export-Package: de.fzi.replica.comm,
  de.fzi.replica.comm.channel,
  de.fzi.replica.comm.util
 Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: lib/commons-io-2.1.jar,
+ .
