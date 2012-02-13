@@ -291,10 +291,20 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 //		}
 	}
 	
-	private OWLOntology convertToReplicaOntology(OWLOntology ontology) {
-		// leave empty, is overridden by an aspect 
-		return null;
-	}
+	
+	
+	/*
+	 * Do not use AspectJ, does not work in NeOn Toolkit.
+	 */
+	
+//	private OWLOntology convertToReplicaOntology(OWLOntology ontology) {
+//		// leave empty, is overridden by an aspect 
+//		return null;
+//	}
+	
+	
+	
+	
 	
 //	private OWLOntology convertToReplicaOntology(OWLOntology ontology)
 //			throws OWLOntologyCreationException {
