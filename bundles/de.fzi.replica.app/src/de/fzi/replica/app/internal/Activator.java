@@ -18,6 +18,7 @@ package de.fzi.replica.app.internal;
 
 import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_ID;
 import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_TYPE;
+import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
 
 import java.util.Properties;
 
@@ -91,6 +92,20 @@ public class Activator implements BundleActivator {
 					p.getProperty("server.id")));
 			s.start();
 		}
+		
+		// Start a client, if specified
+		Properties p1 = new Properties();
+		p1.load(context.getBundle().
+				getResource("config.properties").openStream());
+		if("true".equals(p1.getProperty("client.start", "false"))) {
+			System.out.println("\tStarting a client");
+			DefaultServerFactory f = new DefaultServerFactory();
+			Server s = f.createServer(createClientConfig(
+					p1.getProperty("client.type"),
+					p1.getProperty("client.id"),
+					p1.getProperty("client.target")));
+			s.start();
+		}
 	}
 	
 	protected Properties createServerConfig(
@@ -99,6 +114,17 @@ public class Activator implements BundleActivator {
 		Properties connectionConfig = new Properties();
 		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
 		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);
+		return connectionConfig;
+	}
+	
+	protected Properties createClientConfig(
+			String containerTypeServer,
+			String containerIDServer,
+			String containerTarget) {
+		Properties connectionConfig = new Properties();
+		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
+		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);
+		connectionConfig.put(CONFIG_KEYWORD_TARGET_ID, containerTarget);
 		return connectionConfig;
 	}
 	
