@@ -19,10 +19,8 @@ package de.fzi.replica.app.internal;
 import java.util.Properties;
 
 import org.eclipse.ecf.core.ContainerCreateException;
-import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.core.IContainerManager;
 import org.eclipse.ecf.core.util.SystemLogService;
-import org.eclipse.ecf.remoteservice.IRemoteServiceContainerAdapter;
 import org.eclipse.ecf.remoteservice.IRemoteServiceRegistration;
 import org.eclipse.ecf.storage.IIDStore;
 import org.eclipse.equinox.security.storage.ISecurePreferences;
