@@ -31,6 +31,8 @@ import de.fzi.replica.OWLReplicaManager;
 import de.fzi.replica.OWLReplicaOntology;
 
 /**
+ * Convert an OWLOntologyImpl instance to an OWLReplicaOntologyImpl.
+ * 
  * @author Jan Novacek novacek@fzi.de
  * @version 0.1, 09.02.2012
  */
