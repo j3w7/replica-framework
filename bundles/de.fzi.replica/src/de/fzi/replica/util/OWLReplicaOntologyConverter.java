@@ -48,6 +48,7 @@ public class OWLReplicaOntologyConverter {
 			new OWLOntologyToOWLMutableOntologyCopier().copy(
 					Collections.singleton(onto), 
 						((AbstractOWLReplicaOntology) ro).ontology);
+			
 //			((AbstractOWLReplicaOntology) ro).ontology = (OWLMutableOntology) onto;
 			return ro;
 		} catch (OWLOntologyCreationException e) {
