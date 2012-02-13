@@ -20,7 +20,6 @@ import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_ID;
 import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_CONTAINER_TYPE;
 import static de.fzi.replica.comm.Connection.CONFIG_KEYWORD_TARGET_ID;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -33,21 +32,15 @@ import org.eclipse.ecf.core.sharedobject.ISharedObject;
 import org.eclipse.ecf.core.sharedobject.SharedObjectAddException;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
-import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
-import org.semanticweb.owlapi.model.OWLOntologyID;
 
 import de.fzi.replica.OWLReplicaManager;
-import de.fzi.replica.OWLReplicaOntology;
-import de.fzi.replica.OWLReplicaOntologyImpl;
 import de.fzi.replica.comm.CommManager;
 import de.fzi.replica.comm.CommManagerFactory;
 import de.fzi.replica.comm.Connection;
 import de.fzi.replica.comm.DefaultCommManagerFactory;
-import de.fzi.replica.util.OWLOntologyToOWLReplicaOntologyCopier;
 
 /**
  * 
