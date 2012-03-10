@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Bundles.iml" filepath="$PROJECT_DIR$/Bundles.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica/De.fzi.replica.iml" filepath="$PROJECT_DIR$/de.fzi.replica/De.fzi.replica.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.app/De.fzi.replica.app.iml" filepath="$PROJECT_DIR$/de.fzi.replica.app/De.fzi.replica.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.app.old/De.fzi.replica.app.old.iml" filepath="$PROJECT_DIR$/de.fzi.replica.app.old/De.fzi.replica.app.old.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.changes/De.fzi.replica.changes.iml" filepath="$PROJECT_DIR$/de.fzi.replica.changes/De.fzi.replica.changes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.comm/De.fzi.replica.comm.iml" filepath="$PROJECT_DIR$/de.fzi.replica.comm/De.fzi.replica.comm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.demo/De.fzi.replica.demo.iml" filepath="$PROJECT_DIR$/de.fzi.replica.demo/De.fzi.replica.demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.dictionary/De.fzi.replica.dictionary.iml" filepath="$PROJECT_DIR$/de.fzi.replica.dictionary/De.fzi.replica.dictionary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.fragments/De.fzi.replica.fragments.iml" filepath="$PROJECT_DIR$/de.fzi.replica.fragments/De.fzi.replica.fragments.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.neonplugin/De.fzi.replica.neonplugin.iml" filepath="$PROJECT_DIR$/de.fzi.replica.neonplugin/De.fzi.replica.neonplugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.old/De.fzi.replica.old.iml" filepath="$PROJECT_DIR$/de.fzi.replica.old/De.fzi.replica.old.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.policies/De.fzi.replica.policies.iml" filepath="$PROJECT_DIR$/de.fzi.replica.policies/De.fzi.replica.policies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.query/De.fzi.replica.query.iml" filepath="$PROJECT_DIR$/de.fzi.replica.query/De.fzi.replica.query.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.repo/De.fzi.replica.repo.iml" filepath="$PROJECT_DIR$/de.fzi.replica.repo/De.fzi.replica.repo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.repo.client/De.fzi.replica.repo.client.iml" filepath="$PROJECT_DIR$/de.fzi.replica.repo.client/De.fzi.replica.repo.client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/de.fzi.replica.repo.service/De.fzi.replica.repo.service.iml" filepath="$PROJECT_DIR$/de.fzi.replica.repo.service/De.fzi.replica.repo.service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/org.semanticweb.owl/Org.semanticweb.owl.iml" filepath="$PROJECT_DIR$/org.semanticweb.owl/Org.semanticweb.owl.iml" />
+    </modules>
+  </component>
+</project>
+

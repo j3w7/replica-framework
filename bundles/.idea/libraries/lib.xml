@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="lib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/de.fzi.replica.demo/lib/prefusex.jar!/" />
+      <root url="jar://$PROJECT_DIR$/de.fzi.replica.demo/lib/jruby-1.6.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/de.fzi.replica.demo/lib/core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/de.fzi.replica.demo/lib/jung-prefuse.jar!/" />
+      <root url="jar://$PROJECT_DIR$/de.fzi.replica.demo/lib/swing-layout-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/de.fzi.replica.demo/lib/groovy-all-1.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/de.fzi.replica.demo/lib/prefuse.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

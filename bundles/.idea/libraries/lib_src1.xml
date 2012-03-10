@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="lib_src1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/org.semanticweb.owl/lib_src/org.semanticweb.owlapi.source_3.2.2.v20110217.jar!/" />
+      <root url="jar://$PROJECT_DIR$/org.semanticweb.owl/lib_src/org.semanticweb.owlapi.source_3.2.0.v20110114.jar!/" />
+      <root url="jar://$PROJECT_DIR$/org.semanticweb.owl/lib_src/org.semanticweb.owlapi.source_3.0.0.v20100128.jar!/" />
+      <root url="jar://$PROJECT_DIR$/org.semanticweb.owl/lib_src/org.semanticweb.owlapi.source_3.1.0.v20100820.jar!/" />
+      <root url="jar://$PROJECT_DIR$/org.semanticweb.owl/lib_src/org.semanticweb.owlapi.source_3.2.3.v20110527.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
