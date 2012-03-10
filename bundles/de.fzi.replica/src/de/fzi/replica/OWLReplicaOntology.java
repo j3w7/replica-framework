@@ -40,6 +40,8 @@ public interface OWLReplicaOntology extends OWLMutableOntology, ISharedObject {
 	/*
 	 * TODO Add applyChanges methods which return applied changes lists that are
 	 * filled asynchronously.
+	 *
+	 * blub
 	 */
 
 }
