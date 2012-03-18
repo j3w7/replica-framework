@@ -222,13 +222,13 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         gd = new GridData(GridData.FILL_HORIZONTAL);
         gd.grabExcessHorizontalSpace = true;
         _containerID.setLayoutData(gd);
-        _containerID.addModifyListener(new ModifyListener() {
-        	@Override
-            public void modifyText(ModifyEvent e) {
-                updateStatus();
-            }
-        });
-        _containerID.setText(targetID);
+//        _containerID.addModifyListener(new ModifyListener() {
+//        	@Override
+//            public void modifyText(ModifyEvent e) {
+//                updateStatus();
+//            }
+//        });
+//        _containerID.setText(targetID);
         
         gd = new GridData(GridData.FILL_HORIZONTAL);
         Label dummy31 = new Label(_container, SWT.NONE);
@@ -243,14 +243,14 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         gd = new GridData(GridData.FILL_HORIZONTAL);
         gd.grabExcessHorizontalSpace = true;
         _containerType.setLayoutData(gd);
-        _containerType.addModifyListener(new ModifyListener() {
-        	@Override
-            public void modifyText(ModifyEvent e) {
-                updateStatus();
-                System.out.println("ModifyEvent: "+e);
-            }
-        });
-        _containerType.setText(containerTypeClient);
+//        _containerType.addModifyListener(new ModifyListener() {
+//        	@Override
+//            public void modifyText(ModifyEvent e) {
+//                updateStatus();
+//                System.out.println("ModifyEvent: "+e);
+//            }
+//        });
+//        _containerType.setText(containerTypeClient);
         
         
         gd = new GridData(GridData.FILL_HORIZONTAL);
