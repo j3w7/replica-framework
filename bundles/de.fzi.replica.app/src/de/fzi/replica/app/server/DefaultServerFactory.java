@@ -18,9 +18,9 @@ package de.fzi.replica.app.server;
 
 import java.util.Properties;
 
+import de.fzi.replica.app.ApplicationContextImpl;
 import de.fzi.replica.comm.CommManager;
 import de.fzi.replica.comm.DefaultCommManagerFactory;
-import de.fzi.replica.app.ApplicationContextImpl;
 
 /**
  * 
