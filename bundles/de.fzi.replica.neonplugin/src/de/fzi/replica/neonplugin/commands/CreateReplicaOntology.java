@@ -40,7 +40,6 @@ import org.semanticweb.owlapi.model.OWLOntologyManager;
 import com.ontoprise.ontostudio.owl.model.OWLManchesterProjectFactory;
 import com.ontoprise.ontostudio.owl.model.OWLNamespaces;
 
-import de.fzi.replica.OWLReplicaOntologyFactoryImpl;
 import de.fzi.replica.app.Application.StartupException;
 import de.fzi.replica.app.client.Client;
 import de.fzi.replica.app.client.Client.AddException;
@@ -300,7 +299,6 @@ public class CreateReplicaOntology extends DatamodelCommand {
 //    }
     
 //    Connection connection;
-    
     
     private void shareOntology(final OWLOntology ontology) {
     	System.out.println("shareOntology(), ID="+ontology.getOntologyID());
