@@ -1,5 +1,5 @@
 /*
-   Copyright 2011 Jan Novacek
+   Copyright 2012 Jan Novacek
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -41,7 +41,6 @@ public interface OWLReplicaOntology extends OWLMutableOntology, ISharedObject {
 	 * TODO Add applyChanges methods which return applied changes lists that are
 	 * filled asynchronously.
 	 *
-	 * blub
 	 */
 
 }
