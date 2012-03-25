@@ -107,7 +107,7 @@ public class AddOWLReplicaOntologyTestCase extends AbstractOWLReplicaOntologyTes
 		new OWLOntologyToOWLReplicaOntologyCopier().copy(Collections.singleton(pizzaOnto), (OWLReplicaOntology) primary);
 		
 		// Wait for change propagation
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		assertNotSame(pizzaOnto, primary);
 		assertEquals(pizzaOnto.getAxioms(), primary.getAxioms());
 		assertEquals(pizzaOnto.getAxioms(), replica.getAxioms());
