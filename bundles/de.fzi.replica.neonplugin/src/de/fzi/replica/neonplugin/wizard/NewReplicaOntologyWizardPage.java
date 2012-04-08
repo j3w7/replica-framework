@@ -98,8 +98,10 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
 
     public NewReplicaOntologyWizardPage(IStructuredSelection selection) {
         super("NewReplicaOntologyWizardPage"); //$NON-NLS-1$
-        setTitle(Messages.NewReplicaOntologyWizardPage_1);
-        setDescription(Messages.NewReplicaOntologyWizardPage_2);
+//        setTitle(Messages.NewReplicaOntologyWizardPage_1);
+//        setDescription(Messages.NewReplicaOntologyWizardPage_2);
+        setTitle("title");
+        setDescription("description");
         _selection = selection;
         // Start a server
 		if(Integer.parseInt(System.getenv("INSTANCE").toString()) == 0) {
@@ -206,69 +208,87 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         gd = new GridData(GridData.GRAB_HORIZONTAL);
         _createButton.setLayoutData(gd);
                 
-        GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
-        Label dummy3 = new Label(_container, SWT.NONE);
-        dummy3.setVisible(false);
-        dummy3.setLayoutData(gd3);
+//        GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
+//        Label dummy3 = new Label(_container, SWT.NONE);
+//        dummy3.setVisible(false);
+//        dummy3.setLayoutData(gd3);
         
         /*
          * ReplicaOntology specific stuff
          */
         
-        label = new Label(_container, SWT.NULL);
-        label.setText("Replica server ID");
+        Label l = new Label(_container, SWT.NONE);
+        l.setText("Container Type:");
         
-        _containerID = new Text(_container, SWT.BORDER | SWT.SINGLE);
-        gd = new GridData(GridData.FILL_HORIZONTAL);
-        gd.grabExcessHorizontalSpace = true;
-        _containerID.setLayoutData(gd);
-//        _containerID.addModifyListener(new ModifyListener() {
-//        	@Override
-//            public void modifyText(ModifyEvent e) {
-//                updateStatus();
-//            }
-//        });
-//        _containerID.setText(targetID);
+        Combo c = new Combo(_container, SWT.NONE);
+        c.add(DEFAULT_CONTAINER_TYPE_CLIENT);
+        c.add(DEFAULT_CONTAINER_TYPE_SERVER);
         
-        gd = new GridData(GridData.FILL_HORIZONTAL);
-        Label dummy31 = new Label(_container, SWT.NONE);
-        dummy31.setVisible(false);
-        dummy31.setLayoutData(gd);
+		GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
+		Label dummy3 = new Label(_container, SWT.NONE);
+		dummy3.setVisible(false);
+		dummy3.setLayoutData(gd3);
         
+        Label l2 = new Label(_container, SWT.NONE);
+        l2.setText("Target ID:");
         
-        label = new Label(_container, SWT.NULL);
-        label.setText("Container type");
+        Combo c2 = new Combo(_container, SWT.NONE);
+        c2.add(DEFAULT_CONTAINER_ID_SERVER);
         
-        _containerType = new Text(_container, SWT.BORDER | SWT.SINGLE);
-        gd = new GridData(GridData.FILL_HORIZONTAL);
-        gd.grabExcessHorizontalSpace = true;
-        _containerType.setLayoutData(gd);
-//        _containerType.addModifyListener(new ModifyListener() {
-//        	@Override
-//            public void modifyText(ModifyEvent e) {
-//                updateStatus();
-//                System.out.println("ModifyEvent: "+e);
-//            }
-//        });
-//        _containerType.setText(containerTypeClient);
-        
-        
-        gd = new GridData(GridData.FILL_HORIZONTAL);
-        Label dummy4 = new Label(_container, SWT.NONE);
-        dummy4.setVisible(false);
-        dummy4.setLayoutData(gd);
-        
-//        _isClientCheckbox = new Button(_container, SWT.NONE);
-//        _isClientCheckbox.setText("Start local server");
-//        _isClientCheckbox.addSelectionListener(new SelectionListener() {
-//			@Override
-//			public void widgetDefaultSelected(SelectionEvent arg0) {
-//				startServer();
-//			}
-//			@Override
-//			public void widgetSelected(SelectionEvent arg0) {
-//				startServer();
-//			}
+//        label = new Label(_container, SWT.NULL);
+//        label.setText("Replica server ID");
+//        
+//        _containerID = new Text(_container, SWT.BORDER | SWT.SINGLE);
+//        gd = new GridData(GridData.FILL_HORIZONTAL);
+//        gd.grabExcessHorizontalSpace = true;
+//        _containerID.setLayoutData(gd);
+////        _containerID.addModifyListener(new ModifyListener() {
+////        	@Override
+////            public void modifyText(ModifyEvent e) {
+////                updateStatus();
+////            }
+////        });
+////        _containerID.setText(targetID);
+//        
+//        gd = new GridData(GridData.FILL_HORIZONTAL);
+//        Label dummy31 = new Label(_container, SWT.NONE);
+//        dummy31.setVisible(false);
+//        dummy31.setLayoutData(gd);
+//        
+//        
+//        label = new Label(_container, SWT.NULL);
+//        label.setText("Container type");
+//        
+//        _containerType = new Text(_container, SWT.BORDER | SWT.SINGLE);
+//        gd = new GridData(GridData.FILL_HORIZONTAL);
+//        gd.grabExcessHorizontalSpace = true;
+//        _containerType.setLayoutData(gd);
+////        _containerType.addModifyListener(new ModifyListener() {
+////        	@Override
+////            public void modifyText(ModifyEvent e) {
+////                updateStatus();
+////                System.out.println("ModifyEvent: "+e);
+////            }
+////        });
+////        _containerType.setText(containerTypeClient);
+//        
+//        
+//        gd = new GridData(GridData.FILL_HORIZONTAL);
+//        Label dummy4 = new Label(_container, SWT.NONE);
+//        dummy4.setVisible(false);
+//        dummy4.setLayoutData(gd);
+//        
+////        _isClientCheckbox = new Button(_container, SWT.NONE);
+////        _isClientCheckbox.setText("Start local server");
+////        _isClientCheckbox.addSelectionListener(new SelectionListener() {
+////			@Override
+////			public void widgetDefaultSelected(SelectionEvent arg0) {
+////				startServer();
+////			}
+////			@Override
+////			public void widgetSelected(SelectionEvent arg0) {
+////				startServer();
+////			}
 //        });
         
         initialize();
