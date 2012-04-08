@@ -74,6 +74,10 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
 	private static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://localhost:10000/server"; // Set to interface IP
 	private static final String DEFAULT_CONTAINER_ID_CLIENT = "client1";
 	
+	
+	public static String containerType;
+	
+	// deprecated
 	// Use for a client connection
 	public static String containerTypeClient = DEFAULT_CONTAINER_TYPE_CLIENT;
 	public static String containerIDClient = DEFAULT_CONTAINER_ID_CLIENT;
@@ -223,6 +227,14 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         Combo c = new Combo(_container, SWT.NONE);
         c.add(DEFAULT_CONTAINER_TYPE_CLIENT);
         c.add(DEFAULT_CONTAINER_TYPE_SERVER);
+        c.addModifyListener(new ModifyListener() {
+			
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+				System.out.println("modify event="+arg0);
+				containerType=(String) arg0.data;
+			}
+		});
         
 		GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
 		Label dummy3 = new Label(_container, SWT.NONE);

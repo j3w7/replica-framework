@@ -50,6 +50,7 @@ import de.fzi.replica.app.client.Client.OnOntologyIDsReceivedListener;
 import de.fzi.replica.app.client.Client.OnOntologyReceivedListener;
 import de.fzi.replica.app.client.DefaultClientFactory;
 import de.fzi.replica.neonplugin.Activator;
+import de.fzi.replica.neonplugin.wizard.NewReplicaOntologyWizardPage;
 
 /**
  * @author diwe, novacek
@@ -95,8 +96,15 @@ public class CreateReplicaOntology extends DatamodelCommand {
     
     private Properties createClientConfig(String containerId) {
     	Properties configuration = new Properties();
-		configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
-		configuration.put(CONFIG_KEYWORD_TARGET_ID, containerIDServer);
+    	System.out.println("creating config...");
+    	String t = NewReplicaOntologyWizardPage.containerType;
+//    	if(DEFAULT_CONTAINER_TYPE_CLIENT.equals(t)) {
+    		configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, t);
+    		configuration.put(CONFIG_KEYWORD_TARGET_ID, containerIDServer);    		
+//    	} else {
+//    		configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
+//    		configuration.put(CONFIG_KEYWORD_TARGET_ID, containerIDServer);
+//    	}
 		configuration.put(CONFIG_KEYWORD_CONTAINER_ID, containerId);
 		return configuration;
     }
