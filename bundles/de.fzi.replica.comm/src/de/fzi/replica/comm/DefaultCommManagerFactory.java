@@ -16,6 +16,10 @@
 
 package de.fzi.replica.comm;
 
+/*
+ * strange problems with this class
+ */
+
 public class DefaultCommManagerFactory implements CommManagerFactory {
 	
 	public static CommManager DEFAULT_INSTANCE = new CommManagerImpl();
