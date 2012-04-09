@@ -171,8 +171,8 @@ public class Activator implements BundleActivator {
 		serviceRegistration = containerAdapter.registerRemoteService(
 				new String[] { ReplicaRepositoryServiceAsync.class.getName() },
 				new ReplicaRepositoryServiceAsyncImpl(), null);
-		System.out.println("IHello RemoteService registered");
-		*/
+		 */
+		System.out.println("ReplicaRepositoryServiceAsync RemoteService registered");
 	}
 	
 	void unregisterHelloRemoteService() {
@@ -181,7 +181,7 @@ public class Activator implements BundleActivator {
 			repoSrvRegistration = null;
 		}
 		// tell everyone
-		System.out.println("Host: Hello Remote Service Unregistered");
+		System.out.println("Host: ReplicaRepositoryServiceAsync Remote Service Unregistered");
 	}
 	
 //	public IContainerManager getContainerManager() {
