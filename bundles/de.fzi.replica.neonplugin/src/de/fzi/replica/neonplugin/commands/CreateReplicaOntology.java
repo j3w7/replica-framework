@@ -52,7 +52,6 @@ import de.fzi.replica.app.client.DefaultClientFactory;
 import de.fzi.replica.app.server.DefaultServerFactory;
 import de.fzi.replica.app.server.Server;
 import de.fzi.replica.neonplugin.Activator;
-import de.fzi.replica.neonplugin.wizard.NewReplicaOntologyWizardPage;
 
 /**
  * @author diwe, novacek
@@ -70,9 +69,11 @@ public class CreateReplicaOntology extends DatamodelCommand {
 //	protected final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://localhost:{0}/server";
 	protected final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://localhost:10000/server";
 	
-	protected String containerTypeClient = DEFAULT_CONTAINER_TYPE_CLIENT;
-	protected String containerTypeServer = DEFAULT_CONTAINER_TYPE_SERVER;
-	protected String containerIDServer = DEFAULT_CONTAINER_ID_SERVER;
+//	protected String containerTypeClient = DEFAULT_CONTAINER_TYPE_CLIENT;
+//	protected String containerTypeServer = DEFAULT_CONTAINER_TYPE_SERVER;
+	
+	private String containerId = DEFAULT_CONTAINER_ID_SERVER;
+	private String containerType = DEFAULT_CONTAINER_TYPE_SERVER;
     
     public CreateReplicaOntology(String project, String ontologyUri,
     		String defaultNamespace, String fileName,
@@ -84,6 +85,9 @@ public class CreateReplicaOntology extends DatamodelCommand {
          * Replica: either start server and connect or just
          * create a client and connect
          */
+        
+        this.containerType = containerType;
+        this.containerId = containerId;
         
         try {
 	        if(DEFAULT_CONTAINER_TYPE_SERVER.equals(containerType)) {
@@ -101,8 +105,8 @@ public class CreateReplicaOntology extends DatamodelCommand {
     
     private Properties createClientConfig(String containerId) {
     	Properties configuration = new Properties();
-		configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
-		configuration.put(CONFIG_KEYWORD_TARGET_ID, containerIDServer);
+		configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerType);
+		configuration.put(CONFIG_KEYWORD_TARGET_ID, this.containerId);
 		configuration.put(CONFIG_KEYWORD_CONTAINER_ID, containerId);
 		return configuration;
     }
@@ -183,13 +187,19 @@ public class CreateReplicaOntology extends DatamodelCommand {
                 manager.setOntologyDocumentIRI(ontology, IRI.create(physicalUri));
                 Activator.getDefault().logInfo("ontology="+ontology);
                 
+//                Activator.getDefault().logInfo(
+//                		"this.getArgument(0)="+this.getArgument(0) + 
+//                		"this.getArgument(1)="+this.getArgument(1) +
+//                		"this.getArgument(2)="+this.getArgument(2) +
+//                		"this.getArgument(3)="+this.getArgument(3));
+                
                 // Activate shared ontology by adding it to the pool
                 // of shared ontologies
                 try {
-                	Activator.getDefault().logInfo(
-                			"this is instance "+
-                				Integer.parseInt(System.getenv("INSTANCE").toString()));
-                	if(Integer.parseInt(System.getenv("INSTANCE").toString()) == 0) {
+//                	Activator.getDefault().logInfo(
+//                			"this is instance "+
+//                				Integer.parseInt(System.getenv("INSTANCE").toString()));
+                	if(DEFAULT_CONTAINER_TYPE_SERVER.equals(containerType)) {
                 		// Server
                 		shareOntology(ontology);
                 		
@@ -214,7 +224,7 @@ public class CreateReplicaOntology extends DatamodelCommand {
 //                		ISharedObject sharedObject = connection.getSharedObjectContainer().
 //                			getSharedObjectManager().getSharedObject(sharedObjectID);
 //                		System.out.println("sharedObject="+sharedObject);
-                	} else if(Integer.parseInt(System.getenv("INSTANCE").toString()) == 1) {
+                	} else if(DEFAULT_CONTAINER_TYPE_CLIENT.equals(containerType)) {
                 		// Client
                 		Activator.getDefault().logInfo("Client - retrieving ontology");
                 		ontology = retrieveOntology();
@@ -223,10 +233,6 @@ public class CreateReplicaOntology extends DatamodelCommand {
 					e.printStackTrace();
 				}
                 
-                Activator.getDefault().logInfo(
-                		"this.getArgument(0)="+this.getArgument(0) + 
-                		"this.getArgument(1)="+this.getArgument(1) + 
-                		"this.getArgument(2)="+this.getArgument(2) );
 				
 				// Register a change listener
 				ontology.getOWLOntologyManager().addOntologyChangeListener(
