@@ -90,7 +90,11 @@ public class NewReplicaOntologyWizard extends Wizard implements INewWizard {
             String ontologyUri = new CreateValidOntologyUri(_page.getOntologyUri()).getOntologyUri();
             String defaultNs = _page.getDefaultNamespace();
             String filename = OntologyProjectManager.getDefault().getOntologyProject(projectName).getNewOntologyFilenameFromURI(ontologyUri, ".owl"); //$NON-NLS-1$
-			new CreateReplicaOntology(projectName, ontologyUri, defaultNs, filename).run();
+            // Replica specific stuff
+            String containerType = _page.getContainerType();
+            String targetID = _page.getContainerID();
+			new CreateReplicaOntology(projectName, ontologyUri, defaultNs, filename,
+					containerType, targetID).run();
 		} catch (Exception e) {
 			new NeonToolkitExceptionHandler().handleException(Messages.NewOntologyWizard_0, e, _page.getShell());
 			return false;

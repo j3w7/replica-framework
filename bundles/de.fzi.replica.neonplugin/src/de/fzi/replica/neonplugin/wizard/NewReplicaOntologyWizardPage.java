@@ -63,29 +63,10 @@ import de.fzi.replica.neonplugin.Activator;
  */
 public class NewReplicaOntologyWizardPage extends WizardPage {
 	
-	public static boolean IS_CLIENT = true;
-	public static boolean INST0_SERVER_STARTED = true;
-	public static boolean INST1_SERVER_STARTED = true;
-	// One client adds a shared ontology, another one retrieves it.
-	private static final boolean IS_ADDING_SHARED_OBJECT = true;
+	public static final String DEFAULT_CONTAINER_TYPE_CLIENT = "ecf.generic.client";
+	public static final String DEFAULT_CONTAINER_TYPE_SERVER = "ecf.generic.server";
+	public static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://localhost:10000/server"; // Set to interface IP
 	
-	private static final String DEFAULT_CONTAINER_TYPE_CLIENT = "ecf.generic.client";
-	private static final String DEFAULT_CONTAINER_TYPE_SERVER = "ecf.generic.server";
-	private static final String DEFAULT_CONTAINER_ID_SERVER = "ecftcp://localhost:10000/server"; // Set to interface IP
-	private static final String DEFAULT_CONTAINER_ID_CLIENT = "client1";
-	
-	
-	public static String containerType;
-	
-	// deprecated
-	// Use for a client connection
-	public static String containerTypeClient = DEFAULT_CONTAINER_TYPE_CLIENT;
-	public static String containerIDClient = DEFAULT_CONTAINER_ID_CLIENT;
-	public static String targetID = DEFAULT_CONTAINER_ID_SERVER;
-	// Use for a server connection, uncomment previous
-	public static String containerTypeServer = DEFAULT_CONTAINER_TYPE_SERVER;
-	public static String containerIDServer = DEFAULT_CONTAINER_ID_SERVER;
-
     private IStructuredSelection _selection;
     private Composite _container;
     private Combo _projectCombo;
@@ -97,8 +78,8 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
     private String _ontologyURI;
     private String _projectName;
     private boolean _initDone;
-	private Text _containerID;
-	private Text _containerType;
+	private Combo _containerID;
+	private Combo _containerType;
 
     public NewReplicaOntologyWizardPage(IStructuredSelection selection) {
         super("NewReplicaOntologyWizardPage"); //$NON-NLS-1$
@@ -107,13 +88,6 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         setTitle("title");
         setDescription("description");
         _selection = selection;
-        // Start a server
-		if(Integer.parseInt(System.getenv("INSTANCE").toString()) == 0) {
-//		  	startServer();
-		  	ServerThread t = new ServerThread();
-		  	t.start();
-		  	Activator.getDefault().logInfo("Server started");
-		}
     }
     
     protected IInputValidator getInputValidator() {
@@ -211,11 +185,6 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         _createButton.setVisible(false);
         gd = new GridData(GridData.GRAB_HORIZONTAL);
         _createButton.setLayoutData(gd);
-                
-//        GridData gd3 = new GridData(GridData.FILL_HORIZONTAL);
-//        Label dummy3 = new Label(_container, SWT.NONE);
-//        dummy3.setVisible(false);
-//        dummy3.setLayoutData(gd3);
         
         /*
          * ReplicaOntology specific stuff
@@ -224,15 +193,14 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         Label l = new Label(_container, SWT.NONE);
         l.setText("Container Type:");
         
-        Combo c = new Combo(_container, SWT.NONE);
-        c.add(DEFAULT_CONTAINER_TYPE_CLIENT);
-        c.add(DEFAULT_CONTAINER_TYPE_SERVER);
-        c.addModifyListener(new ModifyListener() {
-			
+        _containerType = new Combo(_container, SWT.NONE);
+        _containerType.add(DEFAULT_CONTAINER_TYPE_CLIENT);
+        _containerType.add(DEFAULT_CONTAINER_TYPE_SERVER);
+        _containerType.addModifyListener(new ModifyListener() {
 			@Override
 			public void modifyText(ModifyEvent arg0) {
 				System.out.println("modify event="+arg0);
-				containerType=(String) arg0.data;
+//				containerType=(String) arg0.data;
 			}
 		});
         
@@ -244,64 +212,15 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         Label l2 = new Label(_container, SWT.NONE);
         l2.setText("Target ID:");
         
-        Combo c2 = new Combo(_container, SWT.NONE);
-        c2.add(DEFAULT_CONTAINER_ID_SERVER);
-        
-//        label = new Label(_container, SWT.NULL);
-//        label.setText("Replica server ID");
-//        
-//        _containerID = new Text(_container, SWT.BORDER | SWT.SINGLE);
-//        gd = new GridData(GridData.FILL_HORIZONTAL);
-//        gd.grabExcessHorizontalSpace = true;
-//        _containerID.setLayoutData(gd);
-////        _containerID.addModifyListener(new ModifyListener() {
-////        	@Override
-////            public void modifyText(ModifyEvent e) {
-////                updateStatus();
-////            }
-////        });
-////        _containerID.setText(targetID);
-//        
-//        gd = new GridData(GridData.FILL_HORIZONTAL);
-//        Label dummy31 = new Label(_container, SWT.NONE);
-//        dummy31.setVisible(false);
-//        dummy31.setLayoutData(gd);
-//        
-//        
-//        label = new Label(_container, SWT.NULL);
-//        label.setText("Container type");
-//        
-//        _containerType = new Text(_container, SWT.BORDER | SWT.SINGLE);
-//        gd = new GridData(GridData.FILL_HORIZONTAL);
-//        gd.grabExcessHorizontalSpace = true;
-//        _containerType.setLayoutData(gd);
-////        _containerType.addModifyListener(new ModifyListener() {
-////        	@Override
-////            public void modifyText(ModifyEvent e) {
-////                updateStatus();
-////                System.out.println("ModifyEvent: "+e);
-////            }
-////        });
-////        _containerType.setText(containerTypeClient);
-//        
-//        
-//        gd = new GridData(GridData.FILL_HORIZONTAL);
-//        Label dummy4 = new Label(_container, SWT.NONE);
-//        dummy4.setVisible(false);
-//        dummy4.setLayoutData(gd);
-//        
-////        _isClientCheckbox = new Button(_container, SWT.NONE);
-////        _isClientCheckbox.setText("Start local server");
-////        _isClientCheckbox.addSelectionListener(new SelectionListener() {
-////			@Override
-////			public void widgetDefaultSelected(SelectionEvent arg0) {
-////				startServer();
-////			}
-////			@Override
-////			public void widgetSelected(SelectionEvent arg0) {
-////				startServer();
-////			}
-//        });
+        _containerID = new Combo(_container, SWT.NONE);
+        _containerID.add(DEFAULT_CONTAINER_ID_SERVER);
+        _containerID.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent arg0) {
+				System.out.println("modify event="+arg0);
+//				containerType=(String) arg0.data;
+			}
+		});
         
         initialize();
         updateStatus();
@@ -447,6 +366,14 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
   		return _namespaceText.getText();
     }
     
+    public String getContainerType() {
+    	return _containerType.getText();
+    }
+    
+    public String getContainerID() {
+    	return _containerID.getText();
+    }
+    
     @Override
     public void performHelp() {
         String helpContextId = org.neontoolkit.gui.IHelpContextIds.OWL_CREATE_ONTOLOGY;
@@ -462,95 +389,93 @@ public class NewReplicaOntologyWizardPage extends WizardPage {
         _projectComboFixed = true;
     }
     
-    public static Properties createConnectionProperties(boolean server) {
-//    	String info = "";
-    	Properties connectionProperties = new Properties();
-    	int instance = Integer.parseInt(System.getenv("INSTANCE").toString());
-    	if(!server) { // client
-//    		info = "\t client instance\n"+
-//				Integer.parseInt(System.getenv("INSTANCE").toString())+"\n"+
-//				"containerTypeClient="+containerTypeClient+"\n"+
-//				"targetID="+targetID+"\n"+
-//				"client"+instance;
-    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
-    		connectionProperties.put(CONFIG_KEYWORD_TARGET_ID, targetID);
-//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDClient);
-			if(instance == 0) {
-				connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, "client0");
-			} else {
-				connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, "client1");
-			}
-    	} else { // server
-//    		info = "\t server instance"+
-//				Integer.parseInt(System.getenv("INSTANCE").toString())+"\n"+
-//				"containerTypeServer="+containerTypeServer+"\n"+
-//				"containerIDServer="+containerIDServer;
-    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
-    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);    		
-    	}
-    	Activator.getDefault().logInfo("connectionProperties="+
-    			connectionProperties);
-    	return connectionProperties;
-    }
+//    public static Properties createConnectionProperties(boolean server) {
+////    	String info = "";
+//    	Properties connectionProperties = new Properties();
+//    	int instance = Integer.parseInt(System.getenv("INSTANCE").toString());
+//    	if(!server) { // client
+////    		info = "\t client instance\n"+
+////				Integer.parseInt(System.getenv("INSTANCE").toString())+"\n"+
+////				"containerTypeClient="+containerTypeClient+"\n"+
+////				"targetID="+targetID+"\n"+
+////				"client"+instance;
+//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
+//    		connectionProperties.put(CONFIG_KEYWORD_TARGET_ID, targetID);
+////    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDClient);
+//			if(instance == 0) {
+//				connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, "client0");
+//			} else {
+//				connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, "client1");
+//			}
+//    	} else { // server
+////    		info = "\t server instance"+
+////				Integer.parseInt(System.getenv("INSTANCE").toString())+"\n"+
+////				"containerTypeServer="+containerTypeServer+"\n"+
+////				"containerIDServer="+containerIDServer;
+//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
+//    		connectionProperties.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);    		
+//    	}
+//    	Activator.getDefault().logInfo("connectionProperties="+
+//    			connectionProperties);
+//    	return connectionProperties;
+//    }
     
-    protected Properties createServerConfig() {
-		Properties connectionConfig = new Properties();
-		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
-		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);
-//		connectionConfig.put(CONFIG_KEYWORD_DEFAULT_CONTAINER_TYPE, containerTypeServer);
-//		connectionConfig.put(CONFIG_KEYWORD_DEFAULT_CONTAINER_ID, containerIDServer);
-		return connectionConfig;
-	}
+//    protected Properties createServerConfig() {
+//		Properties connectionConfig = new Properties();
+//		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeServer);
+//		connectionConfig.put(CONFIG_KEYWORD_CONTAINER_ID, containerIDServer);
+////		connectionConfig.put(CONFIG_KEYWORD_DEFAULT_CONTAINER_TYPE, containerTypeServer);
+////		connectionConfig.put(CONFIG_KEYWORD_DEFAULT_CONTAINER_ID, containerIDServer);
+//		return connectionConfig;
+//	}
     
-    private void startServer() {
-		try {
-//			CommManager mgr = new CommManagerImpl();
-//			Connection connection = mgr.createConnection(
-//					createConnectionProperties(true));
-//			connection.connect();
-//			connection.getSharedObjectContainer().addListener(
-//					new IContainerListener() {
-//						@Override
-//						public void handleEvent(IContainerEvent event) {
-//							Activator.getDefault().logInfo(
-//									"event="+event+"\n");
-//						}
-//					});
-			
-			
-			Server s = new DefaultServerFactory().createServer(createServerConfig());
-			s.start();
-			
-			
-			/*
-			 * Debug output
-			 */
-			
-//			System.out.println("");
-//			Activator.getDefault().logInfo("connection==null ?   "+
-//					(connection!=null?false:true));
-			int instance = Integer.parseInt(System.getenv("INSTANCE").toString());
-	//		if(instance == 0) {
-	//			INST0_SERVER_STARTED = true;
-	//			INST1_SERVER_STARTED = false;
-	//		} else {
-	//			// server is started on instance 1
-	//			INST0_SERVER_STARTED = false;
-	//			INST1_SERVER_STARTED = true;
-	//		}
-			Activator.getDefault().logInfo("Server started on instance "+instance);
-		} catch (StartupException e) {
-			e.printStackTrace();
-		}
-  	}
+//    private void startServer() {
+//		try {
+////			CommManager mgr = new CommManagerImpl();
+////			Connection connection = mgr.createConnection(
+////					createConnectionProperties(true));
+////			connection.connect();
+////			connection.getSharedObjectContainer().addListener(
+////					new IContainerListener() {
+////						@Override
+////						public void handleEvent(IContainerEvent event) {
+////							Activator.getDefault().logInfo(
+////									"event="+event+"\n");
+////						}
+////					});
+//			
+//			Server s = new DefaultServerFactory().createServer(createServerConfig());
+//			s.start();
+//			
+//			/*
+//			 * Debug output
+//			 */
+//			
+////			System.out.println("");
+////			Activator.getDefault().logInfo("connection==null ?   "+
+////					(connection!=null?false:true));
+//			int instance = Integer.parseInt(System.getenv("INSTANCE").toString());
+//	//		if(instance == 0) {
+//	//			INST0_SERVER_STARTED = true;
+//	//			INST1_SERVER_STARTED = false;
+//	//		} else {
+//	//			// server is started on instance 1
+//	//			INST0_SERVER_STARTED = false;
+//	//			INST1_SERVER_STARTED = true;
+//	//		}
+//			Activator.getDefault().logInfo("Server started on instance "+instance);
+//		} catch (StartupException e) {
+//			e.printStackTrace();
+//		}
+//  	}
     
-    class ServerThread extends Thread {
-    	@Override
-    	public void run() {
-    		startServer();
-    		System.out.println("Replica server started");
-    	}
-    }
+//    class ServerThread extends Thread {
+//    	@Override
+//    	public void run() {
+//    		startServer();
+//    		System.out.println("Replica server started");
+//    	}
+//    }
 }
 
 

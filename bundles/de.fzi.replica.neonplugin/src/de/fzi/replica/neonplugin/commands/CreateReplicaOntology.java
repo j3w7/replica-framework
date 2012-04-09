@@ -49,6 +49,8 @@ import de.fzi.replica.app.client.Client.OnOntologyAddedListener;
 import de.fzi.replica.app.client.Client.OnOntologyIDsReceivedListener;
 import de.fzi.replica.app.client.Client.OnOntologyReceivedListener;
 import de.fzi.replica.app.client.DefaultClientFactory;
+import de.fzi.replica.app.server.DefaultServerFactory;
+import de.fzi.replica.app.server.Server;
 import de.fzi.replica.neonplugin.Activator;
 import de.fzi.replica.neonplugin.wizard.NewReplicaOntologyWizardPage;
 
@@ -73,22 +75,25 @@ public class CreateReplicaOntology extends DatamodelCommand {
 	protected String containerIDServer = DEFAULT_CONTAINER_ID_SERVER;
     
     public CreateReplicaOntology(String project, String ontologyUri,
-    		String defaultNamespace, String fileName) {
+    		String defaultNamespace, String fileName,
+    		String containerType, String containerId) {
         super(project, ontologyUri, defaultNamespace, fileName);
         Activator.getDefault().logInfo("CreateReplicaOntology("+project+", "+ontologyUri+", "+defaultNamespace+", "+fileName);
         
-        Properties c = createClientConfig("client"+
-				Integer.parseInt(System.getenv("INSTANCE").toString()));
-        client = new DefaultClientFactory().createClient(c); // FIXME in factory
-        client.setConfiguration(c);
+        /*
+         * Replica: either start server and connect or just
+         * create a client and connect
+         */
+        
         try {
-        	client.start();
-			client.connect();
+	        if(DEFAULT_CONTAINER_TYPE_SERVER.equals(containerType)) {
+			  	startServer(createServerConfig(containerType, containerId));
+			  	Activator.getDefault().logInfo("Server started, connecting...");
+	        }
 			Thread.sleep(5000);
-		} catch (ConnectException e) {
-			e.printStackTrace();
-		} catch (StartupException e) {
-			e.printStackTrace();
+			startClient(createClientConfig("client"+Math.random()));
+			Thread.sleep(5000);
+			Activator.getDefault().logInfo("Connected!");
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -96,15 +101,16 @@ public class CreateReplicaOntology extends DatamodelCommand {
     
     private Properties createClientConfig(String containerId) {
     	Properties configuration = new Properties();
-    	System.out.println("creating config...");
-//    	String t = NewReplicaOntologyWizardPage.containerType;
-//    	if(DEFAULT_CONTAINER_TYPE_CLIENT.equals(t)) {
-//    		configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, t);
-//    		configuration.put(CONFIG_KEYWORD_TARGET_ID, containerIDServer);    		
-//    	} else {
-    		configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
-    		configuration.put(CONFIG_KEYWORD_TARGET_ID, containerIDServer);
-//    	}
+		configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerTypeClient);
+		configuration.put(CONFIG_KEYWORD_TARGET_ID, containerIDServer);
+		configuration.put(CONFIG_KEYWORD_CONTAINER_ID, containerId);
+		return configuration;
+    }
+    
+    private Properties createServerConfig(
+    		String containerType, String containerId) {
+    	Properties configuration = new Properties();
+    	configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerType);
 		configuration.put(CONFIG_KEYWORD_CONTAINER_ID, containerId);
 		return configuration;
     }
@@ -308,6 +314,8 @@ public class CreateReplicaOntology extends DatamodelCommand {
     
 //    Connection connection;
     
+    
+    
     private void shareOntology(final OWLOntology ontology) {
     	System.out.println("shareOntology(), ID="+ontology.getOntologyID());
     	try {
@@ -374,11 +382,50 @@ public class CreateReplicaOntology extends DatamodelCommand {
     	OWLOntology onto;
     }
     
+  private void startServer(Properties config) {
+		try {			
+			Server s = new DefaultServerFactory().createServer(config);
+			s.start();
+			/*
+			 * Debug output
+			 */
+			Activator.getDefault().logInfo("Server started");
+		} catch (StartupException e) {
+			e.printStackTrace();
+		}
+	}
+
+	class ServerThread extends Thread {
+		Properties createServerConfig;
+		
+		public ServerThread(Properties createServerConfig) {
+			this.createServerConfig = createServerConfig;
+		}
+
+		@Override
+		public void run() {
+			if(createServerConfig == null) {
+				throw new RuntimeException("No config supplied!");
+			}
+			startServer(createServerConfig);
+			System.out.println("Replica server started");
+		}
+	}
     
-    
-    
-    
-    
+    private void startClient(Properties config) {
+//    	Properties c = createClientConfig("client"+
+//				Integer.parseInt(System.getenv("INSTANCE").toString()));
+        client = new DefaultClientFactory().createClient(config); // FIXME in factory
+        client.setConfiguration(config);
+        try {
+        	client.start();
+			client.connect();
+		} catch (ConnectException e) {
+			e.printStackTrace();
+		} catch (StartupException e) {
+			e.printStackTrace();
+		}
+    }
     
     
     /*
