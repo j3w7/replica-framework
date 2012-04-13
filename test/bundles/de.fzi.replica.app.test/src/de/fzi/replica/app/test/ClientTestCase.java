@@ -38,6 +38,7 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
 
+import de.fzi.replica.OWLReplicaOntology;
 import de.fzi.replica.app.client.Client.AddException;
 import de.fzi.replica.app.client.Client.AsyncMethodCallback.Result;
 import de.fzi.replica.app.client.Client.FetchException;
@@ -474,8 +475,16 @@ public class ClientTestCase extends AbstractApplicationTestCase {
 		Thread.sleep(3000);
 		assertEquals(Result.OK, h.result0);
 		assertEquals(Result.OK, h.result1);
-		assertNotNull(h.objs[0]);
-		assertNotNull(h.objs[1]);
+		OWLReplicaOntology o0 = (OWLReplicaOntology) h.objs[0];
+		OWLReplicaOntology o1 = (OWLReplicaOntology) h.objs[1];
+		assertNotNull(o0);
+		assertNotNull(o1);
+		o0.containsClassInSignature(IRI.create("http://blub.org/#classA"));
+		o0.containsClassInSignature(IRI.create("http://blub.org/#classB"));
+		o0.containsClassInSignature(IRI.create("http://blub.org/#classC"));
+		o1.containsClassInSignature(IRI.create("http://blub.org/#classA"));
+		o1.containsClassInSignature(IRI.create("http://blub.org/#classB"));
+		o1.containsClassInSignature(IRI.create("http://blub.org/#classC"));
 		System.out.println("h.objs[0]=" + h.objs[0]);
 		System.out.println("h.objs[1]=" + h.objs[1]);
 		System.out.println("------testGetOntology()------end\n");
