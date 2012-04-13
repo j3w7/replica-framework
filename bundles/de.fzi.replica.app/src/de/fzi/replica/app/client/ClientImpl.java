@@ -247,7 +247,9 @@ public class ClientImpl extends AbstractMasterSlaveConceptApplication
 		ConnectionActivity a = cntxt.addConnectionActivity(requestId);
 		registerConnectionActivity(requestId, a);
 		try {
-			registerArgument(requestId, OWLReplicaOntologyConverter.convert(ontology));
+			registerArgument(requestId,
+					ontology instanceof OWLReplicaOntology ? ontology :
+							OWLReplicaOntologyConverter.convert(ontology));
 //			System.out.println("registerArgument, ontology="+ontology.getClass());
 //			registerArgument(requestId, ontology);
 			a.setConnectionActivityStates(AddOntology.stateMap);
