@@ -89,23 +89,23 @@ public class CreateReplicaOntology extends DatamodelCommand {
         this.containerType = containerType;
         this.containerId = containerId;
         
-        try {
-	        if(DEFAULT_CONTAINER_TYPE_SERVER.equals(containerType)) {
-			  	startServer(createServerConfig(containerType, containerId));
-			  	Activator.getDefault().logInfo("Server started, connecting...");
-	        }
-			Thread.sleep(5000);
-			startClient(createClientConfig("client"+Math.random()));
-			Thread.sleep(5000);
-			Activator.getDefault().logInfo("Connected!");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//        try {
+//	        if(DEFAULT_CONTAINER_TYPE_SERVER.equals(containerType)) {
+//			  	startServer(createServerConfig(containerType, containerId));
+//			  	Activator.getDefault().logInfo("Server started, connecting...");
+//			  	Thread.sleep(5000);
+//	        }
+//			startClient(createClientConfig("client"+Math.random()));
+////			Thread.sleep(5000);
+//			Activator.getDefault().logInfo("Connected!");
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
     }
     
     private Properties createClientConfig(String containerId) {
     	Properties configuration = new Properties();
-		configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, containerType);
+		configuration.put(CONFIG_KEYWORD_CONTAINER_TYPE, DEFAULT_CONTAINER_TYPE_CLIENT);
 		configuration.put(CONFIG_KEYWORD_TARGET_ID, this.containerId);
 		configuration.put(CONFIG_KEYWORD_CONTAINER_ID, containerId);
 		return configuration;
@@ -192,6 +192,8 @@ public class CreateReplicaOntology extends DatamodelCommand {
 //                		"this.getArgument(1)="+this.getArgument(1) +
 //                		"this.getArgument(2)="+this.getArgument(2) +
 //                		"this.getArgument(3)="+this.getArgument(3));
+                
+                initReplica();
                 
                 // Activate shared ontology by adding it to the pool
                 // of shared ontologies
@@ -320,7 +322,21 @@ public class CreateReplicaOntology extends DatamodelCommand {
     
 //    Connection connection;
     
-    
+    private void initReplica() {
+    	try {
+	        if(DEFAULT_CONTAINER_TYPE_SERVER.equals(containerType)) {
+			  	startServer(createServerConfig(containerType, containerId));
+			  	Activator.getDefault().logInfo("Server started, connecting...");
+			  	Thread.sleep(5000);
+	        }
+			startClient(createClientConfig("client"+Math.random()));
+			Thread.sleep(5000);
+			Activator.getDefault().logInfo("Connected!");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			Activator.getDefault().logInfo("Connection failed: "+e.getMessage());
+		}
+    }
     
     private void shareOntology(final OWLOntology ontology) {
     	System.out.println("shareOntology(), ID="+ontology.getOntologyID());
